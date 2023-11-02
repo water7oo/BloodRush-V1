@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://rxvn565bxjsx"
+path="res://.godot/imported/SlashFX.obj-b40850b207f067edfbe088791372aa8d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SlashFX.obj-b40850b207f067edfbe088791372aa8d.mesh"]
+
+source_file="res://SlashFX.obj"
+dest_files=["res://.godot/imported/SlashFX.obj-b40850b207f067edfbe088791372aa8d.mesh", "res://.godot/imported/SlashFX.obj-b40850b207f067edfbe088791372aa8d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://bymlhpx8o3etj"]
+
+[ext_resource type="Texture2D" uid="uid://x33lfq4ey12x" path="res://My Textures/Mori_Belt.png" id="1_kaek2"]
+[ext_resource type="Material" uid="uid://bnwgd26lgv7mc" path="res://Shaders/OUTLINE.tres" id="2_vtfta"]
+
+[resource]
+next_pass = ExtResource("2_vtfta")
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_kaek2")
+heightmap_scale = 4.935

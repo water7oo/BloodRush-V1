@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://t18do042j80c"]
+
+[ext_resource type="Texture2D" uid="uid://cvlifsakrek6n" path="res://addons/kenney_prototype_textures/dark/texture_06.png" id="1_qcmih"]
+
+[resource]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_qcmih")
+metallic_specular = 0.0
+roughness = 0.0
+uv1_triplanar = true
+uv1_world_triplanar = true

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw617a6hk345q"]
+
+[ext_resource type="PackedScene" uid="uid://c0v67yknw5gcp" path="res://FX/Game_Effects.fbx" id="1_wgj80"]
+[ext_resource type="Shader" path="res://PS1.gdshader" id="2_n1ac7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4v7ab"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khchy"]
+render_priority = 0
+shader = ExtResource("2_n1ac7")
+shader_parameter/jitter = 0.7
+shader_parameter/jitter_z_coordinate = true
+shader_parameter/jitter_depth_independent = true
+shader_parameter/affine_texture_mapping = true
+shader_parameter/alpha_scissor = 1.0
+shader_parameter/albedo = SubResource("CanvasTexture_4v7ab")
+
+[node name="Game_Effects" instance=ExtResource("1_wgj80")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Landing_strong_001" parent="RootNode" index="0" groups=["wall_wave"]]
+transform = Transform3D(109.076, 0, 0, 0, 109.076, 0, 0, 0, 17.4447, -0.0172687, -0.0228026, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_khchy")
+
+[node name="AnimationPlayer" parent="." index="1"]
+playback_process_mode = 0
+speed_scale = 1.5

@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://ddlan0ctjeve2"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_8vsvu"]
+[ext_resource type="Shader" path="res://My Textures/PS1_ANOTHERONE.gdshader" id="2_8pipm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b5mkl"]
+render_priority = 0
+shader = ExtResource("1_8vsvu")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_v6x48"]
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_b5mkl")
+shader = ExtResource("2_8pipm")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.5
+shader_parameter/resolution = Vector2i(320, 240)
+shader_parameter/albedo = SubResource("CanvasTexture_v6x48")

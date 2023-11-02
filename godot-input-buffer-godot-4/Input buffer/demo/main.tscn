@@ -1,0 +1,737 @@
+[gd_scene load_steps=40 format=2]
+
+[ext_resource path="res://demo/obstacles/cactus_clump.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo/cloud.tscn" type="PackedScene" id=2]
+[ext_resource path="res://demo/obstacles/cactus.tscn" type="PackedScene" id=3]
+[ext_resource path="res://demo/obstacles/pterodactyl.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/obstacles/cactus_baby.tscn" type="PackedScene" id=5]
+[ext_resource path="res://demo/Treadmill.cs" type="Script" id=6]
+[ext_resource path="res://demo/PressStart2P-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://demo/sfx/die.wav" type="AudioStream" id=8]
+[ext_resource path="res://demo/sfx/jump.wav" type="AudioStream" id=9]
+[ext_resource path="res://demo/offline-sprite-2x.png" type="Texture" id=10]
+[ext_resource path="res://demo/sfx/point.wav" type="AudioStream" id=11]
+[ext_resource path="res://demo/ui/Score.cs" type="Script" id=12]
+[ext_resource path="res://demo/ui/HighScore.cs" type="Script" id=13]
+[ext_resource path="res://demo/DinoGameAnimator.cs" type="Script" id=14]
+[ext_resource path="res://demo/Dino.cs" type="Script" id=15]
+[ext_resource path="res://demo/ui/GameOverMessage.cs" type="Script" id=16]
+[ext_resource path="res://demo/Ground.cs" type="Script" id=17]
+[ext_resource path="res://demo/BufferControl.cs" type="Script" id=18]
+
+[sub_resource type="Animation" id=13]
+resource_name = "Intro animation"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Curtain:polygon")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ PoolVector2Array( -734, 0, 100, 0, 100, 600, -734, 600 ), PoolVector2Array( 0, 0, 100, 0, 100, 600, 0, 600 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Dino:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 144, 220 ), Vector2( 154, 220 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Treadmill")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Start"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Curtain:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 923, 0 ), Vector2( 1750, 0 ) ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("Cloud 1")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Start"
+} ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("Cloud 2")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Start"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("Cloud 3")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Start"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("UI/Score container/Current score")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Start"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Curtain:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 1.54929, 101.546, 2400.26, 38.3509 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 1200, 8.5 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 49.75, 299.75 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 50 )
+
+[sub_resource type="Animation" id=18]
+resource_name = "Die"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 1690.2, 0, 87.8, 99.248 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 53.316, 10 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "Ducking"
+length = 0.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Rect2( 1866.2, 0, 120, 99.248 ), Rect2( 1984.28, 0, 120, 99.248 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Regular hitbox/Hitbox shape:shape")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ SubResource( 10 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Regular hitbox/Hitbox shape:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1, 38 ) ]
+}
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 1337.9, 0, 87.8, 99.248 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Idle + Jump"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ SubResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 1337.9, 0, 87.8, 99.248 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Regular hitbox/Hitbox shape:shape")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ SubResource( 2 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Regular hitbox/Hitbox shape:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Regular hitbox/Hitbox shape:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Regular hitbox/Hitbox shape:shape")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ SubResource( 2 ) ]
+}
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 1514.3, 0, 86.632, 100 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 1602.4, 0, 86.632, 100 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Run"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ SubResource( 1 ), SubResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Rect2( 1514.3, 0, 86.632, 100 ), Rect2( 1602.4, 0, 86.632, 100 ) ]
+}
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 952.344, 24.2983, 386.656, 33.7017 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 1.5369, 1.25722, 73.0468, 65.6811 )
+
+[sub_resource type="DynamicFont" id=21]
+size = 24
+font_data = ExtResource( 7 )
+
+[sub_resource type="Animation" id=22]
+resource_name = "Reveal"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Buffer control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=17]
+size = 24
+font_data = ExtResource( 7 )
+
+[sub_resource type="Animation" id=20]
+resource_name = "Blink"
+length = 2.0
+step = 0.27
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:_updating")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.27, 0.54, 0.81, 1.08, 1.35, 1.62, 1.89, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.27, 0.54, 0.81, 1.08, 1.35, 1.62, 1.89, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("Milestone sound effect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 11 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("Milestone sound effect")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+
+[node name="Root" type="Node"]
+
+[node name="Intro animator" type="AnimationPlayer" parent="."]
+"anims/Intro animation" = SubResource( 13 )
+anims/RESET = SubResource( 15 )
+script = ExtResource( 14 )
+
+[node name="Treadmill" type="Node2D" parent="."]
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_description_": ""
+}
+_initialSpeed = 800.0
+_acceleration = 10.0
+_groundPath1 = NodePath("Ground 1")
+_groundPath2 = NodePath("Ground 2")
+
+[node name="Ground 1" type="Sprite" parent="Treadmill"]
+position = Vector2( 100, 251 )
+texture = SubResource( 3 )
+centered = false
+script = ExtResource( 17 )
+_cactus = ExtResource( 3 )
+_cactusClump = ExtResource( 1 )
+_cactusBaby = ExtResource( 5 )
+_pterodactyl = ExtResource( 4 )
+_otherGroundPath = NodePath("../Ground 2")
+
+[node name="Physics hitbox" type="StaticBody2D" parent="Treadmill/Ground 1"]
+position = Vector2( 1199, 28 )
+__meta__ = {
+"_editor_description_": "Used to stop the dino from falling through the ground"
+}
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Treadmill/Ground 1/Physics hitbox"]
+shape = SubResource( 8 )
+
+[node name="Orientation hitbox" type="Area2D" parent="Treadmill/Ground 1"]
+position = Vector2( 1199, 28 )
+collision_layer = 0
+collision_mask = 4
+__meta__ = {
+"_editor_description_": "Used to detect leaving the screen"
+}
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Treadmill/Ground 1/Orientation hitbox"]
+shape = SubResource( 8 )
+
+[node name="Ground 2" type="Sprite" parent="Treadmill"]
+position = Vector2( 2500, 251 )
+texture = SubResource( 3 )
+centered = false
+script = ExtResource( 17 )
+_cactus = ExtResource( 3 )
+_cactusClump = ExtResource( 1 )
+_cactusBaby = ExtResource( 5 )
+_pterodactyl = ExtResource( 4 )
+_initialObstaclePos = 400
+_otherGroundPath = NodePath("../Ground 1")
+
+[node name="Physics hitbox" type="StaticBody2D" parent="Treadmill/Ground 2"]
+position = Vector2( 1199, 28 )
+__meta__ = {
+"_editor_description_": "Used to stop the dino from falling through the ground"
+}
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Treadmill/Ground 2/Physics hitbox"]
+shape = SubResource( 8 )
+
+[node name="Orientation hitbox" type="Area2D" parent="Treadmill/Ground 2"]
+position = Vector2( 1199, 28 )
+collision_layer = 0
+collision_mask = 4
+__meta__ = {
+"_editor_description_": "Used to detect leaving the screen"
+}
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Treadmill/Ground 2/Orientation hitbox"]
+shape = SubResource( 8 )
+
+[node name="Cloud 1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 401, 127 )
+_respawnPointPath = NodePath("../Cloud respawn position")
+
+[node name="Cloud 2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 783, 71 )
+_respawnPointPath = NodePath("../Cloud respawn position")
+
+[node name="Cloud 3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1072, 151 )
+_respawnPointPath = NodePath("../Cloud respawn position")
+
+[node name="Cloud respawn position" type="Position2D" parent="."]
+position = Vector2( 1072, 20 )
+
+[node name="Left edge" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( 0, 0, 100, 0, 100, 600, 0, 600 )
+
+[node name="Hitbox" type="Area2D" parent="Left edge"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Left edge/Hitbox"]
+position = Vector2( 50.25, 300.25 )
+shape = SubResource( 9 )
+
+[node name="Right edge" type="Polygon2D" parent="."]
+position = Vector2( 924, 0 )
+polygon = PoolVector2Array( 0, 0, 100, 0, 100, 600, 0, 600 )
+
+[node name="Dino" type="KinematicBody2D" parent="."]
+position = Vector2( 144, 220 )
+script = ExtResource( 15 )
+_animation_player_path = NodePath("Animator")
+_regularHitboxPath = NodePath("Regular hitbox/Hitbox shape")
+_duckingHitboxPath = NodePath("Ducking hitbox/Hitbox shape")
+_audioPath = NodePath("Jump sound")
+_regularGravity = 3600.0
+_shortHopGravity = 7200.0
+_initialJumpSpeed = 1100.0
+
+[node name="Ground hitbox" type="CollisionShape2D" parent="Dino"]
+shape = SubResource( 2 )
+
+[node name="Dino sprite" type="Sprite" parent="Dino"]
+texture = ExtResource( 10 )
+region_enabled = true
+region_rect = Rect2( 1690.2, 0, 87.8, 99.248 )
+
+[node name="Animator" type="AnimationPlayer" parent="Dino"]
+root_node = NodePath("../Dino sprite")
+autoplay = "Idle + Jump"
+anims/Die = SubResource( 18 )
+anims/Ducking = SubResource( 11 )
+"anims/Idle + Jump" = SubResource( 4 )
+anims/RESET = SubResource( 12 )
+anims/Run = SubResource( 5 )
+
+[node name="Regular hitbox" type="Area2D" parent="Dino"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Dino/Regular hitbox"]
+shape = SubResource( 2 )
+
+[node name="Ducking hitbox" type="Area2D" parent="Dino"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Hitbox shape" type="CollisionShape2D" parent="Dino/Ducking hitbox"]
+position = Vector2( 0, 40 )
+shape = SubResource( 10 )
+disabled = true
+
+[node name="Jump sound" type="AudioStreamPlayer" parent="Dino"]
+stream = ExtResource( 9 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="Game over screen" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource( 16 )
+_retryButtonPath = NodePath("Retry button")
+_audioPath = NodePath("Death sound")
+
+[node name="Message" type="TextureRect" parent="UI/Game over screen"]
+anchor_right = 1.0
+anchor_bottom = 0.357
+margin_bottom = -0.200012
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 189, 13 )
+texture = SubResource( 16 )
+stretch_mode = 4
+
+[node name="Retry button" type="TextureButton" parent="UI/Game over screen"]
+anchor_left = 0.5
+anchor_top = 0.302
+anchor_right = 0.5
+anchor_bottom = 0.302
+margin_left = -35.0
+margin_top = -20.0
+margin_right = 35.0
+margin_bottom = 24.8
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource( 19 )
+
+[node name="Death sound" type="AudioStreamPlayer" parent="UI/Game over screen"]
+stream = ExtResource( 8 )
+
+[node name="Buffer control container" type="HBoxContainer" parent="UI"]
+margin_left = 13.0
+margin_top = 10.0
+margin_bottom = 55.0
+
+[node name="Buffer control" type="Label" parent="UI/Buffer control container"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 10.0
+margin_right = 288.0
+margin_bottom = 34.0
+custom_colors/font_color = Color( 0.458824, 0.458824, 0.458824, 1 )
+custom_fonts/font = SubResource( 21 )
+text = "Buffer is ON"
+script = ExtResource( 18 )
+_animatorPath = NodePath("../Reveal animation")
+
+[node name="Reveal animation" type="AnimationPlayer" parent="UI/Buffer control container"]
+anims/Reveal = SubResource( 22 )
+
+[node name="Score container" type="HBoxContainer" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -361.0
+margin_top = 10.0
+margin_right = -13.0
+margin_bottom = 55.0
+grow_horizontal = 0
+
+[node name="High score" type="Label" parent="UI/Score container"]
+margin_top = 10.0
+margin_right = 192.0
+margin_bottom = 34.0
+rect_pivot_offset = Vector2( -1137, 242 )
+size_flags_horizontal = 6
+custom_colors/font_color = Color( 0.458824, 0.458824, 0.458824, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "HI 00000"
+script = ExtResource( 13 )
+_scoreNodePath = NodePath("../Current score")
+
+[node name="Current score" type="Label" parent="UI/Score container"]
+margin_left = 214.0
+margin_top = 10.0
+margin_right = 334.0
+margin_bottom = 34.0
+size_flags_horizontal = 6
+custom_colors/font_color = Color( 0.32549, 0.32549, 0.32549, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "00000"
+align = 2
+script = ExtResource( 12 )
+_pterodactylMilestone = 450.0
+_animationPlayerPath = NodePath("Blink animation")
+_blinkTimerPath = NodePath("Blink timer")
+_pterodactylTimerPath = NodePath("Pterodactyl timer")
+
+[node name="Blink animation" type="AnimationPlayer" parent="UI/Score container/Current score"]
+anims/Blink = SubResource( 20 )
+
+[node name="Blink timer" type="Timer" parent="UI/Score container/Current score"]
+
+[node name="Pterodactyl timer" type="Timer" parent="UI/Score container/Current score"]
+
+[node name="Milestone sound effect" type="AudioStreamPlayer" parent="UI/Score container/Current score"]
+stream = ExtResource( 11 )
+volume_db = -15.67
+
+[node name="Curtain" type="Polygon2D" parent="."]
+visible = false
+position = Vector2( 1750, 0 )
+polygon = PoolVector2Array( -734, 0, 100, 0, 100, 600, -734, 600 )
+
+[connection signal="area_exited" from="Treadmill/Ground 1/Orientation hitbox" to="Treadmill/Ground 1" method="_on_Area2D_area_exited"]
+[connection signal="area_exited" from="Treadmill/Ground 2/Orientation hitbox" to="Treadmill/Ground 2" method="_on_Area2D_area_exited"]
+[connection signal="GotHit" from="Dino" to="Treadmill" method="_on_Dino_GotHit"]
+[connection signal="GotHit" from="Dino" to="Cloud 1" method="_on_Dino_GotHit"]
+[connection signal="GotHit" from="Dino" to="Cloud 2" method="_on_Dino_GotHit"]
+[connection signal="GotHit" from="Dino" to="Cloud 3" method="_on_Dino_GotHit"]
+[connection signal="GotHit" from="Dino" to="UI/Game over screen" method="_on_Dino_GotHit"]
+[connection signal="GotHit" from="Dino" to="UI/Score container/High score" method="_on_Dino_GotHit"]
+[connection signal="GotHit" from="Dino" to="UI/Score container/Current score" method="_on_Dino_GotHit"]
+[connection signal="IntroJumpFinished" from="Dino" to="Intro animator" method="_on_Dino_IntroJumpFinished"]
+[connection signal="area_entered" from="Dino/Regular hitbox" to="Dino" method="_on_Regular_hitbox_area_entered"]
+[connection signal="area_entered" from="Dino/Ducking hitbox" to="Dino" method="_on_Ducking_hitbox_area_entered"]
+[connection signal="pressed" from="UI/Game over screen/Retry button" to="Intro animator" method="_on_Retry_button_pressed"]
+[connection signal="pressed" from="UI/Game over screen/Retry button" to="Treadmill" method="_on_Retry_button_pressed"]
+[connection signal="pressed" from="UI/Game over screen/Retry button" to="Treadmill/Ground 1" method="_on_Retry_button_pressed"]
+[connection signal="pressed" from="UI/Game over screen/Retry button" to="Treadmill/Ground 2" method="_on_Retry_button_pressed"]
+[connection signal="pressed" from="UI/Game over screen/Retry button" to="Dino" method="_on_Retry_button_pressed"]
+[connection signal="pressed" from="UI/Game over screen/Retry button" to="UI/Game over screen" method="_on_Retry_button_pressed"]
+[connection signal="BufferToggled" from="UI/Buffer control container/Buffer control" to="Dino" method="_on_Buffer_control_BufferToggled"]
+[connection signal="PterodactylTime" from="UI/Score container/Current score" to="Treadmill/Ground 1" method="_on_Current_score_PterodactylTime"]
+[connection signal="timeout" from="UI/Score container/Current score/Blink timer" to="UI/Score container/Current score" method="_on_Blink_timer_timeout"]
+[connection signal="timeout" from="UI/Score container/Current score/Pterodactyl timer" to="UI/Score container/Current score" method="_on_Pterodactyl_timer_timeout"]

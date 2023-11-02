@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cyytttb28bncb"]
+
+[ext_resource type="Texture2D" uid="uid://02wkt312ifl3" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="1_ropn6"]
+[ext_resource type="Material" uid="uid://bnwgd26lgv7mc" path="res://Shaders/OUTLINE.tres" id="2_4rtmj"]
+
+[resource]
+next_pass = ExtResource("2_4rtmj")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_ropn6")
+metallic_specular = 0.0
+roughness = 0.0
+uv1_triplanar = true
+uv1_world_triplanar = true

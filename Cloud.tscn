@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://dat7rrc8lut1h"]
+
+[ext_resource type="ArrayMesh" uid="uid://oi8g8hsadpwn" path="res://FX/Cloud.obj" id="1_toron"]
+[ext_resource type="Shader" path="res://Shaders/Testing.gdshader" id="3_hrnh4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ox72w"]
+render_priority = 0
+shader = ExtResource("3_hrnh4")
+shader_parameter/offset = 1.085
+shader_parameter/up = true
+shader_parameter/borderColor = Color(1, 1, 0, 1)
+shader_parameter/borderHeight = 0.1
+shader_parameter/emissionIntensity = 0.0
+shader_parameter/blendUVScale = Vector2(1, 1.075)
+shader_parameter/textureUVScale = Vector2(1, 1)
+
+[sub_resource type="Animation" id="Animation_rpsxx"]
+resource_name = "CloudAnim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/0:uv1_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -0.24, 0), Vector3(0.3, 0.68, 1.195)]
+}
+
+[sub_resource type="Animation" id="Animation_i5b1o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/0:uv1_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2.52, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3vq3g"]
+_data = {
+"CloudAnim": SubResource("Animation_rpsxx"),
+"RESET": SubResource("Animation_i5b1o")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_toron")
+surface_material_override/0 = SubResource("ShaderMaterial_ox72w")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_process_mode = 0
+libraries = {
+"": SubResource("AnimationLibrary_3vq3g")
+}

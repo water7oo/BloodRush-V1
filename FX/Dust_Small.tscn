@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb6yob33ggvf2"]
+
+[ext_resource type="Material" uid="uid://bowys8lhliu03" path="res://FX/Dust_Small.tres" id="1_23rah"]
+[ext_resource type="Material" uid="uid://cx0dsad2my6ud" path="res://Shaders/Dust.tres" id="2_u2kps"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_fnqrm"]
+material = ExtResource("2_u2kps")
+radius = 0.2
+height = 0.4
+
+[node name="DUST" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
+amount = 3
+lifetime = 0.32
+speed_scale = 0.5
+explosiveness = 0.22
+trail_lifetime = 0.86
+process_material = ExtResource("1_23rah")
+draw_pass_1 = SubResource("SphereMesh_fnqrm")

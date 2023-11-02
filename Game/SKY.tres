@@ -1,0 +1,18 @@
+[gd_resource type="Sky" load_steps=3 format=3 uid="uid://ddor6rirpkfi1"]
+
+[ext_resource type="Texture2D" uid="uid://d7b2dg3gyp3k" path="res://My Textures/Sky Texture_Game.png" id="1_36quu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1opr"]
+sky_top_color = Color(0, 0.27451, 0.780392, 1)
+sky_horizon_color = Color(0, 0.8, 1, 1)
+sky_curve = 0.106066
+sky_energy_multiplier = 1.2
+sky_cover = ExtResource("1_36quu")
+ground_bottom_color = Color(0, 0.254902, 0.8, 1)
+ground_horizon_color = Color(0.309804, 0.85098, 1, 1)
+ground_curve = 0.278576
+ground_energy_multiplier = 1.2
+sun_curve = 0.0549033
+
+[resource]
+sky_material = SubResource("ProceduralSkyMaterial_l1opr")

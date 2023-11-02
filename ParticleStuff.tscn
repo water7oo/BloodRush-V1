@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://br55wm47enc0v"]
+
+[ext_resource type="Texture2D" uid="uid://diq33s0pjvodl" path="res://addons/kenney_particle_pack/FireBall.png" id="1_1iipr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5n8xe"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_1iipr")
+uv1_triplanar = true
+uv1_triplanar_sharpness = 0.210224
+billboard_mode = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0foly"]
+lifetime_randomness = 1.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+damping_min = 10.0
+damping_max = 10.0
+scale_min = 10.0
+scale_max = 10.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_75s4b"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_5n8xe")
+amount = 15
+lifetime = 0.8
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_0foly")
+draw_pass_1 = SubResource("QuadMesh_75s4b")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://6lbhjqxiurkw"]
+
+[ext_resource type="Shader" path="res://Shaders/Testing.gdshader" id="1_l40kx"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_oer2c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qdtla"]
+render_priority = 0
+shader = ExtResource("1_l40kx")
+shader_parameter/offset = 0.0
+shader_parameter/up = true
+shader_parameter/borderColor = Color(1, 1, 0, 1)
+shader_parameter/borderHeight = 0.1
+shader_parameter/emissionIntensity = 1.0
+shader_parameter/blendUVScale = Vector2(1, 1)
+shader_parameter/textureUVScale = Vector2(1, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_oer2c")
+surface_material_override/0 = SubResource("ShaderMaterial_qdtla")

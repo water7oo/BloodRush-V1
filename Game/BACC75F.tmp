@@ -1,0 +1,272 @@
+[gd_scene load_steps=26 format=3 uid="uid://6t7iwo1h1tjj"]
+
+[ext_resource type="Texture2D" uid="uid://d7b2dg3gyp3k" path="res://My Textures/Sky Texture_Game.png" id="1_84pr5"]
+[ext_resource type="Material" uid="uid://cyytttb28bncb" path="res://Game/Enviroment.tres" id="2_n6qj1"]
+[ext_resource type="Texture2D" uid="uid://bknh5febfwrw6" path="res://addons/kenney_prototype_textures/dark/texture_13.png" id="2_pijav"]
+[ext_resource type="Texture2D" uid="uid://hp6fmk1pv6lj" path="res://addons/kenney_prototype_textures/orange/texture_01.png" id="4_30xpy"]
+[ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="5_ci5fn"]
+[ext_resource type="PackedScene" uid="uid://bkxvu1n28r078" path="res://FX/game_effects.tscn" id="5_g2thr"]
+[ext_resource type="Shader" path="res://Shaders/BACKUP_GAMESCENE.gdshader" id="6_tf5ju"]
+[ext_resource type="PackedScene" uid="uid://cubsoivnpe88k" path="res://Player/cowboy_player_animations.tscn" id="7_i55g6"]
+[ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://ENEMY.tscn" id="8_1cpvw"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_61fb2"]
+sky_top_color = Color(0, 0.760784, 0.972549, 1)
+sky_horizon_color = Color(0.12549, 0.580392, 0.721569, 1)
+sky_curve = 0.00190374
+sky_energy_multiplier = 0.6
+sky_cover = ExtResource("1_84pr5")
+ground_bottom_color = Color(0.172549, 0, 0.8, 1)
+ground_horizon_color = Color(0, 0.686, 0.98, 1)
+ground_curve = 0.320003
+ground_energy_multiplier = 0.5
+
+[sub_resource type="Sky" id="Sky_w07aw"]
+sky_material = SubResource("ProceduralSkyMaterial_61fb2")
+
+[sub_resource type="Environment" id="Environment_wv40e"]
+background_mode = 2
+background_color = Color(0, 0.298039, 0.584314, 1)
+sky = SubResource("Sky_w07aw")
+fog_light_energy = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cu2d2"]
+albedo_texture = ExtResource("2_pijav")
+
+[sub_resource type="BoxMesh" id="BoxMesh_emcrd"]
+material = ExtResource("2_n6qj1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3np0w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o45h3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kas5q"]
+albedo_texture = ExtResource("4_30xpy")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n4dft"]
+
+[sub_resource type="Animation" id="Animation_hkg8v"]
+resource_name = "Landing_strong_001|CircleAction_002"
+length = 0.3
+tracks/0/type = "scale_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Landing_strong_001")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 1.802, 1.802, 2.00527, 0.0333333, 1, 20.9917, 20.9917, 14.1426, 0.0666667, 1, 46.6833, 46.6833, 15.3944, 0.1, 1, 68.2889, 68.2889, 16.2914, 0.133333, 1, 85.857, 85.857, 16.8927, 0.166667, 1, 99.4365, 99.4365, 17.2574, 0.2, 1, 109.076, 109.076, 17.4447, 0.233333, 1, 114.824, 114.824, 17.5137, 0.266667, 1, 116.729, 116.729, 17.5235, 0.3, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_fvhi0"]
+resource_name = "Landing_strong_001|IcosphereAction"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "scale_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Landing_strong_001")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 89.9758, 90.9848, 37.1269, 0.0333333, 1, 89.8984, 90.8756, 37.4329, 0.0666667, 1, 89.8211, 90.5566, 38.327, 0.1, 1, 89.6346, 90.0403, 39.7737, 0.133333, 1, 89.3815, 89.3396, 41.7373, 0.166667, 1, 89.0664, 88.4671, 44.1821, 0.2, 1, 88.6938, 87.4357, 47.0724, 0.233333, 1, 88.2685, 86.2579, 50.3728, 0.266667, 1, 87.7948, 84.9466, 54.0474, 0.3, 1, 87.2775, 83.5144, 58.0606, 0.333333, 1, 86.7212, 81.9741, 62.3769, 0.366667, 1, 86.1304, 80.3383, 66.9605, 0.4, 1, 85.5098, 78.6199, 71.7758, 0.433333, 1, 84.8638, 76.8316, 76.7872, 0.466667, 1, 84.1972, 74.9859, 81.959, 0.5, 1, 83.5145, 73.0958, 87.2555, 0.666667, 1, 80.0207, 63.4225, 114.362, 0.7, 1, 79.338, 61.5323, 119.659, 0.733333, 1, 78.6714, 59.6867, 124.83, 0.766667, 1, 78.0254, 57.8983, 129.842, 0.8, 1, 77.4048, 56.1799, 134.657, 0.833333, 1, 76.814, 54.5442, 139.241, 0.866667, 1, 76.2576, 53.0039, 143.557, 0.9, 1, 75.7404, 51.5717, 147.57, 0.933333, 1, 75.2667, 50.2604, 151.245, 0.966667, 1, 74.8413, 49.0826, 154.545, 1, 1, 74.4688, 48.0511, 157.435, 1.03333, 1, 74.1537, 47.1787, 159.88, 1.06667, 1, 73.9006, 46.478, 161.844, 1.1, 1, 73.7141, 45.9617, 163.29, 1.13333, 1, 73.6368, 45.6426, 164.185, 1.16667, 1, 73.5594, 45.5334, 164.491, 1.2, 1, 73.8649, 45.833, 163.796, 1.23333, 1, 74.748, 46.699, 161.787, 1.26667, 1, 76.1583, 48.0822, 158.58, 1.3, 1, 78.0458, 49.9332, 154.287, 1.33333, 1, 80.3601, 52.2029, 149.023, 1.36667, 1, 83.0511, 54.842, 142.903, 1.4, 1, 86.0686, 57.8012, 136.04, 1.43333, 1, 89.3622, 61.0313, 128.549, 1.46667, 1, 92.8818, 64.483, 120.544, 1.5, 1, 96.5772, 68.1071, 112.139, 1.53333, 1, 100.398, 71.8543, 103.449, 1.63333, 1, 112.112, 83.3422, 76.8068, 1.66667, 1, 115.933, 87.0894, 68.1165, 1.7, 1, 119.629, 90.7135, 59.7117, 1.73333, 1, 123.148, 94.1652, 51.7067, 1.76667, 1, 126.442, 97.3953, 44.2157, 1.8, 1, 129.459, 100.355, 37.3529, 1.83333, 1, 132.15, 102.994, 31.2325, 1.86667, 1, 134.465, 105.263, 25.9688, 1.9, 1, 136.352, 107.114, 21.676, 1.93333, 1, 137.762, 108.497, 18.4683, 1.96667, 1, 138.645, 109.363, 16.4599, 2, 1, 138.951, 109.663, 15.7651)
+
+[sub_resource type="Animation" id="Animation_hfiwk"]
+resource_name = "Landing_strong_001|Icosphere_001Action"
+length = 3.76667
+loop_mode = 1
+tracks/0/type = "scale_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Landing_strong_001")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 31.459, 31.459, 31.459, 0.0333333, 1, 32.1466, 32.1466, 32.1466, 0.0666667, 1, 34.0971, 34.0971, 34.0971, 0.1, 1, 37.1422, 37.1422, 37.1422, 0.133333, 1, 41.1134, 41.1134, 41.1134, 0.166667, 1, 45.8424, 45.8424, 45.8424, 0.2, 1, 51.1607, 51.1607, 51.1607, 0.233333, 1, 56.9, 56.9, 56.9, 0.266667, 1, 62.8919, 62.8919, 62.8919, 0.3, 1, 68.968, 68.968, 68.968, 0.333333, 1, 74.9599, 74.9599, 74.9599, 0.366667, 1, 80.6992, 80.6992, 80.6992, 0.4, 1, 86.0175, 86.0175, 86.0175, 0.433333, 1, 90.7465, 90.7465, 90.7465, 0.466667, 1, 94.7177, 94.7177, 94.7177, 0.5, 1, 97.7627, 97.7627, 97.7627, 0.533333, 1, 99.7132, 99.7132, 99.7132, 0.566667, 1, 100.401, 100.401, 100.401, 0.666667, 1, 100.113, 100.113, 100.113, 0.7, 1, 99.8924, 99.8924, 99.8924, 0.733333, 1, 99.6121, 99.6121, 99.6121, 0.766667, 1, 99.2733, 99.2733, 99.2733, 0.8, 1, 98.8772, 98.8772, 98.8772, 0.833333, 1, 98.4254, 98.4254, 98.4254, 0.866667, 1, 97.919, 97.919, 97.919, 0.9, 1, 97.3596, 97.3596, 97.3596, 0.933333, 1, 96.7483, 96.7483, 96.7483, 0.966667, 1, 96.0867, 96.0867, 96.0867, 1, 1, 95.3761, 95.3761, 95.3761, 1.03333, 1, 94.6178, 94.6178, 94.6178, 1.06667, 1, 93.8133, 93.8133, 93.8133, 1.1, 1, 92.9637, 92.9637, 92.9637, 1.13333, 1, 92.0706, 92.0706, 92.0706, 1.16667, 1, 91.1353, 91.1353, 91.1353, 1.2, 1, 90.1592, 90.1592, 90.1592, 1.23333, 1, 89.1435, 89.1435, 89.1435, 1.26667, 1, 88.0897, 88.0897, 88.0897, 1.3, 1, 86.9992, 86.9992, 86.9992, 1.33333, 1, 85.8732, 85.8732, 85.8732, 1.36667, 1, 84.7132, 84.7132, 84.7132, 1.4, 1, 83.5205, 83.5205, 83.5205, 1.43333, 1, 82.2965, 82.2965, 82.2965, 1.46667, 1, 81.0425, 81.0425, 81.0425, 1.5, 1, 79.76, 79.76, 79.76, 1.53333, 1, 78.4502, 78.4502, 78.4502, 1.56667, 1, 77.1145, 77.1145, 77.1145, 1.6, 1, 75.7543, 75.7543, 75.7543, 1.63333, 1, 74.371, 74.371, 74.371, 1.66667, 1, 72.9659, 72.9659, 72.9659, 1.7, 1, 71.5403, 71.5403, 71.5403, 1.73333, 1, 70.0957, 70.0957, 70.0957, 1.76667, 1, 68.6334, 68.6334, 68.6334, 1.8, 1, 67.1547, 67.1547, 67.1547, 1.86667, 1, 64.1538, 64.1538, 64.1538, 1.96667, 1, 59.564, 59.564, 59.564, 2.36667, 1, 40.8369, 40.8369, 40.8369, 2.43333, 1, 37.7665, 37.7665, 37.7665, 2.5, 1, 34.7397, 34.7397, 34.7397, 2.53333, 1, 33.2461, 33.2461, 33.2461, 2.56667, 1, 31.7675, 31.7675, 31.7675, 2.6, 1, 30.3051, 30.3051, 30.3051, 2.63333, 1, 28.8605, 28.8605, 28.8605, 2.66667, 1, 27.435, 27.435, 27.435, 2.7, 1, 26.0299, 26.0299, 26.0299, 2.73333, 1, 24.6465, 24.6465, 24.6465, 2.76667, 1, 23.2863, 23.2863, 23.2863, 2.8, 1, 21.9506, 21.9506, 21.9506, 2.83333, 1, 20.6409, 20.6409, 20.6409, 2.86667, 1, 19.3583, 19.3583, 19.3583, 2.9, 1, 18.1043, 18.1043, 18.1043, 2.93333, 1, 16.8803, 16.8803, 16.8803, 2.96667, 1, 15.6876, 15.6876, 15.6876, 3, 1, 14.5276, 14.5276, 14.5276, 3.03333, 1, 13.4017, 13.4017, 13.4017, 3.06667, 1, 12.3111, 12.3111, 12.3111, 3.1, 1, 11.2573, 11.2573, 11.2573, 3.13333, 1, 10.2417, 10.2417, 10.2417, 3.16667, 1, 9.26551, 9.26551, 9.26551, 3.2, 1, 8.3302, 8.3302, 8.3302, 3.23333, 1, 7.43711, 7.43711, 7.43711, 3.26667, 1, 6.58758, 6.58758, 6.58758, 3.3, 1, 5.78301, 5.78301, 5.78301, 3.33333, 1, 5.02474, 5.02474, 5.02474, 3.36667, 1, 4.3141, 4.3141, 4.3141, 3.4, 1, 3.6525, 3.6525, 3.6525, 3.43333, 1, 3.04129, 3.04129, 3.04129, 3.46667, 1, 2.48184, 2.48184, 2.48184, 3.5, 1, 1.9755, 1.9755, 1.9755, 3.53333, 1, 1.52359, 1.52359, 1.52359, 3.56667, 1, 1.12756, 1.12756, 1.12756, 3.6, 1, 0.788701, 0.788701, 0.788701, 3.63333, 1, 0.508416, 0.508416, 0.508416, 3.66667, 1, 0.288022, 0.288022, 0.288022, 3.7, 1, 0.128937, 0.128937, 0.128937, 3.73333, 1, 0.0324726, 0.0324726, 0.0324726, 3.76667, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_vsd8o"]
+resource_name = "Landing_strong_001|Icosphere_001Action_001"
+length = 3.76667
+loop_mode = 1
+tracks/0/type = "scale_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Landing_strong_001")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 31.459, 31.459, 31.459, 0.0333333, 1, 32.1466, 32.1466, 32.1466, 0.0666667, 1, 34.0971, 34.0971, 34.0971, 0.1, 1, 37.1422, 37.1422, 37.1422, 0.133333, 1, 41.1134, 41.1134, 41.1134, 0.166667, 1, 45.8424, 45.8424, 45.8424, 0.2, 1, 51.1607, 51.1607, 51.1607, 0.233333, 1, 56.9, 56.9, 56.9, 0.266667, 1, 62.8919, 62.8919, 62.8919, 0.3, 1, 68.968, 68.968, 68.968, 0.333333, 1, 74.9599, 74.9599, 74.9599, 0.366667, 1, 80.6992, 80.6992, 80.6992, 0.4, 1, 86.0175, 86.0175, 86.0175, 0.433333, 1, 90.7465, 90.7465, 90.7465, 0.466667, 1, 94.7177, 94.7177, 94.7177, 0.5, 1, 97.7627, 97.7627, 97.7627, 0.533333, 1, 99.7132, 99.7132, 99.7132, 0.566667, 1, 100.401, 100.401, 100.401, 0.666667, 1, 100.113, 100.113, 100.113, 0.7, 1, 99.8924, 99.8924, 99.8924, 0.733333, 1, 99.6121, 99.6121, 99.6121, 0.766667, 1, 99.2733, 99.2733, 99.2733, 0.8, 1, 98.8772, 98.8772, 98.8772, 0.833333, 1, 98.4254, 98.4254, 98.4254, 0.866667, 1, 97.919, 97.919, 97.919, 0.9, 1, 97.3596, 97.3596, 97.3596, 0.933333, 1, 96.7483, 96.7483, 96.7483, 0.966667, 1, 96.0867, 96.0867, 96.0867, 1, 1, 95.3761, 95.3761, 95.3761, 1.03333, 1, 94.6178, 94.6178, 94.6178, 1.06667, 1, 93.8133, 93.8133, 93.8133, 1.1, 1, 92.9637, 92.9637, 92.9637, 1.13333, 1, 92.0706, 92.0706, 92.0706, 1.16667, 1, 91.1353, 91.1353, 91.1353, 1.2, 1, 90.1592, 90.1592, 90.1592, 1.23333, 1, 89.1435, 89.1435, 89.1435, 1.26667, 1, 88.0897, 88.0897, 88.0897, 1.3, 1, 86.9992, 86.9992, 86.9992, 1.33333, 1, 85.8732, 85.8732, 85.8732, 1.36667, 1, 84.7132, 84.7132, 84.7132, 1.4, 1, 83.5205, 83.5205, 83.5205, 1.43333, 1, 82.2965, 82.2965, 82.2965, 1.46667, 1, 81.0425, 81.0425, 81.0425, 1.5, 1, 79.76, 79.76, 79.76, 1.53333, 1, 78.4502, 78.4502, 78.4502, 1.56667, 1, 77.1145, 77.1145, 77.1145, 1.6, 1, 75.7543, 75.7543, 75.7543, 1.63333, 1, 74.371, 74.371, 74.371, 1.66667, 1, 72.9659, 72.9659, 72.9659, 1.7, 1, 71.5403, 71.5403, 71.5403, 1.73333, 1, 70.0957, 70.0957, 70.0957, 1.76667, 1, 68.6334, 68.6334, 68.6334, 1.8, 1, 67.1547, 67.1547, 67.1547, 1.86667, 1, 64.1538, 64.1538, 64.1538, 1.96667, 1, 59.564, 59.564, 59.564, 2.36667, 1, 40.8369, 40.8369, 40.8369, 2.43333, 1, 37.7665, 37.7665, 37.7665, 2.5, 1, 34.7397, 34.7397, 34.7397, 2.53333, 1, 33.2461, 33.2461, 33.2461, 2.56667, 1, 31.7675, 31.7675, 31.7675, 2.6, 1, 30.3051, 30.3051, 30.3051, 2.63333, 1, 28.8605, 28.8605, 28.8605, 2.66667, 1, 27.435, 27.435, 27.435, 2.7, 1, 26.0299, 26.0299, 26.0299, 2.73333, 1, 24.6465, 24.6465, 24.6465, 2.76667, 1, 23.2863, 23.2863, 23.2863, 2.8, 1, 21.9506, 21.9506, 21.9506, 2.83333, 1, 20.6409, 20.6409, 20.6409, 2.86667, 1, 19.3583, 19.3583, 19.3583, 2.9, 1, 18.1043, 18.1043, 18.1043, 2.93333, 1, 16.8803, 16.8803, 16.8803, 2.96667, 1, 15.6876, 15.6876, 15.6876, 3, 1, 14.5276, 14.5276, 14.5276, 3.03333, 1, 13.4017, 13.4017, 13.4017, 3.06667, 1, 12.3111, 12.3111, 12.3111, 3.1, 1, 11.2573, 11.2573, 11.2573, 3.13333, 1, 10.2417, 10.2417, 10.2417, 3.16667, 1, 9.26551, 9.26551, 9.26551, 3.2, 1, 8.3302, 8.3302, 8.3302, 3.23333, 1, 7.43711, 7.43711, 7.43711, 3.26667, 1, 6.58758, 6.58758, 6.58758, 3.3, 1, 5.78301, 5.78301, 5.78301, 3.33333, 1, 5.02474, 5.02474, 5.02474, 3.36667, 1, 4.3141, 4.3141, 4.3141, 3.4, 1, 3.6525, 3.6525, 3.6525, 3.43333, 1, 3.04129, 3.04129, 3.04129, 3.46667, 1, 2.48184, 2.48184, 2.48184, 3.5, 1, 1.9755, 1.9755, 1.9755, 3.53333, 1, 1.52359, 1.52359, 1.52359, 3.56667, 1, 1.12756, 1.12756, 1.12756, 3.6, 1, 0.788701, 0.788701, 0.788701, 3.63333, 1, 0.508416, 0.508416, 0.508416, 3.66667, 1, 0.288022, 0.288022, 0.288022, 3.7, 1, 0.128937, 0.128937, 0.128937, 3.73333, 1, 0.0324726, 0.0324726, 0.0324726, 3.76667, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_xdm05"]
+resource_name = "Landing_strong_001|Icosphere_001Action_002"
+length = 0.0333333
+loop_mode = 1
+tracks/0/type = "scale_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Landing_strong_001")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 153.604, 153.604, 153.604)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eq2an"]
+_data = {
+"Landing_strong_001|CircleAction_002": SubResource("Animation_hkg8v"),
+"Landing_strong_001|IcosphereAction": SubResource("Animation_fvhi0"),
+"Landing_strong_001|Icosphere_001Action": SubResource("Animation_hfiwk"),
+"Landing_strong_001|Icosphere_001Action_001": SubResource("Animation_vsd8o"),
+"Landing_strong_001|Icosphere_001Action_002": SubResource("Animation_xdm05")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nw1s3"]
+shader = ExtResource("6_tf5ju")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.991761, 0.11094, -0.0640515, -2.68059e-05, 0.49982, 0.866129, 0.128103, 0.858995, -0.495699, -36.9978, 14.4752, -3.11399)
+shadow_bias = 0.0
+shadow_normal_bias = 2.977
+shadow_opacity = 0.6
+shadow_blur = 10.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wv40e")
+
+[node name="Level" type="Node3D" parent="."]
+transform = Transform3D(27.561, 0, 0, 0, 2, 0, 0, 0, 28.41, -17.3689, 2.89217, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(3.4473, 0, 0, 0, 19.927, 0, 0, 0, 6, -0.065011, -9.68852, -1.18823)
+material_override = SubResource("StandardMaterial3D_cu2d2")
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/Floor"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_3np0w")
+
+[node name="Block" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(1.286, 0, 0, 0, 7, 0, 0, 0, 0.426, 0.262074, 0.400744, -3.27265)
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/Block"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Block/StaticBody3D"]
+shape = SubResource("BoxShape3D_o45h3")
+
+[node name="WallJump1" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.2, 0, 0, 0, 14.618, 0, 0, 0, 0.335945, -0.185242, 4.43097, -2.32027)
+material_override = SubResource("StandardMaterial3D_kas5q")
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/WallJump1"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/WallJump1/StaticBody3D"]
+shape = SubResource("BoxShape3D_o45h3")
+
+[node name="WallJump2" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.2, 0, 0, 0, 14.618, 0, 0, 0, 0.335945, -0.185241, 4.43097, -1.53733)
+material_override = SubResource("StandardMaterial3D_kas5q")
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/WallJump2"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/WallJump2/StaticBody3D"]
+shape = SubResource("BoxShape3D_o45h3")
+
+[node name="Block4" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(0.835052, 0, 0, 0, 7.99999, 0, 0, 0, 0.277, -1.36828, -1.94023, -2.4069)
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/Block4"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Block4/StaticBody3D"]
+shape = SubResource("BoxShape3D_o45h3")
+
+[node name="Block2" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(1.278, 0, 0, 0, 5, 0, 0, 0, 0.424, -1.14294, -0.583869, -3.2361)
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/Block2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21067, 0)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Block2/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19852, 0)
+shape = SubResource("BoxShape3D_n4dft")
+
+[node name="Block3" type="MeshInstance3D" parent="Level"]
+transform = Transform3D(3.68873, 0, 0, 0, 30, 0, 0, 0, 0.830999, -0.174148, 13.7968, -3.84424)
+mesh = SubResource("BoxMesh_emcrd")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level/Block3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21067, 0)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Block3/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19852, 0)
+shape = SubResource("BoxShape3D_n4dft")
+
+[node name="JUMP_WAVE" parent="." groups=["Jump_wave"] instance=ExtResource("5_g2thr")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -30.4561, 4.82214, -48.7583)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="JUMP_WAVE"]
+playback_process_mode = 0
+libraries = {
+"": SubResource("AnimationLibrary_eq2an")
+}
+
+[node name="COWBOY_PLAYER_ANIMATIONS" parent="." instance=ExtResource("7_i55g6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.3786, 4.78811, -58.9991)
+
+[node name="DUST" parent="COWBOY_PLAYER_ANIMATIONS" groups=["dust_trail"] instance=ExtResource("5_ci5fn")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.282509)
+
+[node name="Enemy" parent="." instance=ExtResource("8_1cpvw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.4604, 3.62512, -65.2105)
+
+[node name="Button" type="Button" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_nw1s3")
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 14.0
+offset_bottom = 13.0
+scale = Vector2(3.74957, 2.60138)
+
+[node name="BP" type="ProgressBar" parent="."]
+visible = false
+offset_left = -31.0
+offset_top = 609.0
+offset_right = 467.0
+offset_bottom = 636.0
+step = 1.0
+value = 40.0
+show_percentage = false
+
+[node name="HP" type="ProgressBar" parent="."]
+visible = false
+offset_left = -27.0
+offset_top = 575.0
+offset_right = 462.0
+offset_bottom = 602.0
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

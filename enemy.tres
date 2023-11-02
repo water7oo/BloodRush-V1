@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://c4ltmqueby4jj"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_v47el"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7qcyo"]
+render_priority = 0
+shader = ExtResource("1_v47el")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 2.0
+
+[resource]
+next_pass = SubResource("ShaderMaterial_7qcyo")
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.898039, 0, 0.109804, 1)
+metallic_specular = 0.0
+roughness = 0.0
+heightmap_scale = 4.71
+uv2_triplanar_sharpness = 1.41421

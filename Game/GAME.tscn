@@ -1,0 +1,199 @@
+[gd_scene load_steps=15 format=3 uid="uid://bae3snvmbh3wq"]
+
+[ext_resource type="Sky" uid="uid://ddor6rirpkfi1" path="res://Game/SKY.tres" id="1_g7tt2"]
+[ext_resource type="PackedScene" uid="uid://dw617a6hk345q" path="res://FX/Wall_Jump_Wave.tscn" id="2_6xk0b"]
+[ext_resource type="PackedScene" uid="uid://cbq8qt8e0kba8" path="res://Cowboy_Player/bloodrush_player.tscn" id="4_ilyjr"]
+[ext_resource type="PackedScene" uid="uid://dat7rrc8lut1h" path="res://Cloud.tscn" id="4_nx6o8"]
+[ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="5_civpc"]
+[ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://ENEMY.tscn" id="6_v7yh1"]
+[ext_resource type="Shader" path="res://Shaders/BACKUP_GAMESCENE.gdshader" id="7_84g2o"]
+[ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="7_ct035"]
+[ext_resource type="Texture2D" uid="uid://dm1l58p4q676g" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="8_t76ax"]
+[ext_resource type="Material" uid="uid://cyytttb28bncb" path="res://Game/Enviroment.tres" id="9_mkqlw"]
+[ext_resource type="Material" uid="uid://t18do042j80c" path="res://Game/Enviroment2.tres" id="10_emdvm"]
+
+[sub_resource type="Environment" id="Environment_wv40e"]
+background_mode = 2
+background_color = Color(0, 0.298039, 0.584314, 1)
+sky = ExtResource("1_g7tt2")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 2
+ssil_radius = 16.0
+ssil_sharpness = 0.05
+fog_light_color = Color(1, 1, 1, 1)
+fog_light_energy = 0.0
+volumetric_fog_density = 0.1029
+volumetric_fog_emission = Color(0.843137, 0.843137, 0.843137, 1)
+volumetric_fog_emission_energy = 0.0
+adjustment_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5iw8"]
+albedo_texture = ExtResource("8_t76ax")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nw1s3"]
+shader = ExtResource("7_84g2o")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wv40e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.991761, 0.11094, -0.0640515, -2.68059e-05, 0.49982, 0.866129, 0.128103, 0.858995, -0.495699, -38.9514, 33.644, -99.0668)
+shadow_bias = 0.0
+shadow_opacity = 0.0
+shadow_blur = 10.0
+
+[node name="WALL_JUMP_WAVE" parent="." groups=["wall_wave"] instance=ExtResource("2_6xk0b")]
+transform = Transform3D(-0.8, 0, -6.99382e-08, 0, 0.8, 0, 6.99382e-08, 0, -0.8, -79.1074, 4.82214, 32.9291)
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="WALL_JUMP_WAVE"]
+
+[node name="Cloud" parent="." groups=["Jump_wave"] instance=ExtResource("4_nx6o8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.1365, 0, 19.8169)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.704314, 0, 0, 0, 0.704314, 0, 0, 0, 0.704314, 0, 0, 0)
+material_override = ExtResource("7_ct035")
+gi_mode = 0
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(51.7614, 0, 0, 0, 4.85673, 0, 0, 0, 22.1916, -22.867, -10.4354, -69.3973)
+material_override = SubResource("StandardMaterial3D_r5iw8")
+snap = 1.0
+size = Vector3(2.301, 5, 5)
+material = ExtResource("10_emdvm")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(51.7614, 0, 0, 0, -2.12294e-07, -22.1916, 0, 4.85673, -9.70026e-07, -22.867, 10.9302, -23.0708)
+material_override = SubResource("StandardMaterial3D_r5iw8")
+snap = 1.0
+size = Vector3(2.301, 5, 5)
+material = ExtResource("9_mkqlw")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.26256e-06, 4.85673, -9.70026e-07, 0, -2.12294e-07, -22.1916, -51.7614, -2.12294e-07, 1.5434e-13, 42.8397, 9.37227, -92.22)
+material_override = SubResource("StandardMaterial3D_r5iw8")
+snap = 1.0
+size = Vector3(2.301, 5, 5)
+material = ExtResource("9_mkqlw")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(9.95104e-08, 0, -89.5329, 0, 11.951, 0, 3.33902, 0, 4.06049e-06, -55.0239, 1.32652, -118.99)
+polygon = PackedVector2Array(-19, 0, -19, 1, 3, 1, 10, 0)
+material = ExtResource("9_mkqlw")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(3.33902, 0, 3.41121e-06, 0, 11.951, 0, -2.45463e-07, 0, 38.3009, -55.0239, 13.5457, -143.863)
+polygon = PackedVector2Array(-19, 0, -19, 1, 3, 1, 10, 0)
+material = ExtResource("9_mkqlw")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D" groups=["Wall"]]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -18.339, 2.26418, -51.346)
+size = Vector3(1.47829, 3.90548, 1.77128)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -49.4865, 10.0044, -129.688)
+size = Vector3(1.47829, 3.90548, 1.77128)
+material = ExtResource("10_emdvm")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -3.86795, 9.00613, -138.92)
+size = Vector3(2.06858, 3.90548, 2.45886)
+material = ExtResource("10_emdvm")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -39.4858, 13.1165, -116.47)
+size = Vector3(1.66232, 1.45769, 1.22549)
+material = ExtResource("10_emdvm")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(18.2621, 0, 0, 0, 1.6892, 0, 0, 0, 14.103, -60.9949, 0.394411, -51.346)
+operation = 2
+size = Vector3(1.47829, 3.90548, 1.77128)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 28.6964, 2.26418, -38.3492)
+size = Vector3(0.881142, 9.25327, 1.77128)
+material = ExtResource("10_emdvm")
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.18556e-07, -7.29758, 0, 4.99999, -3.18987e-07, 0, 0, 0, 8.91529, 2.37787, 25.6155, -34.8571)
+polygon = PackedVector2Array(0, -2, 0, 0, 1, 0, 1, 0)
+material = ExtResource("10_emdvm")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.6808e-07, -5, 0, 6.13295, -2.18557e-07, 0, 0, 0, 5, -20.6731, 15.5352, -38.3492)
+size = Vector3(4.92603, 9.25327, 2.16298)
+material = ExtResource("10_emdvm")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 9.62895, 2.26418, -39.4407)
+size = Vector3(2.94919, 9.3424, 1.77128)
+material = ExtResource("10_emdvm")
+
+[node name="Enemy" parent="." instance=ExtResource("6_v7yh1")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -24.3671, 2.03597, -52.5581)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="BLOODRUSH_PLAYER" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_ilyjr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3218, 2.14509, -39.5727)
+
+[node name="DUST" parent="SubViewportContainer/SubViewport/BLOODRUSH_PLAYER" groups=["dust_trail"] instance=ExtResource("5_civpc")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.282509)
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/BLOODRUSH_PLAYER" groups=["Cooldown"]]
+visible = false
+offset_left = 6.0
+offset_top = 329.0
+offset_right = 115.0
+offset_bottom = 355.0
+text = "Cooldown: 0.0"
+
+[node name="Control" type="Control" parent="SubViewportContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="SubViewportContainer/Control"]
+material = SubResource("ShaderMaterial_nw1s3")
+layout_mode = 0
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 14.0
+offset_bottom = 13.0
+scale = Vector2(3.74957, 2.60138)
+
+[node name="BP" type="ProgressBar" parent="SubViewportContainer/Control"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 599.0
+offset_right = 494.0
+offset_bottom = 626.0
+step = 1.0
+value = 40.0
+show_percentage = false
+
+[node name="HP" type="ProgressBar" parent="SubViewportContainer/Control"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 565.0
+offset_right = 484.0
+offset_bottom = 592.0
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[connection signal="area_entered" from="Enemy" to="SubViewportContainer/SubViewport/BLOODRUSH_PLAYER" method="_on_enemy_area_entered"]

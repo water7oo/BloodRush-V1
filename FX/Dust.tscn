@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://dq1wojfy8mi7q"]
+
+[ext_resource type="Material" uid="uid://cx0dsad2my6ud" path="res://Shaders/Dust.tres" id="1_nlbt2"]
+[ext_resource type="Shader" path="res://PS1.gdshader" id="1_upxlw"]
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="2_bd2qp"]
+
+[sub_resource type="Curve" id="Curve_0txrv"]
+min_value = 1.0
+max_value = 1.5
+_data = [Vector2(0, 1.40526), 0.0, 0.0, 0, 0, Vector2(0.53, 1.31579), -0.379437, -0.379437, 0, 0, Vector2(0.79, 1.01), -2.1, -2.1, 0, 0, Vector2(0.98, 0.347368), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_40vfr"]
+curve = SubResource("Curve_0txrv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4vu0"]
+lifetime_randomness = 1.0
+spread = 64.87
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 0.5
+angular_velocity_min = 1.0
+angular_velocity_max = 1.0
+linear_accel_min = 1.5
+linear_accel_max = 4.0
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_40vfr")
+turbulence_noise_strength = 0.03
+turbulence_noise_scale = 4.81
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3bxqy"]
+render_priority = 0
+shader = ExtResource("2_bd2qp")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_fo4xx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dgff"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_3bxqy")
+shader = ExtResource("1_upxlw")
+shader_parameter/jitter = 0.8
+shader_parameter/jitter_z_coordinate = true
+shader_parameter/jitter_depth_independent = true
+shader_parameter/affine_texture_mapping = true
+shader_parameter/alpha_scissor = 1.0
+shader_parameter/albedo = SubResource("CanvasTexture_fo4xx")
+
+[sub_resource type="SphereMesh" id="SphereMesh_fnqrm"]
+lightmap_size_hint = Vector2i(8, 5)
+material = SubResource("ShaderMaterial_6dgff")
+radius = 0.2
+height = 0.4
+radial_segments = 4
+rings = 2
+
+[node name="DUST" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("1_nlbt2")
+emitting = false
+amount = 50
+explosiveness = 0.03
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_x4vu0")
+draw_pass_1 = SubResource("SphereMesh_fnqrm")
