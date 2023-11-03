@@ -3,7 +3,7 @@
 [ext_resource type="Sky" uid="uid://ddor6rirpkfi1" path="res://Game/SKY.tres" id="1_g7tt2"]
 [ext_resource type="PackedScene" uid="uid://dw617a6hk345q" path="res://FX/Wall_Jump_Wave.tscn" id="2_6xk0b"]
 [ext_resource type="PackedScene" uid="uid://cbq8qt8e0kba8" path="res://Cowboy_Player/bloodrush_player.tscn" id="4_ilyjr"]
-[ext_resource type="PackedScene" uid="uid://dat7rrc8lut1h" path="res://Cloud.tscn" id="4_nx6o8"]
+[ext_resource type="PackedScene" uid="uid://dat7rrc8lut1h" path="res://FX/Cloud.tscn" id="4_nx6o8"]
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="5_civpc"]
 [ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://ENEMY.tscn" id="6_v7yh1"]
 [ext_resource type="Shader" path="res://Shaders/BACKUP_GAMESCENE.gdshader" id="7_84g2o"]

@@ -2,27 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dldw8n78c6t6h"
-path.s3tc="res://.godot/imported/Waves.png-12116b66b3a04cf25bdc69510a2b5aac.s3tc.ctex"
+uid="uid://c6xtb260800f1"
+path="res://.godot/imported/icon.png-2140f2c6df3447d19466b644ceb50e68.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://Waves.png"
-dest_files=["res://.godot/imported/Waves.png-12116b66b3a04cf25bdc69510a2b5aac.s3tc.ctex"]
+source_file="res://godot-git-plugin-master/icon.png"
+dest_files=["res://.godot/imported/icon.png-2140f2c6df3447d19466b644ceb50e68.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -32,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
