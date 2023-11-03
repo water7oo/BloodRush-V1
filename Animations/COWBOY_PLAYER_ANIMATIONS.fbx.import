@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bg66y4mudasf5"
-path="res://.godot/imported/PlaceHolder_SWORD.fbx-c3bf115440507232e492281d7506f04f.scn"
+uid="uid://86dy0l11wgef"
+path="res://.godot/imported/COWBOY_PLAYER_ANIMATIONS.fbx-74063d876a20aa6a7bc422a03232ccbf.scn"
 
 [deps]
 
-source_file="res://PlaceHolder_SWORD.fbx"
-dest_files=["res://.godot/imported/PlaceHolder_SWORD.fbx-c3bf115440507232e492281d7506f04f.scn"]
+source_file="res://Animations/COWBOY_PLAYER_ANIMATIONS.fbx"
+dest_files=["res://.godot/imported/COWBOY_PLAYER_ANIMATIONS.fbx-74063d876a20aa6a7bc422a03232ccbf.scn"]
 
 [params]
 
@@ -24,7 +24,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 skins/use_named_skins=true
 animation/import=true
-animation/fps=30
+animation/fps=60.0
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""

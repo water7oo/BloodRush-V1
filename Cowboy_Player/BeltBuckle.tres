@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cs65mwi5pk3ll"]
 
 [ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_07nw4"]
-[ext_resource type="Shader" path="res://PS1.gdshader" id="2_hi5rf"]
+[ext_resource type="Shader" path="res://Trash/PS1.gdshader" id="2_hi5rf"]
 [ext_resource type="Texture2D" uid="uid://0x2furgqq5vn" path="res://My Textures/Mori_Belt_Buckle.png" id="3_j36hi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dgr2l"]

@@ -1,9 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://cx1005bfhyg85"]
+[gd_scene load_steps=5 format=3 uid="uid://cx1005bfhyg85"]
 
-[ext_resource type="Material" uid="uid://ddlan0ctjeve2" path="res://Models/Player/place_holder_sword.tres" id="1_2fbie"]
+[ext_resource type="Shader" path="res://Shaders/TOON.gdshader" id="1_tl1g6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ssfxf"]
+render_priority = 0
+shader = ExtResource("1_tl1g6")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/clamp_diffuse_to_max = false
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.0
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = true
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = true
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_tnqus"]
-material = ExtResource("1_2fbie")
+material = SubResource("ShaderMaterial_ssfxf")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_bbrk1"]
 

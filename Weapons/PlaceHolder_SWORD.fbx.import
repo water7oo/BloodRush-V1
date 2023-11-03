@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://byhkmpw11hw6q"
-path="res://.godot/imported/GAMEPLAYER.fbx-451eb45ae863eefb10b5fcd76215c507.scn"
+uid="uid://bg66y4mudasf5"
+path="res://.godot/imported/PlaceHolder_SWORD.fbx-d7e1b4f7d9f3da691e68512a850598b0.scn"
 
 [deps]
 
-source_file="res://Models/GAMEPLAYER.fbx"
-dest_files=["res://.godot/imported/GAMEPLAYER.fbx-451eb45ae863eefb10b5fcd76215c507.scn"]
+source_file="res://Weapons/PlaceHolder_SWORD.fbx"
+dest_files=["res://.godot/imported/PlaceHolder_SWORD.fbx-d7e1b4f7d9f3da691e68512a850598b0.scn"]
 
 [params]
 

@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://cbq8qt8e0kba8" path="res://Cowboy_Player/bloodrush_player.tscn" id="4_ilyjr"]
 [ext_resource type="PackedScene" uid="uid://dat7rrc8lut1h" path="res://FX/Cloud.tscn" id="4_nx6o8"]
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="5_civpc"]
-[ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://ENEMY.tscn" id="6_v7yh1"]
-[ext_resource type="Shader" path="res://Shaders/BACKUP_GAMESCENE.gdshader" id="7_84g2o"]
+[ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://Enemy/ENEMY.tscn" id="6_v7yh1"]
 [ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="7_ct035"]
 [ext_resource type="Texture2D" uid="uid://dm1l58p4q676g" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="8_t76ax"]
 [ext_resource type="Material" uid="uid://cyytttb28bncb" path="res://Game/Enviroment.tres" id="9_mkqlw"]
 [ext_resource type="Material" uid="uid://t18do042j80c" path="res://Game/Enviroment2.tres" id="10_emdvm"]
+[ext_resource type="Shader" path="res://Trash/BACKUP_GAMESCENE.gdshader" id="11_o7w5l"]
 
 [sub_resource type="Environment" id="Environment_wv40e"]
 background_mode = 2
@@ -32,7 +32,7 @@ adjustment_enabled = true
 albedo_texture = ExtResource("8_t76ax")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nw1s3"]
-shader = ExtResource("7_84g2o")
+shader = ExtResource("11_o7w5l")
 
 [node name="Node3D" type="Node3D"]
 
@@ -156,14 +156,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3218, 2.14509, -39.5727)
 [node name="DUST" parent="SubViewportContainer/SubViewport/BLOODRUSH_PLAYER" groups=["dust_trail"] instance=ExtResource("5_civpc")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.282509)
 
-[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/BLOODRUSH_PLAYER" groups=["Cooldown"]]
-visible = false
-offset_left = 6.0
-offset_top = 329.0
-offset_right = 115.0
-offset_bottom = 355.0
-text = "Cooldown: 0.0"
-
 [node name="Control" type="Control" parent="SubViewportContainer"]
 layout_mode = 2
 
@@ -172,9 +164,16 @@ material = SubResource("ShaderMaterial_nw1s3")
 layout_mode = 0
 offset_left = 6.0
 offset_top = 5.0
-offset_right = 14.0
-offset_bottom = 13.0
+offset_right = 20.0
+offset_bottom = 23.0
 scale = Vector2(3.74957, 2.60138)
+
+[node name="Label" type="Label" parent="SubViewportContainer/Control" groups=["Cooldown"]]
+offset_left = 7.0
+offset_top = 539.0
+offset_right = 116.0
+offset_bottom = 565.0
+text = "Cooldown: 0.0"
 
 [node name="BP" type="ProgressBar" parent="SubViewportContainer/Control"]
 layout_mode = 0
