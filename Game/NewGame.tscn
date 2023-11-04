@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://ciyscyyb72708"]
+
+[ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
+[ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="2_tmod3"]
+[ext_resource type="PackedScene" uid="uid://5pxhd6apnvwv" path="res://Cowboy_Player/Cowboys_2nd.tscn" id="3_ajnbg"]
+
+[sub_resource type="Environment" id="Environment_tjwux"]
+background_mode = 2
+sky = ExtResource("1_f1vrp")
+adjustment_enabled = true
+adjustment_saturation = 1.54
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, 0, 0, 0)
+light_energy = 6.5
+shadow_enabled = true
+directional_shadow_split_2 = 0.506
+directional_shadow_split_3 = 0.222
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 2.1
+directional_shadow_pancake_size = 24.2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tjwux")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(6.9, 0, 0, 0, 1, 0, 0, 0, 3.9, 0, 0.171607, 0)
+material_override = ExtResource("2_tmod3")
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(5.2264, 0.0535513, 8.78831)
+
+[node name="Cowboy_2ndPass" parent="." instance=ExtResource("3_ajnbg")]
+transform = Transform3D(0.215, 0, 0, 0, 0.215, 0, 0, 0, 0.215, 1.04347, 0.24534, -0.294278)

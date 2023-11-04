@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cbq8qt8e0kba8" path="res://Cowboy_Player/bloodrush_player.tscn" id="4_yxe0k"]
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="5_ci5fn"]
 [ext_resource type="PackedScene" uid="uid://bkxvu1n28r078" path="res://FX/Jump_Wave.tscn" id="5_g2thr"]
-[ext_resource type="Shader" path="res://Shaders/BACKUP_GAMESCENE.gdshader" id="6_tf5ju"]
+[ext_resource type="Shader" path="res://Game/BACKUP_GAMESCENE.gdshader" id="6_tf5ju"]
 [ext_resource type="Texture2D" uid="uid://dm1l58p4q676g" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="7_y3ty2"]
-[ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://ENEMY.tscn" id="8_1cpvw"]
+[ext_resource type="PackedScene" uid="uid://c0a1ma1horcnm" path="res://Enemy/ENEMY.tscn" id="8_1cpvw"]
 [ext_resource type="Material" uid="uid://t18do042j80c" path="res://Game/Enviroment2.tres" id="9_m3vwk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_61fb2"]

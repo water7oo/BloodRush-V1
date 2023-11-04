@@ -1,0 +1,13 @@
+[gd_resource type="Sky" load_steps=3 format=3 uid="uid://cj0020bhxfxxp"]
+
+[ext_resource type="Texture2D" uid="uid://bht7sc261n00g" path="res://My Textures/Sky Texture_Game_Sunset.png" id="1_vyjq1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1opr"]
+sky_top_color = Color(0.498039, 0.423529, 0.454902, 1)
+sky_curve = 0.00437358
+sky_cover = ExtResource("1_vyjq1")
+ground_bottom_color = Color(0.0392157, 0.196078, 0.243137, 1)
+ground_horizon_color = Color(0.184314, 0.729412, 0.831373, 1)
+
+[resource]
+sky_material = SubResource("ProceduralSkyMaterial_l1opr")

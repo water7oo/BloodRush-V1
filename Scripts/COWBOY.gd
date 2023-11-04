@@ -239,7 +239,7 @@ func _physics_process(delta):
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
 
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
+#		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
@@ -271,15 +271,15 @@ func _physics_process(delta):
 		Hitbox.monitoring = true
 		
 		
-	$AnimationTree.set("parameters/conditions/IDLE", input_dir == Vector2.ZERO && is_on_floor())
-	$AnimationTree.set("parameters/conditions/Walk", input_dir != Vector2.ZERO && is_on_floor() && !is_sprinting)
-	$AnimationTree.set("parameters/conditions/RUN", input_dir != Vector2.ZERO && is_on_floor() && is_sprinting)
-	$AnimationTree.set("parameters/conditions/JumpAir", !is_on_floor() || Input.is_action_just_pressed("move_jump"))
-	$AnimationTree.set("parameters/conditions/SwordLight1", light_attack1 && is_on_floor())
-	$AnimationTree.set("parameters/conditions/SwordLight2", light_attack2 && is_on_floor())
-	$AnimationTree.set("parameters/conditions/MA1", medium_attack1 && is_on_floor())
-	$AnimationTree.set("parameters/conditions/Dashing", is_dodging && is_on_floor() && input_dir != Vector2.ZERO)
-	$AnimationTree.set("parameters/conditions/FallHard", air_time == 0.5 && is_on_floor() && !is_in_air)
+#	$AnimationTree.set("parameters/conditions/IDLE", input_dir == Vector2.ZERO && is_on_floor())
+#	$AnimationTree.set("parameters/conditions/Walk", input_dir != Vector2.ZERO && is_on_floor() && !is_sprinting)
+#	$AnimationTree.set("parameters/conditions/RUN", input_dir != Vector2.ZERO && is_on_floor() && is_sprinting)
+#	$AnimationTree.set("parameters/conditions/JumpAir", !is_on_floor() || Input.is_action_just_pressed("move_jump"))
+#	$AnimationTree.set("parameters/conditions/SwordLight1", light_attack1 && is_on_floor())
+#	$AnimationTree.set("parameters/conditions/SwordLight2", light_attack2 && is_on_floor())
+#	$AnimationTree.set("parameters/conditions/MA1", medium_attack1 && is_on_floor())
+#	$AnimationTree.set("parameters/conditions/Dashing", is_dodging && is_on_floor() && input_dir != Vector2.ZERO)
+#	$AnimationTree.set("parameters/conditions/FallHard", air_time == 0.5 && is_on_floor() && !is_in_air)
 	move_and_slide()
 
 func _input(event):

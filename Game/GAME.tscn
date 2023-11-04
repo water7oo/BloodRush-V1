@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dm1l58p4q676g" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="8_t76ax"]
 [ext_resource type="Material" uid="uid://cyytttb28bncb" path="res://Game/Enviroment.tres" id="9_mkqlw"]
 [ext_resource type="Material" uid="uid://t18do042j80c" path="res://Game/Enviroment2.tres" id="10_emdvm"]
-[ext_resource type="Shader" path="res://Trash/BACKUP_GAMESCENE.gdshader" id="11_o7w5l"]
+[ext_resource type="Shader" path="res://Game/BACKUP_GAMESCENE.gdshader" id="11_o7w5l"]
 
 [sub_resource type="Environment" id="Environment_wv40e"]
 background_mode = 2
