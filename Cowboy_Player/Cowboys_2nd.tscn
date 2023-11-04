@@ -3480,6 +3480,7 @@ _data = {
 script = ExtResource("2_ttjoe")
 
 [node name="RootNode" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Cowboy" type="MeshInstance3D" parent="RootNode"]
 transform = Transform3D(99.9506, -3.14108, 3.72529e-07, -5.58793e-07, -1.19209e-05, 100, -3.14108, -99.9506, -1.19209e-05, 0, 0, 0)
@@ -3526,8 +3527,9 @@ libraries = {
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.277763, 0.00502396)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 2.10325e-08, 2.56775e-09, -2.10325e-08, 0.970628, 0.240584, 2.56775e-09, -0.240584, 0.970628, 0.000814695, 2.77444, 5.23502)
-spring_length = 2.665
+transform = Transform3D(1, 2.10325e-08, 2.56775e-09, -2.10325e-08, 0.970628, 0.240584, 2.56775e-09, -0.240584, 0.970628, 0.000814877, 1.94457, 3.149)
+spring_length = 5.0
+margin = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05291e-07, 0, 1.20439)

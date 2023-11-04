@@ -9,7 +9,7 @@ sky_curve = 0.00437358
 sky_cover = ExtResource("1_t1323")
 ground_bottom_color = Color(0.160784, 0.254902, 0.278431, 1)
 ground_horizon_color = Color(0.184314, 0.729412, 0.831373, 1)
-sun_curve = 0.00288549
+sun_angle_max = 96.67
 
 [resource]
 sky_material = SubResource("ProceduralSkyMaterial_l1opr")

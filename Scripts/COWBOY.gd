@@ -4,7 +4,7 @@ extends CharacterBody3D
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
 @onready var sword = $RootNode/Armature/Skeleton3D/BoneAttachment3D/Sword  # Reference to the SwordHolder node
 @onready var Hitbox = $RootNode/Armature/Skeleton3D/BoneAttachment3D/Sword/Hitbox
-@onready var armature = $RootNode/Armature/Skeleton3D
+@onready var armature = $RootNode/Cowboy
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
@@ -21,8 +21,8 @@ var mouse_sensitivity = 0.005
 var BASE_SPEED = 5
 var MAX_SPEED = BASE_SPEED * 1.9
 var SPEED = BASE_SPEED
-var ACCELERATION = 15.0
-var DECELERATION = 75.0
+var ACCELERATION = 5.0
+var DECELERATION = 10.0
 var DASH_ACCELERATION = 2000
 var DASH_DECELERATION = 2000
 var DASH_MAX_SPEED = BASE_SPEED * 5
@@ -239,7 +239,7 @@ func _physics_process(delta):
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
 
-#		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
+		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
