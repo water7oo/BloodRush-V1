@@ -3512,7 +3512,7 @@ mesh = SubResource("ArrayMesh_gfk6l")
 skeleton = NodePath("")
 
 [node name="Hat_Belt_006" type="MeshInstance3D" parent="RootNode/Cowboy"]
-transform = Transform3D(4.41487, 0.000927445, -8.73133e-10, -0.138743, 0.0295118, 1.67729e-08, 2.78714e-08, -2.22808e-09, 0.2218, -1.39367e-11, 1.49523e-10, -1.1362e-17)
+transform = Transform3D(4.41487, 0.000927446, -8.73133e-10, -0.138743, 0.0295118, 1.67729e-08, 2.78714e-08, -2.22808e-09, 0.2218, -1.39367e-11, 1.49523e-10, -1.1362e-17)
 material_override = SubResource("ShaderMaterial_wic5h")
 mesh = SubResource("ArrayMesh_mj7pq")
 skeleton = NodePath("")
@@ -3526,7 +3526,7 @@ libraries = {
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.277763, 0.00502396)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 1.09222e-08, 6.84963e-10, -1.09222e-08, 0.992165, 0.124935, 6.84963e-10, -0.124935, 0.992165, 0.000814882, 2.28161, 3.09976)
+transform = Transform3D(1, 2.10325e-08, 2.56775e-09, -2.10325e-08, 0.970628, 0.240584, 2.56775e-09, -0.240584, 0.970628, 0.000814695, 2.77444, 5.23502)
 spring_length = 2.665
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D"]

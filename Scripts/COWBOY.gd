@@ -18,7 +18,7 @@ extends CharacterBody3D
 
 
 var mouse_sensitivity = 0.005
-var BASE_SPEED = 10
+var BASE_SPEED = 5
 var MAX_SPEED = BASE_SPEED * 1.9
 var SPEED = BASE_SPEED
 var ACCELERATION = 15.0
@@ -32,7 +32,7 @@ var dash_duration = 0.04
 
 
 
-var JUMP_VELOCITY = 12.5
+var JUMP_VELOCITY = 7
 var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
 var wall_jump_direction = Vector3()
 var air_time = 0.0

@@ -15,6 +15,7 @@ adjustment_saturation = 1.54
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, 0, 0, 0)
 light_energy = 6.5
+light_cull_mask = 4294967293
 shadow_enabled = true
 directional_shadow_split_2 = 0.506
 directional_shadow_split_3 = 0.222
@@ -26,12 +27,16 @@ directional_shadow_pancake_size = 24.2
 environment = SubResource("Environment_tjwux")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-transform = Transform3D(6.9, 0, 0, 0, 1, 0, 0, 0, 3.9, 0, 0.171607, 0)
+transform = Transform3D(6.9, 0, 0, 0, 27.36, 0, 0, 0, 3.9, 0, -0.828393, 0)
+layers = 2
 material_override = ExtResource("2_tmod3")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 size = Vector3(5.2264, 0.0535513, 8.78831)
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138169, -0.437639, -2.08943)
+
 [node name="Cowboy_2ndPass" parent="." instance=ExtResource("3_ajnbg")]
-transform = Transform3D(0.215, 0, 0, 0, 0.215, 0, 0, 0, 0.215, 1.04347, 0.24534, -0.294278)
+transform = Transform3D(0.215, 0, 0, 0, 0.215, 0, 0, 0, 0.215, 1.04347, 0.0385526, -0.294278)
