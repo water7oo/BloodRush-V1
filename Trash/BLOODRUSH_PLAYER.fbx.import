@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://by4xdkymbim3"
-path="res://.godot/imported/BLOODRUSH_PLAYER.fbx-151eaa0389d2ee03f4e5d0d07af73d35.scn"
+path="res://.godot/imported/BLOODRUSH_PLAYER.fbx-4863a5f75f17e8cb05f77a4b6ef1a5b0.scn"
 
 [deps]
 
-source_file="res://Cowboy_Player/BLOODRUSH_PLAYER.fbx"
-dest_files=["res://.godot/imported/BLOODRUSH_PLAYER.fbx-151eaa0389d2ee03f4e5d0d07af73d35.scn"]
+source_file="res://Trash/BLOODRUSH_PLAYER.fbx"
+dest_files=["res://.godot/imported/BLOODRUSH_PLAYER.fbx-4863a5f75f17e8cb05f77a4b6ef1a5b0.scn"]
 
 [params]
 

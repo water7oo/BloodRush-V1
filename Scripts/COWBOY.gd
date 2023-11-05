@@ -4,7 +4,7 @@ extends CharacterBody3D
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
 @onready var sword = $RootNode/Armature/Skeleton3D/BoneAttachment3D/Sword  # Reference to the SwordHolder node
 @onready var Hitbox = $RootNode/Armature/Skeleton3D/BoneAttachment3D/Sword/Hitbox
-@onready var armature = $RootNode/Cowboy
+@onready var armature = $RootNode/Armature/Skeleton3D
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
@@ -19,7 +19,7 @@ extends CharacterBody3D
 
 var mouse_sensitivity = 0.005
 var BASE_SPEED = 5
-var MAX_SPEED = BASE_SPEED * 1.9
+var MAX_SPEED = BASE_SPEED * 1.5
 var SPEED = BASE_SPEED
 var ACCELERATION = 5.0
 var DECELERATION = 10.0
@@ -272,7 +272,7 @@ func _physics_process(delta):
 		
 		
 #	$AnimationTree.set("parameters/conditions/IDLE", input_dir == Vector2.ZERO && is_on_floor())
-#	$AnimationTree.set("parameters/conditions/Walk", input_dir != Vector2.ZERO && is_on_floor() && !is_sprinting)
+	$AnimationTree.set("parameters/Moving/blend_position", input_dir != Vector2.ZERO && is_on_floor() && !is_sprinting)
 #	$AnimationTree.set("parameters/conditions/RUN", input_dir != Vector2.ZERO && is_on_floor() && is_sprinting)
 #	$AnimationTree.set("parameters/conditions/JumpAir", !is_on_floor() || Input.is_action_just_pressed("move_jump"))
 #	$AnimationTree.set("parameters/conditions/SwordLight1", light_attack1 && is_on_floor())

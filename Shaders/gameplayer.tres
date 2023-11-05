@@ -1,7 +1,6 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bvipd0cuplg0p"]
 
 [resource]
-shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 heightmap_scale = 4.935
