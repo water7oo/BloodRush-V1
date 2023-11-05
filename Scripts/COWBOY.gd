@@ -2,26 +2,24 @@ extends CharacterBody3D
 
 @onready var spring_arm_pivot = $SpringArmPivot
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
-@onready var sword = $RootNode/Armature/Skeleton3D/BoneAttachment3D/Sword  # Reference to the SwordHolder node
-@onready var Hitbox = $RootNode/Armature/Skeleton3D/BoneAttachment3D/Sword/Hitbox
+
+
 @onready var armature = $RootNode/Armature/Skeleton3D
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
 @onready var InputBuffer = get_node("/root/InputBuffer")
 @onready var camera = $SpringArmPivot/SpringArm3D/Camera3D
-@onready var CamCollider = $SpringArmPivot/SpringArm3D/Camera3D/CamCollider
-@onready var slash1_anim = $RootNode/Armature/Skeleton3D/Slash1/AnimationPlayer
-@onready var slash2_anim = $RootNode/Armature/Skeleton3D/Slash2/AnimationPlayer
+
 
 
 
 
 var mouse_sensitivity = 0.005
-var BASE_SPEED = 5
-var MAX_SPEED = BASE_SPEED * 1.5
+var BASE_SPEED = 2
+var MAX_SPEED = BASE_SPEED * 3
 var SPEED = BASE_SPEED
-var ACCELERATION = 5.0
+var ACCELERATION = 1.0
 var DECELERATION = 10.0
 var DASH_ACCELERATION = 2000
 var DASH_DECELERATION = 2000
@@ -88,15 +86,7 @@ func _unhandled_input(event):
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
 		
-		#Current Cam situation
-#		spring_arm_pivot.rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
-#		spring_arm_pivot.rotate_x(deg_to_rad(-event.relative.y * mouse_sensitivity))
-#		spring_arm_pivot.rotation.x = clamp(spring_arm_pivot.rotation.x, deg_to_rad(-60), deg_to_rad(20))
-		
-		#Older Cam situation
-		#spring_arm_pivot.rotate_y(-event.relative.x * 0.005)
-		#spring_arm.rotate_x(-event.relative.y * 0.005)
-		#spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/4, PI/4)
+
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -156,24 +146,6 @@ func _physics_process(delta):
 		else:
 			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
 
-#	if Input.is_action_pressed("move_jump"):
-#		if is_on_wall():
-#			wall_jump_direction = -get_wall_normal().normalized()
-#			velocity = wall_jump_direction * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
-#			velocity.y += JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER
-#			await get_tree().create_timer(1).timeout
-#			if is_on_wall() && Input.is_action_pressed("move_jump"):
-#				print_debug("Player is jumping off of the wall")
-#	else:
-#		velocity += Vector3(0, -custom_gravity * delta * 2.5, 0)
-
-#	if Input.is_action_pressed("move_jump"):
-#		if Input.is_action_pressed("move_forward"):
-#			if is_on_wall():
-#				wall_normal = get_slide_collision(0)
-#				await get_tree().create_timer(1).timeout
-#				fall.y = 0
-#				direction = - wall_normal.normal * BASE_SPEED
 
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -184,6 +156,7 @@ func _physics_process(delta):
 	if sprinting:
 		is_sprinting = true
 		target_speed = MAX_SPEED
+		ACCELERATION = 5
 		
 		if Input.is_action_just_pressed("move_jump") and is_on_floor():
 			velocity.y = RUN_JUMP_VELOCITY
@@ -260,17 +233,7 @@ func _physics_process(delta):
 	light_attack2 = Input.is_action_just_pressed("attack_light2")
 	medium_attack1 = Input.is_action_just_pressed("attack_medium1")
 	
-	if light_attack1 && is_on_floor():
-		slash1_anim.play("Slash1")
-		is_attacking = true
-		Hitbox.monitoring = true
-	
-	if medium_attack1 && is_on_floor():
-		slash1_anim.play("Slash_2")
-		is_attacking = true
-		Hitbox.monitoring = true
-		
-		
+
 #	$AnimationTree.set("parameters/conditions/IDLE", input_dir == Vector2.ZERO && is_on_floor())
 	$AnimationTree.set("parameters/Moving/blend_position", input_dir != Vector2.ZERO && is_on_floor() && !is_sprinting)
 #	$AnimationTree.set("parameters/conditions/RUN", input_dir != Vector2.ZERO && is_on_floor() && is_sprinting)
