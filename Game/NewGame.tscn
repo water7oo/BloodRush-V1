@@ -40,8 +40,28 @@ use_collision = true
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 size = Vector3(5.2264, 0.0535513, 8.78831)
 
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0365497, -15.9696)
+size = Vector3(5.2264, 0.0535513, 8.78831)
+
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138169, -0.437639, -2.08943)
+transform = Transform3D(1, 0, 0, 0, 0.089598, 0, 0, 0, 1, -0.138169, 0.00517021, -3.79462)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.225, 0, 0, 0, 0.117593, 0, 0, 0, 0.366, 1.22848, 0.0782696, -3.79462)
+size = Vector3(1, 1.18783, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.0352917, 0, 0, 0, 1.00805, -0.862807, 0.0555558, -5.27669)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.0352917, 0, 0, 0, 1.00805, -0.138169, 0.0555558, -7.02603)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.40633e-08, -1.00773, 0.0555558, -8.8209)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.40633e-08, -0.138169, 0.0555558, -10.6158)
 
 [node name="Cowboy_2ndPass2" parent="." instance=ExtResource("3_k2lva")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.240209, -0.0958112, -1.95523)

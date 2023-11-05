@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var spring_arm_pivot = $SpringArmPivot
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
 
-
+@onready var blend_space = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var armature = $RootNode/Armature/Skeleton3D
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
@@ -12,15 +12,18 @@ extends CharacterBody3D
 @onready var camera = $SpringArmPivot/SpringArm3D/Camera3D
 
 
-
-
-
+#Basic Movement
 var mouse_sensitivity = 0.005
-var BASE_SPEED = 2
-var MAX_SPEED = BASE_SPEED * 3
+var BASE_SPEED = 3
+var MAX_SPEED = BASE_SPEED * 2
 var SPEED = BASE_SPEED
-var ACCELERATION = 1.0
-var DECELERATION = 10.0
+var target_speed = BASE_SPEED
+var current_speed = 0.0
+var JUMP_VELOCITY = 7
+
+#Acceleration and Speed
+var ACCELERATION = 5.0 #the higher the value the faster the acceleration
+var DECELERATION = 25.0 #the lower the value the slippier the stop
 var DASH_ACCELERATION = 2000
 var DASH_DECELERATION = 2000
 var DASH_MAX_SPEED = BASE_SPEED * 5
@@ -30,9 +33,9 @@ var dash_duration = 0.04
 
 
 
-var JUMP_VELOCITY = 7
+
 var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
-var wall_jump_direction = Vector3()
+
 var air_time = 0.0
 var landing_animation_threshold = 1.0
 var RUNJUMP_MULTIPLIER = 1.2
@@ -48,7 +51,7 @@ var custom_gravity = 30.0
 var sprinting = false
 var dodging = false
 var is_in_air = false
-var current_speed = 0.0
+
 var is_sprinting = false
 var light_attack1 = false
 var light_attack2 = false
@@ -71,6 +74,7 @@ var jumping = Input.is_action_just_pressed("move_jump")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 	
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
@@ -89,9 +93,90 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
+	if is_on_wall():
+		if Input.is_action_just_pressed("move_jump"):
+			var wall_normal = get_wall_normal()
+			if wall_normal != null && wall_normal != Vector3.ZERO:
+				wall_normal = wall_normal.normalized() 
+				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
+				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
+				
+				has_wall_jumped = true
+				can_wall_jump = false
+				wall_jump_position = global_transform.origin
+				if has_wall_jumped:
+					for node in wall_wave:
+							node.global_transform.origin = wall_jump_position
+							if node.has_node("AnimationPlayer"):
+								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
+		
+			else:
+				velocity.x = 0
+				velocity.z = 0
+				velocity.y += custom_gravity * delta
+		else:
+			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
+			
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
+	
+	if direction:
+		if current_speed < target_speed:
+			current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
+		else:
+			current_speed = move_toward(current_speed, target_speed, DECELERATION * delta)
+	
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
+		if direction && !is_sprinting:
+			$AnimationTree.set("parameters/Blend3/blend_amount", 0) 
+	
+		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
+		
+	else:
+		if !direction:
+			velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
+			velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
+			current_speed = sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
+			$AnimationTree.set("parameters/Blend3/blend_amount", -1) 
+
+
+	if sprinting:
+		is_sprinting = true
+		target_speed = MAX_SPEED
+		ACCELERATION = 5
+		$AnimationTree.set("parameters/Blend3/blend_amount", 1) 
+		
+		if Input.is_action_just_pressed("move_jump") and is_on_floor():
+			velocity.y = RUN_JUMP_VELOCITY
+	else:
+		is_sprinting = false
+		target_speed = BASE_SPEED
+		ACCELERATION = ACCELERATION
+		
+		
+	
+	#Dodging
+	if dodging && is_on_floor():
+		is_dodging = true
+		current_speed = 0
+		dash_timer = dash_duration 
+		LERP_VAL = DODGE_LERP_VAL
+		
+		
+	if is_dodging:
+		dash_timer -= delta
+		is_sprinting = false
+		
+		if dash_timer <= 0:
+			is_dodging = false
+			LERP_VAL = 0.2
+		else:
+			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
+
 	if not is_on_floor():
 		air_time += delta
-		$AnimationPlayer.play("Armature_002|Player_Air")
 		if not is_on_wall():
 			velocity.y -= custom_gravity * delta
 		else:
@@ -121,68 +206,8 @@ func _physics_process(delta):
 	
 	
 	
-	if is_on_wall():
-		#current_speed = 0.0
-		if Input.is_action_just_pressed("move_jump"):
-			var wall_normal = get_wall_normal()
-			if wall_normal != null && wall_normal != Vector3.ZERO:
-				wall_normal = wall_normal.normalized() 
-				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
-				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
-				
-				has_wall_jumped = true
-				can_wall_jump = false
-				wall_jump_position = global_transform.origin
-				if has_wall_jumped:
-					for node in wall_wave:
-							node.global_transform.origin = wall_jump_position
-							if node.has_node("AnimationPlayer"):
-								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
-		
-			else:
-				velocity.x = 0
-				velocity.z = 0
-				velocity.y += custom_gravity * delta
-		else:
-			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
 
 
-	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
-
-	var target_speed = BASE_SPEED
-
-	if sprinting:
-		is_sprinting = true
-		target_speed = MAX_SPEED
-		ACCELERATION = 5
-		
-		if Input.is_action_just_pressed("move_jump") and is_on_floor():
-			velocity.y = RUN_JUMP_VELOCITY
-	else:
-		is_sprinting = false
-		target_speed = BASE_SPEED
-		ACCELERATION = ACCELERATION
-		
-		
-	#Dodging
-	if dodging && is_on_floor():
-		is_dodging = true
-		current_speed = 0
-		dash_timer = dash_duration 
-		LERP_VAL = DODGE_LERP_VAL
-		
-	if is_dodging:
-		dash_timer -= delta
-		is_sprinting = false
-		
-		if dash_timer <= 0:
-			is_dodging = false
-			LERP_VAL = 0.2
-		else:
-			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
-	
 	
 	for node in dust_trail:
 		var particle_emitter = node.get_node("GPUParticles3D")
@@ -190,88 +215,28 @@ func _physics_process(delta):
 			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
 			particle_emitter.set_emitting(should_emit_particles)
 			
-			if is_in_air:
-				pass
-	
-	var acceleration = ACCELERATION
-	var deceleration = DECELERATION
-	
-	
-	if is_attacking && is_on_floor():
-		current_speed = 0.0
-	elif direction:
-		if current_speed < target_speed:
-			current_speed = move_toward(current_speed, target_speed, acceleration * delta)
-			
-		else:
-			current_speed = move_toward(current_speed, target_speed, deceleration * delta)
-	else:
-		current_speed = move_toward(current_speed, 0, deceleration * delta)
-
-	if direction:
-		velocity.x = direction.x * current_speed
-		velocity.z = direction.z * current_speed
-
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
-		
-	else:
-		velocity.x = move_toward(velocity.x, 0, deceleration * delta)
-		velocity.z = move_toward(velocity.z, 0, deceleration * delta)
-
-	if not is_on_floor():
-		$AnimationPlayer.play("Armature_002|Player_Air")
-
 	if is_in_air && is_on_floor():
 		is_in_air = false
 		for node in jump_wave:
 			node.global_transform.origin = landing_position
 			if node.has_node("AnimationPlayer"):
 				node.get_node("AnimationPlayer").play("CloudAnim")
-			
-
-	light_attack1 = Input.is_action_just_pressed("attack_light1")
-	light_attack2 = Input.is_action_just_pressed("attack_light2")
-	medium_attack1 = Input.is_action_just_pressed("attack_medium1")
-	
-
-#	$AnimationTree.set("parameters/conditions/IDLE", input_dir == Vector2.ZERO && is_on_floor())
-	$AnimationTree.set("parameters/Moving/blend_position", input_dir != Vector2.ZERO && is_on_floor() && !is_sprinting)
-#	$AnimationTree.set("parameters/conditions/RUN", input_dir != Vector2.ZERO && is_on_floor() && is_sprinting)
-#	$AnimationTree.set("parameters/conditions/JumpAir", !is_on_floor() || Input.is_action_just_pressed("move_jump"))
-#	$AnimationTree.set("parameters/conditions/SwordLight1", light_attack1 && is_on_floor())
-#	$AnimationTree.set("parameters/conditions/SwordLight2", light_attack2 && is_on_floor())
-#	$AnimationTree.set("parameters/conditions/MA1", medium_attack1 && is_on_floor())
-#	$AnimationTree.set("parameters/conditions/Dashing", is_dodging && is_on_floor() && input_dir != Vector2.ZERO)
-#	$AnimationTree.set("parameters/conditions/FallHard", air_time == 0.5 && is_on_floor() && !is_in_air)
+		
 	move_and_slide()
 
-func _input(event):
-	if event.is_action_pressed("attack_light1") || event.is_action_pressed("attack_light2") || event.is_action_pressed("attack_medium1"):
-		is_attacking = true
-	else:
-		is_attacking = false
-		
-		
-
-#Sword to Enemy collision
-func _on_hitbox_area_entered(area):
-	if area.is_in_group("enemy") && is_attacking:
-		hit_stop(0.05, 0.3)
-	pass # Replace with function body.
-
-
-func hit_stop(timeScale, duration):
-	if is_attacking:
-		Engine.time_scale = timeScale
-		var timer = get_tree().create_timer(timeScale*duration)
-		await timer.timeout
-		Engine.time_scale = 1
-
-
-func _on_timer_timeout():
-	pass # Replace with function body.
-
-
-#Enemy to player
-func _on_enemy_area_entered(area):
-	pass # Replace with function body.
+#Time Stop
+#func hit_stop(timeScale, duration):
+#	if is_attacking:
+#		Engine.time_scale = timeScale
+#		var timer = get_tree().create_timer(timeScale*duration)
+#		await timer.timeout
+#		Engine.time_scale = 1
+#
+#
+#func _on_timer_timeout():
+#	pass # Replace with function body.
+#
+#
+##Enemy to player
+#func _on_enemy_area_entered(area):
+#	pass # Replace with function body.
