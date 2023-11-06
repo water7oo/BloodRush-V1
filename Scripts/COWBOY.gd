@@ -9,7 +9,7 @@ extends CharacterBody3D
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
 @onready var InputBuffer = get_node("/root/InputBuffer")
-@onready var camera = $SpringArmPivot/SpringArm3D/Camera3D
+@onready var camera = $SpringArmPivot/SpringArm3D/Margin/Camera3D
 
 
 #Basic Movement
@@ -19,7 +19,7 @@ var MAX_SPEED = BASE_SPEED * 2
 var SPEED = BASE_SPEED
 var target_speed = BASE_SPEED
 var current_speed = 0.0
-var JUMP_VELOCITY = 7
+var JUMP_VELOCITY = 8
 
 #Acceleration and Speed
 var ACCELERATION = 5.0 #the higher the value the faster the acceleration

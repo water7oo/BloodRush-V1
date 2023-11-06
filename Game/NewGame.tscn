@@ -2,7 +2,7 @@
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
 [ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="2_tmod3"]
-[ext_resource type="PackedScene" uid="uid://badb1bwrj74er" path="res://Cowboy_Player/cowboy2nd_pass.tscn" id="3_k2lva"]
+[ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Cowboy_Player/PLAYER_COWBOY.tscn" id="3_yu345"]
 
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
@@ -63,5 +63,5 @@ transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.406
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.40633e-08, -0.138169, 0.0555558, -10.6158)
 
-[node name="Cowboy_2ndPass2" parent="." instance=ExtResource("3_k2lva")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.240209, -0.0958112, -1.95523)
+[node name="2ndPassAnimations" parent="." instance=ExtResource("3_yu345")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.04714, 0.392552, -0.152642)
