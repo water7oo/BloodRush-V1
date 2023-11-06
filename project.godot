@@ -22,8 +22,10 @@ InputBuffer="*res://Scripts/InputBuffer.gd"
 
 [display]
 
+window/size/viewport_width=1024
+window/size/viewport_height=600
 window/stretch/mode="viewport"
-window/stretch/scale=1.2
+window/stretch/scale=2.0
 
 [editor]
 
@@ -123,6 +125,8 @@ move_dodge={
 
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
 anti_aliasing/screen_space_roughness_limiter/enabled=false
+anti_aliasing/screen_space_roughness_limiter/amount=0.01
+anti_aliasing/screen_space_roughness_limiter/limit=0.01
 scaling_3d/mode=1
 
 [shader_globals]

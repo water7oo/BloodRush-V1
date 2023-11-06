@@ -1,7 +1,16 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://cx0dsad2my6ud"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cx0dsad2my6ud"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_o4cw2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kwhof"]
+render_priority = 0
+shader = ExtResource("1_o4cw2")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 3.0
 
 [resource]
 render_priority = 1
+next_pass = SubResource("ShaderMaterial_kwhof")
 transparency = 1
 shading_mode = 0
 diffuse_mode = 3

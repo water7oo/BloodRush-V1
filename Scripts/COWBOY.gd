@@ -4,6 +4,7 @@ extends CharacterBody3D
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
 
 @onready var blend_space = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
+@onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var armature = $RootNode/Armature/Skeleton3D
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
@@ -47,7 +48,7 @@ var LERP_VAL = 0.2
 var DODGE_LERP_VAL = 1
 var wall_jump_position = Vector3.ZERO
 
-var custom_gravity = 30.0
+var custom_gravity = 27.0 #The lower the value the floatier
 var sprinting = false
 var dodging = false
 var is_in_air = false
@@ -142,7 +143,7 @@ func _physics_process(delta):
 			$AnimationTree.set("parameters/Blend3/blend_amount", -1) 
 
 
-	if sprinting:
+	if sprinting && direction:
 		is_sprinting = true
 		target_speed = MAX_SPEED
 		ACCELERATION = 5
@@ -163,11 +164,15 @@ func _physics_process(delta):
 		current_speed = 0
 		dash_timer = dash_duration 
 		LERP_VAL = DODGE_LERP_VAL
+		$AnimationTree.set("parameters/OneShot/active", true) 
+	else:
+		$AnimationTree.set("parameters/OneShot/active", false) 
+		
 		
 		
 	if is_dodging:
 		dash_timer -= delta
-		is_sprinting = false
+		is_sprinting = false 
 		
 		if dash_timer <= 0:
 			is_dodging = false
@@ -224,6 +229,9 @@ func _physics_process(delta):
 		
 	move_and_slide()
 
+
+func respawn():
+	get_tree().reload_current_scene()
 #Time Stop
 #func hit_stop(timeScale, duration):
 #	if is_attacking:

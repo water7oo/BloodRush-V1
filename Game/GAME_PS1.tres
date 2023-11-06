@@ -2,13 +2,13 @@
 
 [ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_8posn"]
 [ext_resource type="Shader" path="res://Shaders/PS1_ANOTHERONE.gdshader" id="2_1ci54"]
-[ext_resource type="Texture2D" uid="uid://bknh5febfwrw6" path="res://addons/kenney_prototype_textures/dark/texture_13.png" id="3_0lxdx"]
+[ext_resource type="Texture2D" uid="uid://hp6fmk1pv6lj" path="res://addons/kenney_prototype_textures/orange/texture_01.png" id="3_1ikpw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
 render_priority = 0
 shader = ExtResource("1_8posn")
 shader_parameter/outline_color = null
-shader_parameter/outline_width = 1.0
+shader_parameter/outline_width = 2.0
 
 [resource]
 render_priority = 0
@@ -18,4 +18,4 @@ shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.11
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_0lxdx")
+shader_parameter/albedo = ExtResource("3_1ikpw")

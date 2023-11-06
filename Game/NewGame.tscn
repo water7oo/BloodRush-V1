@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=8 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
 [ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="2_tmod3"]
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Cowboy_Player/PLAYER_COWBOY.tscn" id="3_yu345"]
+[ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
+[ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
 
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
@@ -14,6 +16,9 @@ ssao_power = 19.4941
 ssao_detail = 0.0
 adjustment_enabled = true
 adjustment_saturation = 1.54
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ccde"]
+size = Vector3(1, 0.215723, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -41,8 +46,24 @@ use_collision = true
 size = Vector3(5.2264, 0.0535513, 8.78831)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0365497, -15.9696)
+transform = Transform3D(1.8648, 0, 0, 0, 1, 0, 0, 0, 1, 0.57971, 0.0365497, -15.9696)
 size = Vector3(5.2264, 0.0535513, 8.78831)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.94243e-09, 0, -0.6375, 0, 7.02519, 0, 0.067315, 0, -2.7866e-08, -1.49108, 0.28791, -20.1902)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.94243e-09, 0, -0.255, 0, 7.02519, 0, 0.067315, 0, -1.11464e-08, 2.42197, 0.28791, -20.1902)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-0.067315, 0, 2.22928e-08, 0, 7.0252, 0, -5.88487e-09, 0, -0.255, -2.07079, 0.28791, -19.1646)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-0.067315, 0, 2.22928e-08, 0, 7.0252, 0, -5.88487e-09, 0, -0.255, 2.13211, 0.28791, -19.1646)
+size = Vector3(5.2264, 0.0664005, 8.78831)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 0.089598, 0, 0, 0, 1, -0.138169, 0.00517021, -3.79462)
@@ -63,5 +84,40 @@ transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.406
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.40633e-08, -0.138169, 0.0555558, -10.6158)
 
-[node name="2ndPassAnimations" parent="." instance=ExtResource("3_yu345")]
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1.00805, 0, 0.0352917, 0, -1, 0, -4.40633e-08, -0.138169, 0.0555558, -10.6158)
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("5_7vbi7")
+
+[node name="Death" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(235.275, 0, 0, 0, 57.3618, 0, 0, 0, 314.842, 0, -17.3825, 0)
+shape = SubResource("BoxShape3D_2ccde")
+disabled = true
+
+[node name="Preview" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Preview"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1024, 600)
+render_target_update_mode = 4
+
+[node name="2ndPassAnimations" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("3_yu345")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.04714, 0.392552, -0.152642)
+
+[node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/2ndPassAnimations" groups=["dust_trail"] instance=ExtResource("4_p7ho0")]
