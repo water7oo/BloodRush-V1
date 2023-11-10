@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+
+
 @onready var spring_arm_pivot = $SpringArmPivot
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
 
@@ -21,6 +23,7 @@ var SPEED = BASE_SPEED
 var target_speed = BASE_SPEED
 var current_speed = 0.0
 var JUMP_VELOCITY = 8
+var jump_timer = 0.0
 
 #Acceleration and Speed
 var ACCELERATION = 5.0 #the higher the value the faster the acceleration
@@ -91,11 +94,18 @@ func _unhandled_input(event):
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
 		
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		# Scroll wheel up, zoom in
+		spring_arm.translation.z -= 1.0  # Adjust the value based on your desired zoom speed
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		# Scroll wheel down, zoom out
+		spring_arm.translation.z -= 1.0  # Adjust the value based on your desired zoom speed
 
 
 func _physics_process(delta):
+
 	if is_on_wall():
-		if Input.is_action_just_pressed("move_jump"):
+		if InputBuffer.is_action_press_buffered("move_jump"):
 			var wall_normal = get_wall_normal()
 			if wall_normal != null && wall_normal != Vector3.ZERO:
 				wall_normal = wall_normal.normalized() 
@@ -121,8 +131,8 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
-	
 	if direction:
+		print_debug(direction)
 		if current_speed < target_speed:
 			current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
 		else:
@@ -149,7 +159,7 @@ func _physics_process(delta):
 		ACCELERATION = 5
 		$AnimationTree.set("parameters/Blend3/blend_amount", 1) 
 		
-		if Input.is_action_just_pressed("move_jump") and is_on_floor():
+		if InputBuffer.is_action_press_buffered("move_jump") and is_on_floor():
 			velocity.y = RUN_JUMP_VELOCITY
 	else:
 		is_sprinting = false
@@ -203,9 +213,11 @@ func _physics_process(delta):
 
 	sprinting = Input.is_action_pressed("move_sprint")
 	dodging = Input.is_action_just_pressed("move_dodge")
-
-	if is_on_floor():
-		if Input.is_action_just_pressed("move_jump"):
+	if Input.is_action_just_pressed("move_jump"):
+		jump_timer = 0.1
+	jump_timer-=delta
+	if jump_timer > 0 && is_on_floor():
+			jump_timer = 0.0
 			is_in_air = true
 			velocity.y = JUMP_VELOCITY
 	
@@ -214,12 +226,12 @@ func _physics_process(delta):
 
 
 	
-	for node in dust_trail:
-		var particle_emitter = node.get_node("GPUParticles3D")
-		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
-			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
-			particle_emitter.set_emitting(should_emit_particles)
-			
+#	for node in dust_trail:
+#		var particle_emitter = node.get_node("GPUParticles3D")
+#		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
+#			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
+#			particle_emitter.set_emitting(should_emit_particles)
+#
 	if is_in_air && is_on_floor():
 		is_in_air = false
 		for node in jump_wave:
@@ -227,6 +239,7 @@ func _physics_process(delta):
 			if node.has_node("AnimationPlayer"):
 				node.get_node("AnimationPlayer").play("CloudAnim")
 		
+	
 	move_and_slide()
 
 
