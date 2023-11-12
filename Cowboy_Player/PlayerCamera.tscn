@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://7l5yih8w56c3"]
+
+[ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
+
+[node name="CameraSet" type="Node3D" groups=["camera"]]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.0591612)
+script = ExtResource("1_aphvx")
+
+[node name="SpringArmPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.005)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.977732, 0.209858, 0, -0.209858, 0.977732, 0.000814877, 2.75854, 3.09514)
+spring_length = 5.0
+margin = 0.5
+
+[node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.994978, -0.100101, 0, 0.100101, 0.994978, -5.82077e-11, 1.34759, 9.94268)
+
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
+transform = Transform3D(5, 5.97698e-10, -4.19726e-09, -4.29371e-10, 4.996, 0.200048, 4.21779e-09, -0.200048, 4.996, 1.26311e-08, -0.173633, -1.82915)
+current = true
+
+[node name="TextureRect" type="TextureRect" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
+offset_right = 623.0
+offset_bottom = 365.0
+metadata/_edit_use_anchors_ = true

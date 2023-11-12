@@ -2,8 +2,13 @@ extends CharacterBody3D
 
 
 
-@onready var spring_arm_pivot = $SpringArmPivot
-@onready var spring_arm = $SpringArmPivot/SpringArm3D
+
+var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
+var spring_arm_pivot = camera.get_node("SpringArmPivot")
+var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
+
+
+
 
 @onready var blend_space = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
@@ -12,28 +17,27 @@ extends CharacterBody3D
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
 @onready var InputBuffer = get_node("/root/InputBuffer")
-@onready var camera = $SpringArmPivot/SpringArm3D/Margin/Camera3D
 
 
 #Basic Movement
-var mouse_sensitivity = 0.005
-var BASE_SPEED = 3
-var MAX_SPEED = BASE_SPEED * 2
+@export var mouse_sensitivity = 0.005
+@export var BASE_SPEED = 3
+@export var MAX_SPEED = BASE_SPEED * 2
 var SPEED = BASE_SPEED
 var target_speed = BASE_SPEED
 var current_speed = 0.0
-var JUMP_VELOCITY = 8
+@export var JUMP_VELOCITY = 8
 var jump_timer = 0.0
 
 #Acceleration and Speed
-var ACCELERATION = 5.0 #the higher the value the faster the acceleration
-var DECELERATION = 25.0 #the lower the value the slippier the stop
-var DASH_ACCELERATION = 2000
-var DASH_DECELERATION = 2000
+@export var ACCELERATION = 5.0 #the higher the value the faster the acceleration
+@export var DECELERATION = 25.0 #the lower the value the slippier the stop
+@export var DASH_ACCELERATION = 2000
+@export var DASH_DECELERATION = 2000
 var DASH_MAX_SPEED = BASE_SPEED * 5
 var is_dodging = false
 var dash_timer = 0.0
-var dash_duration = 0.04
+@export var dash_duration = 0.04
 
 
 
@@ -78,6 +82,7 @@ var jumping = Input.is_action_just_pressed("move_jump")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 
 	
 func _unhandled_input(event):
