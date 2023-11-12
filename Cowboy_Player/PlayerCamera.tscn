@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=3 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kqifv"]
 
 [node name="CameraSet" type="Node3D" groups=["camera"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.0591612)
@@ -18,10 +20,12 @@ margin = 0.5
 transform = Transform3D(1, 0, 0, 0, 0.994978, -0.100101, 0, 0.100101, 0.994978, -5.82077e-11, 1.34759, 9.94268)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(5, 5.97698e-10, -4.19726e-09, -4.29371e-10, 4.996, 0.200048, 4.21779e-09, -0.200048, 4.996, 1.26311e-08, -0.173633, -1.82915)
+transform = Transform3D(1, 1.19556e-10, -8.39478e-10, -8.58735e-11, 0.999198, 0.0400095, 8.43592e-10, -0.0400095, 0.999198, 1.74157e-07, -1.79169, -3.86917)
 current = true
 
-[node name="TextureRect" type="TextureRect" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
-offset_right = 623.0
-offset_bottom = 365.0
-metadata/_edit_use_anchors_ = true
+[node name="Node3D" type="Node3D" parent="SpringArmPivot"]
+transform = Transform3D(1, 1.19557e-10, -8.39478e-10, 8.22892e-12, 0.988594, 0.150606, 8.47905e-10, -0.150606, 0.988594, 0.000815835, -0.555493, -0.0872124)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/Node3D"]
+transform = Transform3D(0.205, 0, 0, 0, 0.205, 0, 0, 0, 0.205, 0, 0.485841, 0.0740147)
+mesh = SubResource("CapsuleMesh_kqifv")

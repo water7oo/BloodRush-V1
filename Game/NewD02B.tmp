@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=10 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
 [ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="2_tmod3"]
@@ -20,6 +20,8 @@ adjustment_saturation = 1.54
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2ccde"]
 size = Vector3(1, 0.215723, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wgv41"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -135,5 +137,12 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.04714, 0.392552, -0.
 
 [node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Cowboy" groups=["dust_trail"] instance=ExtResource("4_p7ho0")]
 
-[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05071, 0.819271, -0.139583)
+[node name="CAM_FOCUS" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy/CAM_FOCUS"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.669674, 0)
+mesh = SubResource("BoxMesh_wgv41")
+
+[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("target", "player") instance=ExtResource("6_m03c4")]
+target = NodePath("../Cowboy/CAM_FOCUS")
+player = NodePath("../Cowboy")

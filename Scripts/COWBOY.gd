@@ -85,57 +85,12 @@ func _ready():
 
 
 	
-func _unhandled_input(event):
-	if Input.is_action_just_pressed("quit_game"):
-		get_tree().quit()
-
-	if event is InputEventMouseMotion:
-		
-		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
-		var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
-		
-		rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
-		
-		spring_arm_pivot.rotation.x = rotation_x
-		spring_arm_pivot.rotation.y = rotation_y
-		
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_UP:
-		# Scroll wheel up, zoom in
-		spring_arm.translation.z -= 1.0  # Adjust the value based on your desired zoom speed
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-		# Scroll wheel down, zoom out
-		spring_arm.translation.z -= 1.0  # Adjust the value based on your desired zoom speed
-
-
-func _physics_process(delta):
-
-	if is_on_wall():
-		if InputBuffer.is_action_press_buffered("move_jump"):
-			var wall_normal = get_wall_normal()
-			if wall_normal != null && wall_normal != Vector3.ZERO:
-				wall_normal = wall_normal.normalized() 
-				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
-				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
-				
-				has_wall_jumped = true
-				can_wall_jump = false
-				wall_jump_position = global_transform.origin
-				if has_wall_jumped:
-					for node in wall_wave:
-							node.global_transform.origin = wall_jump_position
-							if node.has_node("AnimationPlayer"):
-								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
-		
-			else:
-				velocity.x = 0
-				velocity.z = 0
-				velocity.y += custom_gravity * delta
-		else:
-			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
-			
+func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
+	
+	
 	if direction:
 		print_debug(direction)
 		if current_speed < target_speed:
@@ -156,8 +111,9 @@ func _physics_process(delta):
 			velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 			current_speed = sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
 			$AnimationTree.set("parameters/Blend3/blend_amount", -1) 
-
-
+	
+	
+	
 	if sprinting && direction:
 		is_sprinting = true
 		target_speed = MAX_SPEED
@@ -194,6 +150,53 @@ func _physics_process(delta):
 			LERP_VAL = 0.2
 		else:
 			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
+
+
+
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("quit_game"):
+		get_tree().quit()
+
+	if event is InputEventMouseMotion:
+
+		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
+		var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
+
+		rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
+
+		spring_arm_pivot.rotation.x = rotation_x
+		spring_arm_pivot.rotation.y = rotation_y
+		
+
+func _physics_process(delta):
+	
+	_proccess_movement(delta)
+	
+	if is_on_wall():
+		if InputBuffer.is_action_press_buffered("move_jump"):
+			var wall_normal = get_wall_normal()
+			if wall_normal != null && wall_normal != Vector3.ZERO:
+				wall_normal = wall_normal.normalized() 
+				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
+				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
+				
+				has_wall_jumped = true
+				can_wall_jump = false
+				wall_jump_position = global_transform.origin
+				if has_wall_jumped:
+					for node in wall_wave:
+							node.global_transform.origin = wall_jump_position
+							if node.has_node("AnimationPlayer"):
+								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
+		
+			else:
+				velocity.x = 0
+				velocity.z = 0
+				velocity.y += custom_gravity * delta
+		else:
+			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
+			
+
 
 	if not is_on_floor():
 		air_time += delta
