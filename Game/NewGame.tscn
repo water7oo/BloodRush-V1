@@ -135,6 +135,12 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.04714, 0.392552, -0.
 
 [node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Cowboy" groups=["dust_trail"] instance=ExtResource("4_p7ho0")]
 
-[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" node_paths=PackedStringArray("target") instance=ExtResource("6_m03c4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06011, 0.568504, -0.718349)
-target = NodePath("../Cowboy")
+[node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41077, 2.38878)
+gizmo_extents = 2.04
+
+[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34017, 3.4658, 3.11334)
+target = NodePath("../Cowboy/CamTarget")
+speed = 7.5
+enabled = true

@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=2 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
-
-[sub_resource type="TorusMesh" id="TorusMesh_pwhuk"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
@@ -20,10 +18,7 @@ margin = 0.5
 transform = Transform3D(1, 0, 0, 0, 0.994978, -0.100101, -7.10543e-15, 0.100101, 0.994978, 3.58559e-07, 1.34759, 5.82021)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(1, 1.19556e-10, -8.39478e-10, -8.58735e-11, 0.999198, 0.0400095, 8.43592e-10, -0.0400095, 0.999198, 1.74157e-07, -1.79169, -3.86917)
-current = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot"]
-transform = Transform3D(0.745, 0, 0, 0, 0.745, 0, 0, 0, 0.745, 0.001, 0, 0)
-mesh = SubResource("TorusMesh_pwhuk")
+transform = Transform3D(0.745, 0, 0, 0, 0.745, 0, 0, 0, 0.745, 0.001, 2.26514, 6.63859)
 skeleton = NodePath("")
