@@ -1,8 +1,5 @@
 extends CharacterBody3D
 
-
-
-
 var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
@@ -85,6 +82,7 @@ func _ready():
 
 
 	
+
 func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -92,7 +90,6 @@ func _proccess_movement(delta):
 	
 	
 	if direction:
-		print_debug(direction)
 		if current_speed < target_speed:
 			current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
 		else:
@@ -117,7 +114,7 @@ func _proccess_movement(delta):
 	if sprinting && direction:
 		is_sprinting = true
 		target_speed = MAX_SPEED
-		ACCELERATION = 5
+		ACCELERATION = 20
 		$AnimationTree.set("parameters/Blend3/blend_amount", 1) 
 		
 		if InputBuffer.is_action_press_buffered("move_jump") and is_on_floor():
@@ -151,8 +148,6 @@ func _proccess_movement(delta):
 		else:
 			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
 
-
-
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
 		get_tree().quit()
@@ -166,12 +161,10 @@ func _unhandled_input(event):
 
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
-		
+
 
 func _physics_process(delta):
-	
 	_proccess_movement(delta)
-	
 	if is_on_wall():
 		if InputBuffer.is_action_press_buffered("move_jump"):
 			var wall_normal = get_wall_normal()
@@ -247,7 +240,6 @@ func _physics_process(delta):
 			if node.has_node("AnimationPlayer"):
 				node.get_node("AnimationPlayer").play("CloudAnim")
 		
-	
 	move_and_slide()
 
 

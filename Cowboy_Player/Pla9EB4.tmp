@@ -23,7 +23,7 @@ transform = Transform3D(1, 0, 0, 0, 0.994978, -0.100101, -7.10543e-15, 0.100101,
 transform = Transform3D(1, 1.19556e-10, -8.39478e-10, -8.58735e-11, 0.999198, 0.0400095, 8.43592e-10, -0.0400095, 0.999198, 1.74157e-07, -1.79169, -3.86917)
 current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot"]
-transform = Transform3D(0.745, 0, 0, 0, 0.745, 0, 0, 0, 0.745, 0.001, 0, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.745, 0, 0, 0, 0.745, 0, 0, 0, 0.745, 0.001, 0, 0.005)
 mesh = SubResource("TorusMesh_pwhuk")
 skeleton = NodePath("")
