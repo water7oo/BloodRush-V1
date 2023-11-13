@@ -4,11 +4,13 @@ var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 
-
-
-
 @onready var blend_space = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
+var current_blend_amount = 0.0
+var target_blend_amount = 0.0
+var blend_lerp_speed = 5.0  # Adjust the speed of blending
+
+
 @onready var armature = $RootNode/Armature/Skeleton3D
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
@@ -18,8 +20,9 @@ var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 
 #Basic Movement
 @export var mouse_sensitivity = 0.005
+@export var joystick_sensitivity = 0.005
 @export var BASE_SPEED = 3
-@export var MAX_SPEED = BASE_SPEED * 2
+@export var MAX_SPEED = 7
 var SPEED = BASE_SPEED
 var target_speed = BASE_SPEED
 var current_speed = 0.0
@@ -29,8 +32,8 @@ var jump_timer = 0.0
 #Acceleration and Speed
 @export var ACCELERATION = 5.0 #the higher the value the faster the acceleration
 @export var DECELERATION = 25.0 #the lower the value the slippier the stop
-@export var DASH_ACCELERATION = 2000
-@export var DASH_DECELERATION = 2000
+@export var DASH_ACCELERATION = 20
+@export var DASH_DECELERATION = 7
 var DASH_MAX_SPEED = BASE_SPEED * 5
 var is_dodging = false
 var dash_timer = 0.0
@@ -79,10 +82,25 @@ var jumping = Input.is_action_just_pressed("move_jump")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-
 	
 
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("quit_game"):
+		get_tree().quit()
+
+	if event is InputEventMouseMotion:
+
+		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
+		var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
+
+		rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
+
+		spring_arm_pivot.rotation.x = rotation_x
+		spring_arm_pivot.rotation.y = rotation_y
+		
+	
+	
+	
 func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -98,7 +116,13 @@ func _proccess_movement(delta):
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
 		if direction && !is_sprinting:
-			$AnimationTree.set("parameters/Blend3/blend_amount", 0) 
+			target_blend_amount = 0.0
+			current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
+			$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
+		else:
+			target_blend_amount = -1.0
+		
+
 	
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 		
@@ -114,15 +138,20 @@ func _proccess_movement(delta):
 	if sprinting && direction:
 		is_sprinting = true
 		target_speed = MAX_SPEED
-		ACCELERATION = 20
-		$AnimationTree.set("parameters/Blend3/blend_amount", 1) 
+		ACCELERATION = DASH_ACCELERATION
+		DECELERATION = DASH_DECELERATION
+		target_blend_amount = 1.0
+		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
+		$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
 		
 		if InputBuffer.is_action_press_buffered("move_jump") and is_on_floor():
 			velocity.y = RUN_JUMP_VELOCITY
+
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
 		ACCELERATION = ACCELERATION
+		DECELERATION = DECELERATION
 		
 		
 	
@@ -132,6 +161,7 @@ func _proccess_movement(delta):
 		current_speed = 0
 		dash_timer = dash_duration 
 		LERP_VAL = DODGE_LERP_VAL
+		target_speed =  DASH_MAX_SPEED
 		$AnimationTree.set("parameters/OneShot/active", true) 
 	else:
 		$AnimationTree.set("parameters/OneShot/active", false) 
@@ -141,30 +171,47 @@ func _proccess_movement(delta):
 	if is_dodging:
 		dash_timer -= delta
 		is_sprinting = false 
-		
 		if dash_timer <= 0:
 			is_dodging = false
 			LERP_VAL = 0.2
+			target_speed = BASE_SPEED 
 		else:
 			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
-
-func _unhandled_input(event):
-	if Input.is_action_just_pressed("quit_game"):
-		get_tree().quit()
-
-	if event is InputEventMouseMotion:
-
-		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
-		var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
-
-		rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
-
-		spring_arm_pivot.rotation.x = rotation_x
-		spring_arm_pivot.rotation.y = rotation_y
+	
+	
+		for node in dust_trail:
+			var particle_emitter = node.get_node("DUST2/GPUParticles3D")
+			if particle_emitter && input_dir && is_on_floor():
+				print_debug("DUST DUST DUST")
+				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
+				particle_emitter.set_emitting(should_emit_particles)
+#		if is_in_air && is_on_floor():
+#			is_in_air = false
+#			for node in jump_wave:
+#				node.global_transform.origin = landing_position
+#				if node.has_node("AnimationPlayer"):
+#					node.get_node("AnimationPlayer").play("CloudAnim")
+		
 
 
 func _physics_process(delta):
+#	var fps = Engine.get_frames_per_second()
+#	var lerp_interval = direction / fps
+#	var lerp_position = global_transform.origin + lerp_interval
+#
+#
+#	if fps > 30:
+#		armature.set_as_toplevel(true)
+#		armature.global_transform.origin = armature.global_transform.origin.lerp(lerp_position, 20 * delta)
+#	else:
+#		armature.global_transform = global_transform
+#		armature.set_as_toplevel(false)
+#
+#
+#
+#
 	_proccess_movement(delta)
+	_unhandled_input(delta)
 	if is_on_wall():
 		if InputBuffer.is_action_press_buffered("move_jump"):
 			var wall_normal = get_wall_normal()
@@ -224,22 +271,6 @@ func _physics_process(delta):
 	
 	
 	
-
-
-	
-#	for node in dust_trail:
-#		var particle_emitter = node.get_node("GPUParticles3D")
-#		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
-#			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
-#			particle_emitter.set_emitting(should_emit_particles)
-#
-	if is_in_air && is_on_floor():
-		is_in_air = false
-		for node in jump_wave:
-			node.global_transform.origin = landing_position
-			if node.has_node("AnimationPlayer"):
-				node.get_node("AnimationPlayer").play("CloudAnim")
-		
 	move_and_slide()
 
 

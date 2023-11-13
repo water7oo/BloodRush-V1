@@ -48,9 +48,9 @@ height = 0.4
 radial_segments = 4
 rings = 2
 
-[node name="DUST2" type="Node3D"]
+[node name="DUST2" type="Node3D" groups=["dust_trail"]]
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="." groups=["dust_trail"]]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(-9.73203e-08, 0, -1, 0, 0.492198, 0, 2.22643, 0, -4.37114e-08, 0, 0, 0)
 material_override = ExtResource("1_nlbt2")
 material_overlay = ExtResource("1_nlbt2")

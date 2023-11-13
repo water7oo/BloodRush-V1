@@ -16,7 +16,6 @@ ssao_intensity = 0.0
 ssao_power = 19.4941
 ssao_detail = 0.0
 adjustment_enabled = true
-adjustment_saturation = 1.54
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2ccde"]
 size = Vector3(1, 0.215723, 1)
@@ -25,7 +24,6 @@ size = Vector3(1, 0.215723, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, 0, 0.0192336, 0)
-light_energy = 6.5
 light_cull_mask = 4294967293
 directional_shadow_split_1 = 0.058
 directional_shadow_split_2 = 0.506
@@ -133,14 +131,13 @@ render_target_update_mode = 4
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("3_yu345")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.04714, 0.392552, -0.152642)
 
-[node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Cowboy" groups=["dust_trail"] instance=ExtResource("4_p7ho0")]
+[node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Cowboy" instance=ExtResource("4_p7ho0")]
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41077, 2.38878)
-gizmo_extents = 2.04
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.3, -0.1)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34017, 3.4658, 3.11334)
 target = NodePath("../Cowboy/CamTarget")
-speed = 7.5
+speed = 9.0
 enabled = true
