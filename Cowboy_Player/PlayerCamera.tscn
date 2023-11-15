@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=3 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wqenl"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
@@ -11,14 +13,17 @@ spring_arm_pivot = NodePath("SpringArmPivot")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.005)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.977001, 0.213235, 0, -0.213235, 0.977001, 0.00799954, 2, 5.10343)
-spring_length = 5.0
-margin = 0.5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00799954, 3.0172, 2.63746)
+shape = SubResource("SphereShape3D_wqenl")
+spring_length = 4.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 0.994978, -0.100101, -7.10543e-15, 0.100101, 0.994978, 3.58559e-07, 1.34759, 5.82021)
+transform = Transform3D(1, 0, 0, -1.51513e-15, 0.993439, 0.114365, -6.94201e-15, -0.114365, 0.993439, 3.58559e-07, 1.49159, 3.86497)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
 transform = Transform3D(1, 3.18976e-16, 7.18526e-15, 1.52198e-15, 0.987649, -0.156676, -7.67552e-17, 0.156676, 0.987649, 0, -1.54994, 0.245561)
 current = true
 fov = 62.4
+size = 2.0
+
+[node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]

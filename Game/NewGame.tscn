@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=11 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
 [ext_resource type="Material" uid="uid://bh76i2pakjs" path="res://Game/GAME_PS1.tres" id="2_tmod3"]
@@ -20,6 +20,10 @@ adjustment_enabled = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_2ccde"]
 size = Vector3(1, 0.215723, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hstq3"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -37,7 +41,6 @@ environment = SubResource("Environment_tjwux")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 transform = Transform3D(6.9, 0, 0, 0, 27.36, 0, 0, 0, 3.9, 0, -0.828393, 0)
-layers = 2
 material_override = ExtResource("2_tmod3")
 use_collision = true
 
@@ -45,23 +48,39 @@ use_collision = true
 size = Vector3(5.2264, 0.0535513, 8.78831)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1.8648, 0, 0, 0, 1, 0, 0, 0, 1, 0.57971, 0.0365497, -15.9696)
+transform = Transform3D(1.07412, 0, 0, 0, 1, 0, 0, 0, 0.700001, -0.144928, 0.0365497, -14.6876)
 size = Vector3(5.2264, 0.0535513, 8.78831)
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-2.94243e-09, 0, -0.6375, 0, 7.02519, 0, 0.067315, 0, -2.7866e-08, -1.49108, 0.28791, -20.1902)
+transform = Transform3D(-2.0597e-09, 0, -0.44625, 0, 2.95058, 0, 0.0471206, 0, -1.95062e-08, -0.96934, 0.141711, -15.421)
 size = Vector3(5.2264, 0.0664005, 8.78831)
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-2.94243e-09, 0, -0.255, 0, 7.02519, 0, 0.067315, 0, -1.11464e-08, 2.42197, 0.28791, -20.1902)
+transform = Transform3D(-2.0597e-09, 0, -0.1785, 0, 2.95058, 0, 0.0471206, 0, -7.8025e-09, 1.76979, 0.141711, -15.421)
 size = Vector3(5.2264, 0.0664005, 8.78831)
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-0.067315, 0, 2.22928e-08, 0, 7.0252, 0, -5.88487e-09, 0, -0.255, -2.07079, 0.28791, -19.1646)
+transform = Transform3D(-0.0471205, 0, 1.5605e-08, 0, 2.95059, 0, -4.11942e-09, 0, -0.1785, -1.37514, 0.141711, -14.7031)
 size = Vector3(5.2264, 0.0664005, 8.78831)
 
 [node name="CSGBox3D13" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-0.067315, 0, 2.22928e-08, 0, 7.0252, 0, -5.88487e-09, 0, -0.255, 2.13211, 0.28791, -19.1646)
+transform = Transform3D(-0.0471205, 0, 1.5605e-08, 0, 2.95059, 0, -4.11942e-09, 0, -0.1785, 1.56689, 0.141711, -14.7031)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.05971e-09, 0, 0.44625, 0, 2.95058, 0, -0.0471206, 0, -1.95062e-08, 0.885735, 0.105162, 4.01486)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-2.05971e-09, 0, 0.1785, 0, 2.95058, 0, -0.0471206, 0, -7.80248e-09, -1.8534, 0.105162, 4.01487)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.0471205, 0, 3.39825e-14, 0, 2.95059, 0, 1.54862e-14, 0, 0.1785, 1.29153, 0.105162, 3.29693)
+size = Vector3(5.2264, 0.0664005, 8.78831)
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.0471205, 0, 3.39825e-14, 0, 2.95059, 0, 1.54862e-14, 0, 0.1785, -1.6505, 0.105162, 3.29694)
 size = Vector3(5.2264, 0.0664005, 8.78831)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
@@ -134,10 +153,19 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -2.04714, 0.392552, -0.
 [node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Cowboy" instance=ExtResource("4_p7ho0")]
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.3, -0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00824165, 0.019865, -0.1)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34017, 3.4658, 3.11334)
 target = NodePath("../Cowboy/CamTarget")
-speed = 9.0
+speed = 6.0
 enabled = true
+
+[node name="Node3D" type="StaticBody3D" parent="."]
+transform = Transform3D(3.47729, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.756458, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D"]
+shape = SubResource("BoxShape3D_dhc18")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("BoxMesh_hstq3")

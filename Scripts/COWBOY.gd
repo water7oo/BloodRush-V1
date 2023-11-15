@@ -26,15 +26,24 @@ var blend_lerp_speed = 5.0  # Adjust the speed of blending
 var SPEED = BASE_SPEED
 var target_speed = BASE_SPEED
 var current_speed = 0.0
+
+
 @export var JUMP_VELOCITY = 8
+@export var SHORT_JUMP = 4
+@export var LONG_JUMP = 8
+@export var RUNJUMP_MULTIPLIER = 1.3
 var jump_timer = 0.0
+var jump_tap_timer = 0.1
+var jump_height = 128
 
 #Acceleration and Speed
 @export var ACCELERATION = 5.0 #the higher the value the faster the acceleration
 @export var DECELERATION = 25.0 #the lower the value the slippier the stop
+var BASE_ACCELERATION = 3
+var BASE_DECELERATION = 15.0 
 @export var DASH_ACCELERATION = 20
 @export var DASH_DECELERATION = 7
-var DASH_MAX_SPEED = BASE_SPEED * 5
+var DASH_MAX_SPEED = BASE_SPEED * 3
 var is_dodging = false
 var dash_timer = 0.0
 @export var dash_duration = 0.04
@@ -46,7 +55,6 @@ var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
 
 var air_time = 0.0
 var landing_animation_threshold = 1.0
-var RUNJUMP_MULTIPLIER = 1.2
 var WALL_STAY_DURATION = 0.5  # Adjust this value to control how long the player stays on the wall after a jump
 var wall_stay_timer = 0.0
 var ORIGINAL_JUMP_VEL = JUMP_VELOCITY
@@ -122,6 +130,13 @@ func _proccess_movement(delta):
 		else:
 			target_blend_amount = -1.0
 		
+		if is_sprinting:
+			ACCELERATION = BASE_ACCELERATION * 1.5
+			DECELERATION = BASE_DECELERATION * 0.1
+		else:
+			ACCELERATION = BASE_ACCELERATION
+			DECELERATION = BASE_DECELERATION
+
 
 	
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
@@ -144,8 +159,8 @@ func _proccess_movement(delta):
 		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
 		$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
 		
-		if InputBuffer.is_action_press_buffered("move_jump") and is_on_floor():
-			velocity.y = RUN_JUMP_VELOCITY
+#		if InputBuffer.is_action_press_buffered("move_jump") and is_on_floor():
+#			velocity.y = RUN_JUMP_VELOCITY
 
 	else:
 		is_sprinting = false
@@ -158,23 +173,17 @@ func _proccess_movement(delta):
 	#Dodging
 	if dodging && is_on_floor():
 		is_dodging = true
-		current_speed = 0
+		current_speed = DASH_MAX_SPEED
 		dash_timer = dash_duration 
 		LERP_VAL = DODGE_LERP_VAL
-		target_speed =  DASH_MAX_SPEED
-		$AnimationTree.set("parameters/OneShot/active", true) 
-	else:
-		$AnimationTree.set("parameters/OneShot/active", false) 
-		
-		
-		
+
 	if is_dodging:
 		dash_timer -= delta
-		is_sprinting = false 
+		is_sprinting = false
+
 		if dash_timer <= 0:
 			is_dodging = false
 			LERP_VAL = 0.2
-			target_speed = BASE_SPEED 
 		else:
 			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
 	
@@ -193,6 +202,17 @@ func _proccess_movement(delta):
 #					node.get_node("AnimationPlayer").play("CloudAnim")
 		
 
+func _proccess_jump(delta):
+	if Input.is_action_just_pressed("move_jump"):
+			jump_timer = 0.1
+			jump_timer-=delta
+	if jump_timer > 0 && is_on_floor():
+			jump_timer = 0.0
+			is_in_air = true
+			if is_sprinting:
+				velocity.y = JUMP_VELOCITY * RUNJUMP_MULTIPLIER
+			else:
+				velocity.y = JUMP_VELOCITY
 
 func _physics_process(delta):
 #	var fps = Engine.get_frames_per_second()
@@ -211,9 +231,10 @@ func _physics_process(delta):
 #
 #
 	_proccess_movement(delta)
+	_proccess_jump(delta)
 	_unhandled_input(delta)
 	if is_on_wall():
-		if InputBuffer.is_action_press_buffered("move_jump"):
+		if Input.is_action_just_pressed("move_jump"):
 			var wall_normal = get_wall_normal()
 			if wall_normal != null && wall_normal != Vector3.ZERO:
 				wall_normal = wall_normal.normalized() 
@@ -261,13 +282,7 @@ func _physics_process(delta):
 
 	sprinting = Input.is_action_pressed("move_sprint")
 	dodging = Input.is_action_just_pressed("move_dodge")
-	if Input.is_action_just_pressed("move_jump"):
-		jump_timer = 0.1
-	jump_timer-=delta
-	if jump_timer > 0 && is_on_floor():
-			jump_timer = 0.0
-			is_in_air = true
-			velocity.y = JUMP_VELOCITY
+	
 	
 	
 	
