@@ -7,24 +7,21 @@
 [sub_resource type="Curve" id="Curve_0txrv"]
 min_value = 1.0
 max_value = 1.5
-_data = [Vector2(0, 1.40526), 0.0, 0.0, 0, 0, Vector2(0.53, 1.31579), -0.379437, -0.379437, 0, 0, Vector2(0.79, 1.01), -2.1, -2.1, 0, 0, Vector2(0.98, 0.347368), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.14, 1.5), 0.0, 0.0, 0, 0, Vector2(0.16, 1.07368), -0.379437, -0.379437, 0, 0, Vector2(0.79, 1.01), -2.1, -2.1, 0, 0, Vector2(0.98, 0.347368), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_40vfr"]
 curve = SubResource("Curve_0txrv")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4vu0"]
-lifetime_randomness = 1.0
-spread = 64.87
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 0.5
 initial_velocity_max = 0.5
 linear_accel_max = 2.0
-damping_max = 5.0
+damping_max = 9.677
 angle_min = 12.0
 angle_max = 12.0
-scale_min = 0.2
-scale_max = 0.3
+scale_min = 0.0
+scale_max = 0.25
 scale_curve = SubResource("CurveTexture_40vfr")
 turbulence_noise_strength = 0.03
 turbulence_noise_scale = 4.81
@@ -55,8 +52,7 @@ transform = Transform3D(-9.73203e-08, 0, -1, 0, 0.492198, 0, 2.22643, 0, -4.3711
 material_override = ExtResource("1_nlbt2")
 material_overlay = ExtResource("1_nlbt2")
 emitting = false
-amount = 50
-lifetime = 2.0
+amount = 75
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_x4vu0")
 draw_pass_1 = SubResource("SphereMesh_fnqrm")

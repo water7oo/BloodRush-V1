@@ -188,12 +188,14 @@ func _proccess_movement(delta):
 			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
 	
 	
-		for node in dust_trail:
-			var particle_emitter = node.get_node("DUST2/GPUParticles3D")
-			if particle_emitter && input_dir && is_on_floor():
-				print_debug("DUST DUST DUST")
-				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
-				particle_emitter.set_emitting(should_emit_particles)
+	for node in dust_trail:
+		var particle_emitter = node.get_node("GPUParticles3D")
+		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
+			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
+			particle_emitter.set_emitting(should_emit_particles)
+
+			if is_in_air:
+				pass
 #		if is_in_air && is_on_floor():
 #			is_in_air = false
 #			for node in jump_wave:

@@ -5,13 +5,11 @@
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1opr"]
 sky_top_color = Color(0, 0.27451, 0.780392, 1)
 sky_horizon_color = Color(0, 0.8, 1, 1)
-sky_curve = 0.106066
-sky_energy_multiplier = 1.2
+sky_curve = 0.00618516
 sky_cover = ExtResource("1_36quu")
 ground_bottom_color = Color(0, 0.254902, 0.8, 1)
 ground_horizon_color = Color(0.309804, 0.85098, 1, 1)
-ground_curve = 0.278576
-ground_energy_multiplier = 1.2
+ground_curve = 0.618199
 sun_curve = 0.0549033
 
 [resource]
