@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvwoe3cnb8me3"
-path.s3tc="res://.godot/imported/MORI_BASE.png-82fe11274776d6a4125e6a38d60925b3.s3tc.ctex"
+uid="uid://dmppf54mvp2dp"
+path.s3tc="res://.godot/imported/Building Texture Sketch.png-61adbdf8a41cb75713cd72889f239a0e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://My Textures/MORI_BASE.png"
-dest_files=["res://.godot/imported/MORI_BASE.png-82fe11274776d6a4125e6a38d60925b3.s3tc.ctex"]
+source_file="res://My Textures/Building Texture Sketch.png"
+dest_files=["res://.godot/imported/Building Texture Sketch.png-61adbdf8a41cb75713cd72889f239a0e.s3tc.ctex"]
 
 [params]
 

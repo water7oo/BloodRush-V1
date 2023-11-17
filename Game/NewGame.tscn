@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://nfi35eolm8b4" path="res://Buildings/Buildings1.tscn" id="10_qi01w"]
 [ext_resource type="PackedScene" uid="uid://brs8ux0562mri" path="res://Buildings/Buildings2.tscn" id="11_dlrxn"]
 [ext_resource type="PackedScene" uid="uid://dabjr7mly443e" path="res://Billboards/Billboards.tscn" id="12_50rnn"]
-[ext_resource type="PackedScene" uid="uid://bo7ut5vrjx17r" path="res://Buildings/Buildings3.tscn" id="12_hj64o"]
+[ext_resource type="PackedScene" uid="uid://b71dsadut7ha" path="res://Buildings/buildings_3Textured.tscn" id="12_tcasi"]
 
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
@@ -141,7 +141,7 @@ size = Vector2i(1024, 600)
 render_target_update_mode = 4
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("3_yu345")]
-transform = Transform3D(0.2, 0, 3.49691e-08, 0, 0.2, 0, -3.49691e-08, 0, 0.2, 2.58144, 2.15149, 3.75989)
+transform = Transform3D(0.35, 0, 6.11959e-08, 0, 0.35, 0, -6.11959e-08, 0, 0.35, 2.58144, 2.15149, 3.75989)
 
 [node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Cowboy" instance=ExtResource("4_p7ho0")]
 
@@ -168,6 +168,6 @@ mesh = SubResource("BoxMesh_hstq3")
 
 [node name="Buildings2" parent="." instance=ExtResource("11_dlrxn")]
 
-[node name="Buildings3" parent="." instance=ExtResource("12_hj64o")]
-
 [node name="Billboards" parent="." instance=ExtResource("12_50rnn")]
+
+[node name="Buildings3" parent="." instance=ExtResource("12_tcasi")]

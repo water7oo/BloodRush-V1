@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byv2xwgml4niq"
-path.s3tc="res://.godot/imported/Mori_Hat.png-ca2114b4895df370f971b14da67c9360.s3tc.ctex"
+uid="uid://b326yas5ntvmi"
+path.s3tc="res://.godot/imported/Building Texture Sketch2.png-ff56792f76503c9c93a3dbc396bfec15.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://My Textures/Mori_Hat.png"
-dest_files=["res://.godot/imported/Mori_Hat.png-ca2114b4895df370f971b14da67c9360.s3tc.ctex"]
+source_file="res://My Textures/Building Texture Sketch2.png"
+dest_files=["res://.godot/imported/Building Texture Sketch2.png-ff56792f76503c9c93a3dbc396bfec15.s3tc.ctex"]
 
 [params]
 
