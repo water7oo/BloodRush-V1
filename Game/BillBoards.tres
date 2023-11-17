@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://2dnbklqr20g7"]
 
 [ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_0o83a"]
-[ext_resource type="Shader" path="res://Shaders/PS1_ANOTHERONE.gdshader" id="2_e8qxg"]
+[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_e8qxg"]
 [ext_resource type="Texture2D" uid="uid://diromdqe850gw" path="res://addons/kenney_prototype_textures/light/texture_12.png" id="3_cd7ij"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
