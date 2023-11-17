@@ -11,10 +11,8 @@ shader_parameter/outline_width = 3.0
 [resource]
 render_priority = 1
 next_pass = SubResource("ShaderMaterial_kwhof")
-transparency = 1
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-billboard_mode = 1
 billboard_keep_scale = true
 grow_amount = -2.759

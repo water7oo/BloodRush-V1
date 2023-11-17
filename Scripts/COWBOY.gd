@@ -130,12 +130,12 @@ func _proccess_movement(delta):
 		else:
 			target_blend_amount = -1.0
 		
-		if is_sprinting:
-			ACCELERATION = BASE_ACCELERATION * 1.5
-			DECELERATION = BASE_DECELERATION * 0.1
-		else:
-			ACCELERATION = BASE_ACCELERATION
-			DECELERATION = BASE_DECELERATION
+#		if is_sprinting:
+#			ACCELERATION = ACCELERATION * 1.5
+#			DECELERATION = DECELERATION * 1
+#		else:
+#			ACCELERATION = BASE_ACCELERATION
+#			DECELERATION = BASE_DECELERATION
 
 
 	

@@ -13,7 +13,7 @@ spring_arm_pivot = NodePath("SpringArmPivot")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.005)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.992546, 0.121869, 0, -0.121869, 0.992546, 0.00799954, 4.54049, 2.63746)
+transform = Transform3D(1, 0, 0, 0, 0.887343, 0.227073, 0, -0.108952, 1.84936, 0.00799954, 2.54049, 1.58964)
 shape = SubResource("SphereShape3D_wqenl")
 spring_length = 4.0
 

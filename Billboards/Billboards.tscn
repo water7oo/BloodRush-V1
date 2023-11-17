@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dabjr7mly443e"]
+
+[ext_resource type="Material" uid="uid://2dnbklqr20g7" path="res://Game/BillBoards.tres" id="1_0aklv"]
+
+[node name="Billboards" type="Node3D"]
+
+[node name="Billboards" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.734, 0, 0, 0, 0.523, 0, 0, 0, 0.417, 0, 0, 0)
+material_override = ExtResource("1_0aklv")
+use_collision = true
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Billboards"]
+transform = Transform3D(-2.61831e-08, 0, -5.2924, 0, 13.7844, 0, 0.599, 0, -2.31338e-07, -7.53918, 29.907, 95.7967)
+size = Vector3(1, 0.896499, 3.14732)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Billboards"]
+transform = Transform3D(-1.81402e-08, 0, -3.668, 0, 9.554, 0, 0.415, 0, -1.60333e-07, 7.4472, 28.5125, 99.5801)
+size = Vector3(1, 0.896499, 3.14732)
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Billboards"]
+transform = Transform3D(-2.29922e-08, -5.70838e-07, 4.651, -5.95082e-09, 24, 1.10624e-07, -0.526, -2.7152e-07, -2.03302e-07, -20.188, 29.7814, 97.5315)
+size = Vector3(1, 0.845881, 1)

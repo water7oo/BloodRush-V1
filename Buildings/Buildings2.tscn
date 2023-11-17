@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://brs8ux0562mri"]
+
+[ext_resource type="Material" uid="uid://mpycckwjukao" path="res://Game/Buildings.tres" id="1_wlj80"]
+
+[node name="Buildings2" type="Node3D"]
+
+[node name="Buildings" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.734, 0, 0, 0, 0.523, 0, 0, 0, 0.417, 0, 0, 0)
+material_override = ExtResource("1_wlj80")
+use_collision = true
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(45.885, 0, 0, 0, 31.2999, 0, 0, 0, 25.935, 33.0452, 5.25254, 27.3842)
+size = Vector3(0.36, 0.82, 0.665)
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(45.885, 0, 0, 0, 31.2999, 0, 0, 0, 25.935, 33.0452, -2.74746, 9.38418)
+size = Vector3(0.36, 0.82, 0.665)
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(45.885, 0, 0, 0, 31.2999, 0, 0, 0, 25.9351, 33.0452, 9.25254, -8.61585)
+size = Vector3(0.36, 0.82, 0.665)
+
+[node name="CSGBox3D26" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(-45.885, 0, 4.0114e-06, 0, 37.5598, 0, -2.26731e-06, 0, -25.9351, 33.3852, 13.2526, 49.3842)
+size = Vector3(0.36, 0.82, 0.665)
+
+[node name="CSGBox3D27" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(-45.885, 0, 4.0114e-06, 0, 31.2999, 0, -2.26731e-06, 0, -25.9351, 33.9687, 5.25254, 67.3843)
+size = Vector3(0.36, 0.82, 0.665)
+
+[node name="CSGBox3D28" type="CSGBox3D" parent="Buildings"]
+transform = Transform3D(-45.885, 0, 4.0114e-06, 0, 53.7106, 0, -2.26731e-06, 0, -25.9351, 33.3852, 17.2525, 85.3844)
+size = Vector3(0.36, 0.82, 0.665)

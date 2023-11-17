@@ -1,10 +1,8 @@
 shader_type spatial;
-render_mode unshaded , blend_mix,
+render_mode blend_mix, 
 	cull_disabled,
-	depth_prepass_alpha,
-	shadows_disabled,
-	specular_disabled,
-	vertex_lighting;
+	depth_prepass_alpha, depth_draw_always,
+	vertex_lighting, diffuse_toon, specular_toon;
 
 uniform bool affine_mapping = false;
 uniform sampler2D albedo : source_color, filter_nearest;
@@ -47,6 +45,8 @@ void fragment()
 	ALBEDO = (color_base * texture_color).rgb;
 	ALPHA = texture_color.a * color_base.a;
 	ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
+	ROUGHNESS = 0.0;
 }
+
 
 
