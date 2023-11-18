@@ -173,35 +173,36 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_gvwjx")
 
 [node name="Buildings3" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.782072, 0)
 
 [node name="Buildings_001" type="MeshInstance3D" parent="."]
-transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 0, 0)
+transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, -0.315054, 0)
 mesh = SubResource("ArrayMesh_6hv24")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_hko4r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 0, 0)
+transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, -0.315054, 0)
 shape = SubResource("ConvexPolygonShape3D_m2nyq")
 
 [node name="Buildings" type="MeshInstance3D" parent="."]
-transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 0, 0)
+transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 2.10719, 0)
 material_override = SubResource("StandardMaterial3D_4mk52")
 mesh = SubResource("ArrayMesh_o8es3")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 0, 0)
+transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 2.10719, 0)
 shape = SubResource("ConcavePolygonShape3D_t8xau")
 
 [node name="Buildings_002" type="MeshInstance3D" parent="."]
-transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 0, 0)
+transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, -0.771893, 0)
 material_override = SubResource("StandardMaterial3D_r2k3o")
 mesh = SubResource("ArrayMesh_ke7lp")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
-transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, 0, 0)
+transform = Transform3D(73.4, 0, 0, 0, -4.97103e-06, 52.3, 0, -41.7, -6.23465e-06, 0, -0.771893, 0)
 shape = SubResource("ConcavePolygonShape3D_ouw6u")
 
 [node name="Buildings_003" type="MeshInstance3D" parent="."]

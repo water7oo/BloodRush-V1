@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
 [ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Cowboy_Player/PlayerCamera.tscn" id="6_m03c4"]
-[ext_resource type="PackedScene" uid="uid://nfi35eolm8b4" path="res://Buildings/Buildings1.tscn" id="10_qi01w"]
-[ext_resource type="PackedScene" uid="uid://brs8ux0562mri" path="res://Buildings/Buildings2.tscn" id="11_dlrxn"]
+[ext_resource type="PackedScene" uid="uid://djyl4b8gx386k" path="res://Buildings/buildings_2Textured.tscn" id="11_dgxbd"]
 [ext_resource type="PackedScene" uid="uid://dabjr7mly443e" path="res://Billboards/Billboards.tscn" id="12_50rnn"]
+[ext_resource type="PackedScene" uid="uid://bgrl7hpa7v802" path="res://Buildings/buildings_1Textured.tscn" id="12_82owd"]
 [ext_resource type="PackedScene" uid="uid://b71dsadut7ha" path="res://Buildings/buildings_3Textured.tscn" id="12_tcasi"]
 
 [sub_resource type="Environment" id="Environment_tjwux"]
@@ -55,7 +55,7 @@ transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0
 environment = SubResource("Environment_tjwux")
 
 [node name="Ground" type="CSGCombiner3D" parent="."]
-transform = Transform3D(2.783, 0, 0, 0, 11.035, 0, 0, 0, 1.573, 0, -0.828393, 0)
+transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
 material_override = SubResource("StandardMaterial3D_jdeq7")
 use_collision = true
 
@@ -74,7 +74,7 @@ material_override = ExtResource("3_lweo1")
 use_collision = true
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Buildings"]
-transform = Transform3D(83.7232, 0, 0, 0, 21.3408, 0, 0, 0, 33.8013, -3.95337, 4.40022, -33.6058)
+transform = Transform3D(83.7232, 0, 0, 0, 21.3408, 0, 0, 0, 33.8013, -3.95337, 1.01545, -37.4285)
 
 [node name="Objects" type="CSGCombiner3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
@@ -164,10 +164,14 @@ shape = SubResource("BoxShape3D_dhc18")
 material_override = SubResource("ShaderMaterial_5g236")
 mesh = SubResource("BoxMesh_hstq3")
 
-[node name="Buildings1" parent="." instance=ExtResource("10_qi01w")]
-
-[node name="Buildings2" parent="." instance=ExtResource("11_dlrxn")]
-
 [node name="Billboards" parent="." instance=ExtResource("12_50rnn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94194, 0)
 
 [node name="Buildings3" parent="." instance=ExtResource("12_tcasi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94194, 0)
+
+[node name="Buildings1" parent="." instance=ExtResource("12_82owd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71279, 1.7399, -0.848322)
+
+[node name="Buildings2" parent="." instance=ExtResource("11_dgxbd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1859, 0, -0.540138)
