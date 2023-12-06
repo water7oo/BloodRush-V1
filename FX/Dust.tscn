@@ -1,16 +1,24 @@
-[gd_scene load_steps=8 format=3 uid="uid://dq1wojfy8mi7q"]
+[gd_scene load_steps=10 format=3 uid="uid://dq1wojfy8mi7q"]
 
 [ext_resource type="Material" uid="uid://cx0dsad2my6ud" path="res://Shaders/Dust.tres" id="1_nlbt2"]
 [ext_resource type="Shader" path="res://PS1.gdshader" id="1_upxlw"]
 [ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="2_bd2qp"]
+
+[sub_resource type="Curve" id="Curve_w4jfo"]
+_data = [Vector2(0, 0.273684), 0.0, 0.0, 0, 0, Vector2(0.51, 0.915789), -1.78947, -1.78947, 0, 0, Vector2(1, 0.305263), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_llsai"]
+curve = SubResource("Curve_w4jfo")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4vu0"]
 gravity = Vector3(0, 0, 0)
 initial_velocity_max = 0.5
 linear_accel_max = 3.0
 damping_max = 9.0
-scale_min = 0.1
-scale_max = 0.4
+scale_min = 0.5
+scale_max = 0.9
+scale_curve = SubResource("CurveTexture_llsai")
 turbulence_noise_strength = 0.03
 turbulence_noise_scale = 4.81
 
@@ -36,10 +44,11 @@ rings = 2
 [node name="DUST2" type="Node3D" groups=["dust_trail"]]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(-9.73203e-08, 0, -1, 0, 0.492198, 0, 2.22643, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-9.73203e-08, 0, -1, 0, 0.492198, 0, 2.22643, 0, -4.37114e-08, 0, 0, 0.156606)
 material_override = ExtResource("1_nlbt2")
 emitting = false
-amount = 200
+amount = 50
+lifetime = 0.7
 randomness = 1.0
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_x4vu0")

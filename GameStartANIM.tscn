@@ -1,0 +1,106 @@
+[gd_scene load_steps=7 format=3 uid="uid://byiwrnoah113n"]
+
+[ext_resource type="Texture2D" uid="uid://bxjqlnv4bhfmt" path="res://Solid_black.svg.png" id="1_7hqct"]
+
+[sub_resource type="Animation" id="Animation_3umi4"]
+resource_name = "Opener"
+length = 1.4725
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/MeshInstance2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(521, 147), Vector2(521, 136.815), Vector2(521, 30.787), Vector2(521, -150)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer/MeshInstance2D2:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(521, 490), Vector2(521, 491.955), Vector2(521, 503.37), Vector2(521, 544)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer/MeshInstance2D:rotation")
+tracks/2/interp = 4
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.023685]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimationPlayer/MeshInstance2D2:rotation")
+tracks/3/interp = 4
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.14159, -3.1097]
+}
+
+[sub_resource type="Animation" id="Animation_bxu6p"]
+resource_name = "Opener2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/MeshInstance2D2:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(521, 490), Vector2(521, 691)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l08jy"]
+_data = {
+"Opener": SubResource("Animation_3umi4"),
+"Opener2": SubResource("Animation_bxu6p")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nhbyx"]
+light_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_bp5hn"]
+
+[node name="Opener" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Opener"
+playback_default_blend_time = 3.0
+libraries = {
+"": SubResource("AnimationLibrary_l08jy")
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="AnimationPlayer"]
+material = SubResource("CanvasItemMaterial_nhbyx")
+position = Vector2(521, -150)
+rotation = 0.023685
+scale = Vector2(1119, 346)
+mesh = SubResource("QuadMesh_bp5hn")
+texture = ExtResource("1_7hqct")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="AnimationPlayer"]
+material = SubResource("CanvasItemMaterial_nhbyx")
+position = Vector2(521, 544)
+rotation = 3.17348
+scale = Vector2(1119, 346)
+mesh = SubResource("QuadMesh_bp5hn")
+texture = ExtResource("1_7hqct")

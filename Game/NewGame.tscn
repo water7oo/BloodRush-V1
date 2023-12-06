@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=21 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
 [ext_resource type="Texture2D" uid="uid://cvlifsakrek6n" path="res://addons/kenney_prototype_textures/dark/texture_06.png" id="2_ig7bx"]
@@ -8,10 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
 [ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Cowboy_Player/PlayerCamera.tscn" id="6_m03c4"]
-[ext_resource type="PackedScene" uid="uid://djyl4b8gx386k" path="res://Buildings/buildings_2Textured.tscn" id="11_dgxbd"]
+[ext_resource type="Texture2D" uid="uid://d2f6hkjv5n8k2" path="res://addons/kenney_prototype_textures/dark/texture_10.png" id="9_3f5io"]
+[ext_resource type="PackedScene" uid="uid://nfi35eolm8b4" path="res://Buildings/Buildings1.tscn" id="10_uhiin"]
+[ext_resource type="PackedScene" uid="uid://brs8ux0562mri" path="res://Buildings/Buildings2.tscn" id="11_pji27"]
 [ext_resource type="PackedScene" uid="uid://dabjr7mly443e" path="res://Billboards/Billboards.tscn" id="12_50rnn"]
-[ext_resource type="PackedScene" uid="uid://bgrl7hpa7v802" path="res://Buildings/buildings_1Textured.tscn" id="12_82owd"]
-[ext_resource type="PackedScene" uid="uid://b71dsadut7ha" path="res://Buildings/buildings_3Textured.tscn" id="12_tcasi"]
+[ext_resource type="PackedScene" uid="uid://bo7ut5vrjx17r" path="res://Buildings/Buildings3.tscn" id="12_c7e2n"]
+[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="13_a8nsm"]
 
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
@@ -31,6 +33,13 @@ fog_density = 0.0247
 adjustment_enabled = true
 adjustment_saturation = 1.9
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4nit"]
+albedo_texture = ExtResource("9_3f5io")
+
+[sub_resource type="BoxMesh" id="BoxMesh_hstq3"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdeq7"]
 shading_mode = 0
 diffuse_mode = 3
@@ -40,12 +49,6 @@ albedo_texture = ExtResource("2_ig7bx")
 [sub_resource type="BoxShape3D" id="BoxShape3D_2ccde"]
 size = Vector3(1, 0.215723, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5g236"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_hstq3"]
-
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -54,10 +57,20 @@ transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tjwux")
 
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(-3.40497e-08, -64.9223, 0, 0.778967, -2.83784e-06, 0, 0, 0, 59.3641, 0, -0.41, 10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_dhc18")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+material_override = SubResource("StandardMaterial3D_g4nit")
+mesh = SubResource("BoxMesh_hstq3")
+
 [node name="Ground" type="CSGCombiner3D" parent="."]
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_jdeq7")
-use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
 transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.31521, 0, 0, 10)
@@ -82,23 +95,23 @@ material_override = ExtResource("4_e3dc7")
 use_collision = true
 
 [node name="CSGBox3D14" type="CSGBox3D" parent="Objects"]
-transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 1.38763, 0, -20.7, 0, -1.70474e-07, -28.9748, -1.23915, -14.0003)
+transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 4.49082, 0, -20.7, 0, -1.70474e-07, -34.1936, 0.334616, -17.8503)
 size = Vector3(0.36, 0.82, 1.07809)
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="Objects"]
-transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 2.35896, 0, -20.7, 0, -1.70474e-07, -24.0102, -0.95316, -13.9331)
-size = Vector3(0.36, 0.82, 0.96547)
+transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 8.3703, 0, -20.7, 0, -1.70474e-07, -26.5689, 0.804946, -17.7831)
+size = Vector3(0.36, 0.677016, 0.96547)
 
 [node name="CSGBox3D16" type="CSGBox3D" parent="Objects"]
-transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 2.6706, 0, -20.7, 0, -1.70474e-07, -19.0335, -0.828114, -13.9331)
+transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 3.45717, 0, -20.7, 0, -1.70474e-07, -19.0335, 2.76418, -17.7831)
 size = Vector3(0.36, 1.43958, 1.04028)
 
 [node name="CSGBox3D17" type="CSGBox3D" parent="Objects"]
-transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 3.38812, 0, -20.7, 0, -1.70474e-07, -7.5248, 1.14032, -13.9331)
+transform = Transform3D(-9.04826e-07, 0, 3.9, 0, 29.127, 0, -20.7, 0, -1.70474e-07, -5.61561, 2.44776, -17.7831)
 size = Vector3(0.401421, 0.28681, 3.89033)
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="Objects"]
-transform = Transform3D(4.454, 0, 0, 0, 9.227, 0, 0, 0, 4.093, -3.03936, 4.00681, -15.7265)
+transform = Transform3D(4.454, 0, 0, 0, 11.9446, 0, 0, 0, 4.093, -1.13017, 9.02313, -19.5765)
 size = Vector3(1, 0.551687, 1)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Objects"]
@@ -154,24 +167,13 @@ target = NodePath("../Cowboy/CamTarget")
 speed = 6.0
 enabled = true
 
-[node name="Node3D" type="StaticBody3D" parent="."]
-transform = Transform3D(-3.40497e-08, -8.83752, 0, 0.778967, -3.863e-07, 0, 0, 0, 9.45057, 0, 0.756458, 7.44084)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D"]
-shape = SubResource("BoxShape3D_dhc18")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
-material_override = SubResource("ShaderMaterial_5g236")
-mesh = SubResource("BoxMesh_hstq3")
-
 [node name="Billboards" parent="." instance=ExtResource("12_50rnn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94194, 0)
 
-[node name="Buildings3" parent="." instance=ExtResource("12_tcasi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94194, 0)
+[node name="Buildings1" parent="." instance=ExtResource("10_uhiin")]
 
-[node name="Buildings1" parent="." instance=ExtResource("12_82owd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71279, 1.7399, -0.848322)
+[node name="Buildings2" parent="." instance=ExtResource("11_pji27")]
 
-[node name="Buildings2" parent="." instance=ExtResource("11_dgxbd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1859, 0, -0.540138)
+[node name="Buildings3" parent="." instance=ExtResource("12_c7e2n")]
+
+[node name="Opener" parent="." instance=ExtResource("13_a8nsm")]
