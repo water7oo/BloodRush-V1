@@ -48,7 +48,6 @@ transform = Transform3D(-9.73203e-08, 0, -1, 0, 0.492198, 0, 2.22643, 0, -4.3711
 material_override = ExtResource("1_nlbt2")
 emitting = false
 amount = 50
-lifetime = 0.7
 randomness = 1.0
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_x4vu0")

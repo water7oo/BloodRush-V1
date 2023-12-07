@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mru6yu38no5o"
-path.s3tc="res://.godot/imported/texture_05.png-ed8122ecdc41ff5aeccab84e8db1e4f0.s3tc.ctex"
+uid="uid://doha7ra61fyw6"
+path.s3tc="res://.godot/imported/TrimSheet_Testing-Buildings.png-148eb39023673db0c3bf1595337363ee.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/kenney_prototype_textures/dark/texture_05.png"
-dest_files=["res://.godot/imported/texture_05.png-ed8122ecdc41ff5aeccab84e8db1e4f0.s3tc.ctex"]
+source_file="res://TrimSheet_Testing-Buildings.png"
+dest_files=["res://.godot/imported/TrimSheet_Testing-Buildings.png-148eb39023673db0c3bf1595337363ee.s3tc.ctex"]
 
 [params]
 

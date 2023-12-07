@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=20 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_f1vrp"]
 [ext_resource type="Texture2D" uid="uid://cvlifsakrek6n" path="res://addons/kenney_prototype_textures/dark/texture_06.png" id="2_ig7bx"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
 [ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Cowboy_Player/PlayerCamera.tscn" id="6_m03c4"]
-[ext_resource type="Texture2D" uid="uid://d2f6hkjv5n8k2" path="res://addons/kenney_prototype_textures/dark/texture_10.png" id="9_3f5io"]
 [ext_resource type="PackedScene" uid="uid://nfi35eolm8b4" path="res://Buildings/Buildings1.tscn" id="10_uhiin"]
 [ext_resource type="PackedScene" uid="uid://brs8ux0562mri" path="res://Buildings/Buildings2.tscn" id="11_pji27"]
 [ext_resource type="PackedScene" uid="uid://dabjr7mly443e" path="res://Billboards/Billboards.tscn" id="12_50rnn"]
@@ -35,8 +34,13 @@ adjustment_saturation = 1.9
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4nit"]
-albedo_texture = ExtResource("9_3f5io")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3aj7"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+albedo_texture = ExtResource("2_ig7bx")
+uv1_scale = Vector3(15.175, 15.175, 15.175)
 
 [sub_resource type="BoxMesh" id="BoxMesh_hstq3"]
 
@@ -64,13 +68,14 @@ transform = Transform3D(-3.40497e-08, -64.9223, 0, 0.778967, -2.83784e-06, 0, 0,
 shape = SubResource("BoxShape3D_dhc18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-material_override = SubResource("StandardMaterial3D_g4nit")
+material_override = SubResource("StandardMaterial3D_k3aj7")
 mesh = SubResource("BoxMesh_hstq3")
 
 [node name="Ground" type="CSGCombiner3D" parent="."]
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
 visible = false
 material_override = SubResource("StandardMaterial3D_jdeq7")
+use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
 transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.31521, 0, 0, 10)
@@ -167,6 +172,8 @@ target = NodePath("../Cowboy/CamTarget")
 speed = 6.0
 enabled = true
 
+[node name="Opener" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("13_a8nsm")]
+
 [node name="Billboards" parent="." instance=ExtResource("12_50rnn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94194, 0)
 
@@ -175,5 +182,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94194, 0)
 [node name="Buildings2" parent="." instance=ExtResource("11_pji27")]
 
 [node name="Buildings3" parent="." instance=ExtResource("12_c7e2n")]
-
-[node name="Opener" parent="." instance=ExtResource("13_a8nsm")]
