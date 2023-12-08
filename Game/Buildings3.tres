@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cgmslcknann3o"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_evll7"]
+[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_rlkdk"]
+[ext_resource type="Texture2D" uid="uid://hox0rl4cdtnb" path="res://My Textures/BuildingTypeC.png" id="3_vg14r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
+render_priority = 0
+shader = ExtResource("1_evll7")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 1.0
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_skukh")
+shader = ExtResource("2_rlkdk")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.4
+shader_parameter/resolution = Vector2i(1005, 240)
+shader_parameter/albedo = ExtResource("3_vg14r")

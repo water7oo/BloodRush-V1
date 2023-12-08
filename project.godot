@@ -25,7 +25,7 @@ InputBuffer="*res://addons/InputBuffer.gd"
 window/size/viewport_width=1024
 window/size/viewport_height=600
 window/stretch/mode="viewport"
-window/stretch/scale=1.5
+window/stretch/scale=2.0
 
 [editor]
 
@@ -131,6 +131,7 @@ common/physics_ticks_per_second=120
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 anti_aliasing/screen_space_roughness_limiter/amount=0.01

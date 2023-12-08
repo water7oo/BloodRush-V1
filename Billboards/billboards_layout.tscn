@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddyhhkuglawml"]
+
+[ext_resource type="PackedScene" uid="uid://bmd8s3mlienm1" path="res://Billboards/Billboards_Layout.fbx" id="1_rd38p"]
+[ext_resource type="Texture2D" uid="uid://cuv5rccoj6qgo" path="res://My Textures/IMG_2576.png" id="2_l7u8l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_by38l"]
+albedo_texture = ExtResource("2_l7u8l")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vx4y"]
+albedo_texture = ExtResource("2_l7u8l")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v60av"]
+albedo_texture = ExtResource("2_l7u8l")
+texture_filter = 0
+
+[node name="Billboards_Layout" instance=ExtResource("1_rd38p")]
+
+[node name="Cube" parent="RootNode" index="0"]
+material_override = SubResource("StandardMaterial3D_by38l")
+
+[node name="Cube_001" parent="RootNode" index="1"]
+material_override = SubResource("StandardMaterial3D_8vx4y")
+
+[node name="Cube_002" parent="RootNode" index="2"]
+material_override = SubResource("StandardMaterial3D_v60av")

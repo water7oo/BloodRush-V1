@@ -1,0 +1,11 @@
+[gd_resource type="Sky" load_steps=3 format=3 uid="uid://1qk84i63du0a"]
+
+[ext_resource type="Texture2D" uid="uid://bln3tcubo85kw" path="res://My Textures/Sky Texture_GameBANDW.png" id="1_kf6g4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1opr"]
+sky_cover = ExtResource("1_kf6g4")
+ground_curve = 0.045448
+sun_curve = 0.0549033
+
+[resource]
+sky_material = SubResource("ProceduralSkyMaterial_l1opr")

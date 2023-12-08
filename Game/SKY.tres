@@ -3,14 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://d7b2dg3gyp3k" path="res://My Textures/Sky Texture_Game.png" id="1_36quu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l1opr"]
-sky_top_color = Color(0, 0.27451, 0.780392, 1)
-sky_horizon_color = Color(0, 0.8, 1, 1)
-sky_curve = 0.00618516
+sky_top_color = Color(0, 0.356863, 0.552941, 1)
+sky_horizon_color = Color(0.14902, 0.796078, 1, 1)
+sky_curve = 0.0052011
 sky_cover = ExtResource("1_36quu")
 ground_bottom_color = Color(0, 0.254902, 0.8, 1)
 ground_horizon_color = Color(0.309804, 0.85098, 1, 1)
-ground_curve = 0.618199
-sun_curve = 0.0549033
+ground_curve = 0.0800002
 
 [resource]
 sky_material = SubResource("ProceduralSkyMaterial_l1opr")
