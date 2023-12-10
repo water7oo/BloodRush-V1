@@ -1,0 +1,13 @@
+varied jump
+
+Have tbe player press jump button
+game gives player max jumping height
+player falls back down after reaching regular heighr
+now if the player holds the jump button, they go to max jump height and falls doen
+
+most likely needs to track time player is in the air and
+have the player fall back doen after ancertain amount of time
+so if i pressthe jump button, player should go up and back down with gravity
+but if i hold it player wil go up to the max height snd grabity will knock the player down
+
+dont forget to interpolate this movement 
