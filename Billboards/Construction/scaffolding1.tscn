@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://jubxd8mx88ue"]
+
+[ext_resource type="PackedScene" uid="uid://b62jutyqli6xy" path="res://Billboards/Construction/Scaffolding.fbx" id="1_bt732"]
+[ext_resource type="Material" uid="uid://bwrdtq25v11qf" path="res://Billboards/Construction/Scaffolding1.tres" id="2_2tf3e"]
+
+[node name="Scaffolding" instance=ExtResource("1_bt732")]
+
+[node name="Cylinder" parent="RootNode" index="0"]
+material_override = ExtResource("2_2tf3e")
+
+[node name="Cylinder_001" parent="RootNode" index="1"]
+material_override = ExtResource("2_2tf3e")
+
+[node name="Cube" parent="RootNode" index="2"]
+material_override = ExtResource("2_2tf3e")
+
+[node name="Cube_001" parent="RootNode" index="3"]
+material_override = ExtResource("2_2tf3e")
+
+[node name="Plane" parent="RootNode" index="4"]
+material_override = ExtResource("2_2tf3e")

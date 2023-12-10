@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://doha7ra61fyw6"
-path.s3tc="res://.godot/imported/TrimSheet_Testing-Buildings.png-148eb39023673db0c3bf1595337363ee.s3tc.ctex"
+path.s3tc="res://.godot/imported/TrimSheet_Testing-Buildings.png-e85c59bda2159bac8813e5409b9bc680.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TrimSheet_Testing-Buildings.png"
-dest_files=["res://.godot/imported/TrimSheet_Testing-Buildings.png-148eb39023673db0c3bf1595337363ee.s3tc.ctex"]
+source_file="res://My Textures/TrimSheet_Testing-Buildings.png"
+dest_files=["res://.godot/imported/TrimSheet_Testing-Buildings.png-e85c59bda2159bac8813e5409b9bc680.s3tc.ctex"]
 
 [params]
 

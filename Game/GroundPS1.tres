@@ -8,7 +8,7 @@
 render_priority = 0
 shader = ExtResource("1_wcja1")
 shader_parameter/outline_color = null
-shader_parameter/outline_width = 1.0
+shader_parameter/outline_width = 0.0
 
 [resource]
 render_priority = 0
@@ -16,6 +16,6 @@ next_pass = SubResource("ShaderMaterial_skukh")
 shader = ExtResource("2_yr6at")
 shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.5
-shader_parameter/jitter = 0.11
+shader_parameter/jitter = 0.05
 shader_parameter/resolution = Vector2i(1005, 240)
 shader_parameter/albedo = ExtResource("3_xd50k")

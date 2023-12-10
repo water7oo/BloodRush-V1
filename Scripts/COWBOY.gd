@@ -3,7 +3,8 @@ extends CharacterBody3D
 var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
-
+@onready var timer = $Timer
+@onready var label = $Label
 @onready var blend_space = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 var current_blend_amount = 0.0
@@ -42,7 +43,7 @@ var jump_height = 128
 var BASE_ACCELERATION = 3
 var BASE_DECELERATION = 15.0 
 @export var DASH_ACCELERATION = 20
-@export var DASH_DECELERATION = 7
+@export var DASH_DECELERATION = 20
 var DASH_MAX_SPEED = BASE_SPEED * 3
 var is_dodging = false
 var dash_timer = 0.0
@@ -205,18 +206,80 @@ func _proccess_movement(delta):
 		
 
 func _proccess_jump(delta):
-	if Input.is_action_just_pressed("move_jump"):
-			jump_timer = 0.1
-			jump_timer-=delta
-	if jump_timer > 0 && is_on_floor():
-			jump_timer = 0.0
-			is_in_air = true
-			if is_sprinting:
-				velocity.y = JUMP_VELOCITY * RUNJUMP_MULTIPLIER
+	var button_pressed = false
+	
+	if Input.is_action_pressed("move_jump"):
+		button_pressed = true
+		jump_timer += delta
+		if is_on_floor():
+			if jump_timer >= 0.15:
+				print("HIGH JUMP")
+				velocity.y = JUMP_VELOCITY * 2
+				
+			elif jump_timer < 0.15:
+				print("SHORT JUMP")
+				velocity.y = JUMP_VELOCITY
 			else:
 				velocity.y = JUMP_VELOCITY
+			is_in_air = true
+			
+#			if is_on_floor():
+#				is_in_air = true
+#				if is_sprinting:
+#					velocity.y = JUMP_VELOCITY * RUNJUMP_MULTIPLIER
+#				else:
+#					velocity.y = JUMP_VELOCITY
+				
+	if Input.is_action_just_released("move_jump"):
+		button_pressed = false
+		if is_in_air:
+			is_in_air = false
+		if jump_timer > 0.0:
+			print("Button held for "+ str(jump_timer) + " seconds")
+		jump_timer = 0.0
+
+#func _button_test(delta):
+#		var button_pressed = false
+#		if Input.is_action_pressed("button_test"):
+#			button_pressed = true
+#			jump_timer += delta
+#
+#		if Input.is_action_just_released("button_test"):
+#			button_pressed = false
+#
+#			if jump_timer > 0.0:
+#				print("Button held for "+ str(jump_timer) + " seconds")
+#			jump_timer = 0.0
+
+func _process_walljump(delta):
+	if is_on_wall():
+		if Input.is_action_just_pressed("move_jump"):
+			var wall_normal = get_wall_normal()
+			if wall_normal != null && wall_normal != Vector3.ZERO:
+				wall_normal = wall_normal.normalized() 
+				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
+				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
+
+				has_wall_jumped = true
+				can_wall_jump = false
+				wall_jump_position = global_transform.origin
+				if has_wall_jumped:
+					for node in wall_wave:
+							node.global_transform.origin = wall_jump_position
+							if node.has_node("AnimationPlayer"):
+								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
+
+			else:
+				velocity.x = 0
+				velocity.z = 0
+				velocity.y += custom_gravity * delta
+		else:
+			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
+
 
 func _physics_process(delta):
+	
+	
 #	var fps = Engine.get_frames_per_second()
 #	var lerp_interval = direction / fps
 #	var lerp_position = global_transform.origin + lerp_interval
@@ -234,31 +297,11 @@ func _physics_process(delta):
 #
 	_proccess_movement(delta)
 	_proccess_jump(delta)
+	_process_walljump(delta)
 	_unhandled_input(delta)
-	if is_on_wall():
-		if Input.is_action_just_pressed("move_jump"):
-			var wall_normal = get_wall_normal()
-			if wall_normal != null && wall_normal != Vector3.ZERO:
-				wall_normal = wall_normal.normalized() 
-				velocity = wall_normal * (JUMP_VELOCITY * WALL_JUMP_VELOCITY_MULTIPLIER)
-				velocity.y += WALL_JUMP_VELOCITY_MULTIPLIER
-				
-				has_wall_jumped = true
-				can_wall_jump = false
-				wall_jump_position = global_transform.origin
-				if has_wall_jumped:
-					for node in wall_wave:
-							node.global_transform.origin = wall_jump_position
-							if node.has_node("AnimationPlayer"):
-								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
-		
-			else:
-				velocity.x = 0
-				velocity.z = 0
-				velocity.y += custom_gravity * delta
-		else:
-			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
-			
+#	_button_test(delta)
+	
+
 
 
 	if not is_on_floor():
@@ -309,3 +352,9 @@ func respawn():
 ##Enemy to player
 #func _on_enemy_area_entered(area):
 #	pass # Replace with function body.
+
+
+func _on_timer_timeout():
+	pass
+
+
