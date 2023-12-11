@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=5 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
+[ext_resource type="Shader" path="res://addons/TESTING2.gdshader" id="2_y4lm6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
+render_priority = 0
+shader = ExtResource("2_y4lm6")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 1.0
+shader_parameter/highlight_strength = 0.0
+shader_parameter/highlight_color = Color(0, 0, 0, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
@@ -13,15 +26,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.959388, 0.640344, 0, -0.28209, 2.17781, 0.00799954, 0.0583815, 0.0732438)
 collision_mask = 255
-spring_length = 3.245
+spring_length = 2.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.63814, 1.76711)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(1, 5.71954e-15, 1.46971e-14, 2.30444e-15, 0.885565, -0.453027, 2.6887e-16, 0.283649, 0.352349, 0, -2.03851, 0.956286)
+transform = Transform3D(1, 5.71956e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.38137, 0.181079)
 doppler_tracking = 2
 current = true
 size = 2.0
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.73466, 4)
+material_override = SubResource("ShaderMaterial_td6vy")
+mesh = SubResource("QuadMesh_n1m7q")

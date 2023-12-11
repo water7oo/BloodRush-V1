@@ -1,9 +1,18 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bwrdtq25v11qf"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bwrdtq25v11qf"]
 
+[ext_resource type="Shader" path="res://addons/TESTING2.gdshader" id="1_fqu1f"]
 [ext_resource type="Texture2D" uid="uid://b3ih2bf077rm8" path="res://Billboards/Construction/TrimSheet_Testing-Buildings.png" id="2_2plid"]
 [ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_3xj50"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
+render_priority = 0
+shader = ExtResource("1_fqu1f")
+shader_parameter/shadows_enabled = false
+shader_parameter/highlights_enabled = false
+shader_parameter/shadow_strength = 0.6
+shader_parameter/highlight_strength = 0.1
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
 
 [resource]
 render_priority = 0
