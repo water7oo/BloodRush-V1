@@ -55,6 +55,7 @@ var dash_timer = 0.0
 var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
 
 var air_time = 0.0
+var air_timer = 0.0
 var landing_animation_threshold = 1.0
 var WALL_STAY_DURATION = 0.5  # Adjust this value to control how long the player stays on the wall after a jump
 var wall_stay_timer = 0.0
@@ -64,10 +65,11 @@ var LERP_VAL = 0.2
 var DODGE_LERP_VAL = 1
 var wall_jump_position = Vector3.ZERO
 
-var custom_gravity = 27.0 #The lower the value the floatier
+var custom_gravity = 45.0 #The lower the value the floatier
 var sprinting = false
 var dodging = false
 var is_in_air = false
+var can_jump = true
 
 var is_sprinting = false
 var light_attack1 = false
@@ -206,37 +208,33 @@ func _proccess_movement(delta):
 		
 
 func _proccess_jump(delta):
-	var button_pressed = false
-	
+	if !is_on_floor():
+		air_timer += delta
+		can_jump = false
+		velocity.y -= custom_gravity * delta
+		
+
 	if Input.is_action_pressed("move_jump"):
-		button_pressed = true
 		jump_timer += delta
-		if is_on_floor():
-			if jump_timer >= 0.15:
-				print("HIGH JUMP")
-				velocity.y = JUMP_VELOCITY * 2
-				
-			elif jump_timer < 0.15:
-				print("SHORT JUMP")
-				velocity.y = JUMP_VELOCITY
-			else:
-				velocity.y = JUMP_VELOCITY
-			is_in_air = true
-			
-#			if is_on_floor():
-#				is_in_air = true
-#				if is_sprinting:
-#					velocity.y = JUMP_VELOCITY * RUNJUMP_MULTIPLIER
-#				else:
-#					velocity.y = JUMP_VELOCITY
-				
+		air_timer += delta
+		velocity.y = JUMP_VELOCITY 
+		print("JUMP TIME: " + str(jump_timer) + "s")
+		print(can_jump)
+		
+		
+		if jump_timer >= 0.2:
+			if !is_on_floor():
+				velocity.y -= custom_gravity * delta
+				can_jump = false
+				print("JUMP CANCELED")
+
+		
 	if Input.is_action_just_released("move_jump"):
-		button_pressed = false
-		if is_in_air:
-			is_in_air = false
-		if jump_timer > 0.0:
-			print("Button held for "+ str(jump_timer) + " seconds")
+		velocity.y -= custom_gravity * delta
+		air_timer = 0.0
 		jump_timer = 0.0
+	
+
 
 #func _button_test(delta):
 #		var button_pressed = false
@@ -269,68 +267,46 @@ func _process_walljump(delta):
 							if node.has_node("AnimationPlayer"):
 								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
 
-			else:
-				velocity.x = 0
-				velocity.z = 0
-				velocity.y += custom_gravity * delta
-		else:
-			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
+#			else:
+#				velocity.x = 0
+#				velocity.z = 0
+#				velocity.y += custom_gravity * delta
+#		else:
+#			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
 
 
 func _physics_process(delta):
-	
-	
-#	var fps = Engine.get_frames_per_second()
-#	var lerp_interval = direction / fps
-#	var lerp_position = global_transform.origin + lerp_interval
-#
-#
-#	if fps > 30:
-#		armature.set_as_toplevel(true)
-#		armature.global_transform.origin = armature.global_transform.origin.lerp(lerp_position, 20 * delta)
-#	else:
-#		armature.global_transform = global_transform
-#		armature.set_as_toplevel(false)
-#
-#
-#
-#
 	_proccess_movement(delta)
 	_proccess_jump(delta)
-	_process_walljump(delta)
 	_unhandled_input(delta)
-#	_button_test(delta)
-	
 
 
 
-	if not is_on_floor():
-		air_time += delta
-		if not is_on_wall():
-			velocity.y -= custom_gravity * delta
-		else:
-			velocity.y = -0.5 * delta
-			wall_stay_timer = WALL_STAY_DURATION
-			has_wall_jumped = false
-			can_wall_jump = true
-			air_time = 0.0
-	if air_time > landing_animation_threshold:
-		air_time = 0.0
-		is_in_air = true
-	else:
-		landing_position = global_transform.origin
-		wall_jump_position = global_transform.origin
-		can_wall_jump = true
+
+
+#		else:
+#			velocity.y = -0.5 * delta
+#			air_timer = 0.0
+#	if air_time > landing_animation_threshold:
+#		air_timer = 0.0
+#		is_in_air = true
+#	else:
+#		landing_position = global_transform.origin
+#		wall_jump_position = global_transform.origin
+#		can_wall_jump = true
 
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	sprinting = Input.is_action_pressed("move_sprint")
 	dodging = Input.is_action_just_pressed("move_dodge")
-	
-	
-	
-	
+	jumping = Input.is_action_pressed("move_jump")
+
+
+	if is_on_floor():
+		if sprinting && jumping:
+			velocity.y = JUMP_VELOCITY * RUNJUMP_MULTIPLIER
+
 	move_and_slide()
 
 
