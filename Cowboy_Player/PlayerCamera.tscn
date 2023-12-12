@@ -39,6 +39,7 @@ size = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
 transform = Transform3D(2, -7.34149e-15, -3.06754e-14, 1.14391e-14, 1.98147, 0.271596, 2.93943e-14, -0.271596, 1.98147, -0.0079999, -0.101552, -0.874242)
+visible = false
 material_override = SubResource("ShaderMaterial_td6vy")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")

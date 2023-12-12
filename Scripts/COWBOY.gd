@@ -48,6 +48,13 @@ var DASH_MAX_SPEED = BASE_SPEED * 3
 var is_dodging = false
 var dash_timer = 0.0
 @export var dash_duration = 0.04
+var SECOND_DASH_ACCELERATION = 100
+var SECOND_DASH_DECELERATION = 25
+var INITIAL_DASH_ACCELERATION = ACCELERATION
+var INITIAL_DASH_DECELERATION = DECELERATION
+var INITIAL_MAX_SPEED = MAX_SPEED
+var SECOND_MAX_SPEED = DASH_MAX_SPEED * 2
+var is_second_sprint = false
 
 
 
@@ -56,6 +63,9 @@ var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
 
 var air_time = 0.0
 var air_timer = 0.0
+var sprint_timer = 0.0
+
+
 var landing_animation_threshold = 1.0
 var WALL_STAY_DURATION = 0.5  # Adjust this value to control how long the player stays on the wall after a jump
 var wall_stay_timer = 0.0
@@ -65,7 +75,7 @@ var LERP_VAL = 0.2
 var DODGE_LERP_VAL = 1
 var wall_jump_position = Vector3.ZERO
 
-var custom_gravity = 45.0 #The lower the value the floatier
+var custom_gravity = 35.0 #The lower the value the floatier
 var sprinting = false
 var dodging = false
 var is_in_air = false
@@ -108,10 +118,7 @@ func _unhandled_input(event):
 
 		spring_arm_pivot.rotation.x = rotation_x
 		spring_arm_pivot.rotation.y = rotation_y
-		
-	
-	
-	
+
 func _proccess_movement(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -140,12 +147,10 @@ func _proccess_movement(delta):
 #			ACCELERATION = BASE_ACCELERATION
 #			DECELERATION = BASE_DECELERATION
 
-
 	
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 		
-	else:
-		if !direction:
+	elif !direction:
 			velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
 			velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 			current_speed = sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
@@ -154,6 +159,9 @@ func _proccess_movement(delta):
 	
 	
 	if sprinting && direction:
+		sprint_timer += delta
+		print(sprint_timer)
+		
 		is_sprinting = true
 		target_speed = MAX_SPEED
 		ACCELERATION = DASH_ACCELERATION
@@ -162,15 +170,26 @@ func _proccess_movement(delta):
 		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
 		$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
 		
-#		if InputBuffer.is_action_press_buffered("move_jump") and is_on_floor():
-#			velocity.y = RUN_JUMP_VELOCITY
+		if sprint_timer >= 1.5:
+			DASH_ACCELERATION = SECOND_DASH_ACCELERATION
+			DASH_DECELERATION = SECOND_DASH_DECELERATION
+			target_speed = SECOND_MAX_SPEED
+			print(target_speed)
+
+		if Input.is_action_just_released("move_sprint"):
+			is_sprinting = false
+			target_speed = BASE_SPEED
+			ACCELERATION = BASE_ACCELERATION
+			DECELERATION = BASE_DECELERATION
+			sprint_timer = 0.0
+			print(target_speed)
 
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
-		ACCELERATION = ACCELERATION
-		DECELERATION = DECELERATION
-		
+		ACCELERATION = BASE_ACCELERATION
+		DECELERATION = BASE_DECELERATION
+		print(target_speed)
 		
 	
 	#Dodging
@@ -224,9 +243,15 @@ func _proccess_jump(delta):
 			velocity.y = JUMP_VELOCITY
 		else:
 			velocity.y -= custom_gravity * delta
+			can_jump = false
 	
 	if !is_on_floor() && jump_timer >= 0.2:
 		jump_timer = 0.2
+		can_jump = false
+		
+	if is_on_floor():
+		can_jump = true
+		
 		
 	if Input.is_action_just_pressed("move_jump"):
 		air_timer = 0.0
@@ -238,21 +263,9 @@ func _proccess_jump(delta):
 		air_timer = 0.0
 		jump_timer = 0.0
 
-	
 
 
-#func _button_test(delta):
-#		var button_pressed = false
-#		if Input.is_action_pressed("button_test"):
-#			button_pressed = true
-#			jump_timer += delta
-#
-#		if Input.is_action_just_released("button_test"):
-#			button_pressed = false
-#
-#			if jump_timer > 0.0:
-#				print("Button held for "+ str(jump_timer) + " seconds")
-#			jump_timer = 0.0
+
 
 func _process_walljump(delta):
 	if is_on_wall():
@@ -272,33 +285,12 @@ func _process_walljump(delta):
 							if node.has_node("AnimationPlayer"):
 								node.get_node("AnimationPlayer").play("Landing_strong_001|CircleAction_002")
 
-#			else:
-#				velocity.x = 0
-#				velocity.z = 0
-#				velocity.y += custom_gravity * delta
-#		else:
-#			velocity += Vector3(0, -custom_gravity * delta * 6, 0)
 
 
 func _physics_process(delta):
 	_proccess_movement(delta)
 	_proccess_jump(delta)
 	_unhandled_input(delta)
-
-
-
-
-
-#		else:
-#			velocity.y = -0.5 * delta
-#			air_timer = 0.0
-#	if air_time > landing_animation_threshold:
-#		air_timer = 0.0
-#		is_in_air = true
-#	else:
-#		landing_position = global_transform.origin
-#		wall_jump_position = global_transform.origin
-#		can_wall_jump = true
 
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
