@@ -32,14 +32,15 @@ spring_length = 2.0
 transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.63814, 1.76711)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(1, 5.71956e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.38137, 0.181079)
+transform = Transform3D(1, 5.71957e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.38137, 0.181079)
 doppler_tracking = 2
 current = true
 size = 2.0
 
-[node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.73466, 4)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
+transform = Transform3D(2, -7.34149e-15, -3.06754e-14, 1.14391e-14, 1.98147, 0.271596, 2.93943e-14, -0.271596, 1.98147, -0.0079999, -0.101552, -0.874242)
 material_override = SubResource("ShaderMaterial_td6vy")
 mesh = SubResource("QuadMesh_n1m7q")
+skeleton = NodePath("../../../../..")
+
+[node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]

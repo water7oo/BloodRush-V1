@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=25 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_sbt2u"]
 [ext_resource type="Material" uid="uid://bvdjc6srvvdrc" path="res://Game/GroundPS1.tres" id="2_6hlbg"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="4_p7ho0"]
 [ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Cowboy_Player/PlayerCamera.tscn" id="6_m03c4"]
+[ext_resource type="Shader" path="res://Game/TestingShaders3.gdshader" id="7_cw8nn"]
 [ext_resource type="Shader" path="res://addons/TESTING2.gdshader" id="7_g6b30"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="13_a8nsm"]
 [ext_resource type="PackedScene" uid="uid://dordn2c1222of" path="res://Billboards/Billboards2.tscn" id="13_cmpb6"]
@@ -52,6 +53,8 @@ albedo_texture = ExtResource("3_nrbii")
 size = Vector3(1, 0.215723, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g8rj0"]
+render_priority = 0
+shader = ExtResource("7_cw8nn")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s04ec"]
 render_priority = 0
@@ -187,7 +190,6 @@ grow_vertical = 2
 [node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
 handle_input_locally = false
 scaling_3d_scale = 1.5
-fsr_sharpness = 2.0
 size = Vector2i(1024, 600)
 render_target_update_mode = 4
 

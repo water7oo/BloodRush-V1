@@ -89,7 +89,7 @@ var hitbox = null
 var hitbox_active = false
 var hitbox_duration = 0.2  # Adjust the duration of the hitbox here
 var is_attacking = false
-var jumping = Input.is_action_just_pressed("move_jump")
+var jumping = Input.is_action_pressed("move_jump")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -213,26 +213,31 @@ func _proccess_jump(delta):
 		can_jump = false
 		velocity.y -= custom_gravity * delta
 		
-
+	elif is_on_floor():
+		can_jump = true
+		
 	if Input.is_action_pressed("move_jump"):
 		jump_timer += delta
 		air_timer += delta
-		velocity.y = JUMP_VELOCITY 
-		print("JUMP TIME: " + str(jump_timer) + "s")
-		print(can_jump)
 		
+		if jump_timer <= 0.2:
+			velocity.y = JUMP_VELOCITY
+		else:
+			velocity.y -= custom_gravity * delta
+	
+	if !is_on_floor() && jump_timer >= 0.2:
+		jump_timer = 0.2
 		
-		if jump_timer >= 0.2:
-			if !is_on_floor():
-				velocity.y -= custom_gravity * delta
-				can_jump = false
-				print("JUMP CANCELED")
+	if Input.is_action_just_pressed("move_jump"):
+		air_timer = 0.0
+		jump_timer = 0.0
+
 
 		
 	if Input.is_action_just_released("move_jump"):
-		velocity.y -= custom_gravity * delta
 		air_timer = 0.0
 		jump_timer = 0.0
+
 	
 
 
