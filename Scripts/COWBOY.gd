@@ -40,7 +40,7 @@ var jump_height = 128
 #Acceleration and Speed
 @export var ACCELERATION = 5.0 #the higher the value the faster the acceleration
 @export var DECELERATION = 25.0 #the lower the value the slippier the stop
-var BASE_ACCELERATION = 3
+var BASE_ACCELERATION = 9
 var BASE_DECELERATION = 15.0 
 @export var DASH_ACCELERATION = 20
 @export var DASH_DECELERATION = 20
@@ -48,15 +48,13 @@ var DASH_MAX_SPEED = BASE_SPEED * 3
 var is_dodging = false
 var dash_timer = 0.0
 @export var dash_duration = 0.04
-var SECOND_DASH_ACCELERATION = 100
-var SECOND_DASH_DECELERATION = 25
+@export var SECOND_DASH_ACCELERATION = 300
+@export var SECOND_DASH_DECELERATION = 25
 var INITIAL_DASH_ACCELERATION = ACCELERATION
 var INITIAL_DASH_DECELERATION = DECELERATION
 var INITIAL_MAX_SPEED = MAX_SPEED
-var SECOND_MAX_SPEED = DASH_MAX_SPEED * 2
+var SECOND_MAX_SPEED = DASH_MAX_SPEED * 1.25
 var is_second_sprint = false
-
-
 
 
 var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
@@ -160,7 +158,6 @@ func _proccess_movement(delta):
 	
 	if sprinting && direction:
 		sprint_timer += delta
-		print(sprint_timer)
 		
 		is_sprinting = true
 		target_speed = MAX_SPEED
@@ -170,11 +167,10 @@ func _proccess_movement(delta):
 		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
 		$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
 		
-		if sprint_timer >= 1.5:
+		if sprint_timer >= 3:
 			DASH_ACCELERATION = SECOND_DASH_ACCELERATION
 			DASH_DECELERATION = SECOND_DASH_DECELERATION
 			target_speed = SECOND_MAX_SPEED
-			print(target_speed)
 
 		if Input.is_action_just_released("move_sprint"):
 			is_sprinting = false
@@ -182,14 +178,12 @@ func _proccess_movement(delta):
 			ACCELERATION = BASE_ACCELERATION
 			DECELERATION = BASE_DECELERATION
 			sprint_timer = 0.0
-			print(target_speed)
 
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
 		ACCELERATION = BASE_ACCELERATION
 		DECELERATION = BASE_DECELERATION
-		print(target_speed)
 		
 	
 	#Dodging
@@ -215,16 +209,18 @@ func _proccess_movement(delta):
 		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
 			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
 			particle_emitter.set_emitting(should_emit_particles)
-
-			if is_in_air:
-				pass
-#		if is_in_air && is_on_floor():
-#			is_in_air = false
-#			for node in jump_wave:
-#				node.global_transform.origin = landing_position
-#				if node.has_node("AnimationPlayer"):
-#					node.get_node("AnimationPlayer").play("CloudAnim")
+			
+			
+	if direction && !is_on_floor():
+		velocity.x -= target_speed * 0.5 * delta
+		velocity.z -= target_speed * 0.5 * delta
 		
+		
+	if direction.length_squared() > 0.01:  # Check if there is movement input
+		if direction.dot(velocity.normalized()) < 0:  # Check if moving in opposite directions
+			print("Player has inputted an opposite direction")
+
+
 
 func _proccess_jump(delta):
 	if !is_on_floor():
@@ -318,13 +314,7 @@ func respawn():
 #		Engine.time_scale = 1
 #
 #
-#func _on_timer_timeout():
-#	pass # Replace with function body.
-#
-#
-##Enemy to player
-#func _on_enemy_area_entered(area):
-#	pass # Replace with function body.
+
 
 
 func _on_timer_timeout():

@@ -64,12 +64,15 @@ shader_parameter/enable_recolor = false
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s04ec"]
 render_priority = 0
 shader = ExtResource("7_g6b30")
+shader_parameter/disable_shader = false
+shader_parameter/MAX_DEPTH = 1000.0
 shader_parameter/shadows_enabled = true
 shader_parameter/highlights_enabled = true
 shader_parameter/shadow_strength = 1.0
 shader_parameter/highlight_strength = 0.0
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/pixelSize = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iipbe"]
 next_pass = SubResource("ShaderMaterial_s04ec")
@@ -95,6 +98,7 @@ collision_mask = 3
 shape = SubResource("BoxShape3D_dhc18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, -1.11022e-16, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_6hlbg")
 mesh = SubResource("BoxMesh_hstq3")
 
@@ -194,7 +198,8 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
 handle_input_locally = false
-scaling_3d_scale = 1.5
+scaling_3d_scale = 1.7
+fsr_sharpness = 0.2
 size = Vector2i(1024, 600)
 render_target_update_mode = 4
 
@@ -210,7 +215,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00824261, 1.88988, -0.1)
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
 transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 3.28841, 4.81486, 3.61888)
 target = NodePath("../Cowboy/CamTarget")
-speed = 2.0
+speed = 4.0
 enabled = true
 
 [node name="Opener" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("13_a8nsm")]
