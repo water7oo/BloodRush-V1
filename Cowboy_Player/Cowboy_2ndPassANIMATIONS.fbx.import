@@ -3,13 +3,13 @@
 importer="animation_library"
 importer_version=1
 type="AnimationLibrary"
-uid="uid://daunx3nm2w0kf"
-path="res://.godot/imported/2ndPassAnimations.glb-ebfd9bcd8d9b428c0a50abe09e5f49e2.res"
+uid="uid://b6cegmm0hgeam"
+path="res://.godot/imported/Cowboy_2ndPassANIMATIONS.fbx-aa550202a860fb190c5bcb6eff8c2000.res"
 
 [deps]
 
-source_file="res://Animations/2ndPassAnimations.glb"
-dest_files=["res://.godot/imported/2ndPassAnimations.glb-ebfd9bcd8d9b428c0a50abe09e5f49e2.res"]
+source_file="res://Cowboy_Player/Cowboy_2ndPassANIMATIONS.fbx"
+dest_files=["res://.godot/imported/Cowboy_2ndPassANIMATIONS.fbx-aa550202a860fb190c5bcb6eff8c2000.res"]
 
 [params]
 

@@ -1,23 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=8 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
-[ext_resource type="Shader" path="res://addons/TESTING2.gdshader" id="2_y4lm6"]
+[ext_resource type="Shader" path="res://Game/TestingShaders3.gdshader" id="2_bbsl1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
-render_priority = 0
-shader = ExtResource("2_y4lm6")
-shader_parameter/disable_shader = false
-shader_parameter/MAX_DEPTH = 105.0
-shader_parameter/shadows_enabled = true
-shader_parameter/highlights_enabled = true
-shader_parameter/shadow_strength = 0.0
-shader_parameter/highlight_strength = 0.0
-shader_parameter/highlight_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/pixelSize = 4
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bj2ql"]
+render_priority = 0
+shader = ExtResource("2_bbsl1")
+shader_parameter/border_width = 0.033
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/pattern = false
+shader_parameter/line_number = 0.0
+shader_parameter/line_sharpness = null
+shader_parameter/pulse = false
+shader_parameter/pulse_speed = null
+shader_parameter/line_movement = null
+shader_parameter/line_movement_speed = null
+shader_parameter/wave = null
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jejf4"]
+next_pass = SubResource("ShaderMaterial_bj2ql")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_50v2c"]
+material = SubResource("StandardMaterial3D_jejf4")
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
@@ -30,7 +40,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.959388, 0.640344, 0, -0.28209, 2.17781, 0.00799954, 0.0583815, 0.0732438)
 collision_mask = 255
-spring_length = 3.34
+spring_length = 2.23
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.63814, 1.76711)
@@ -42,9 +52,15 @@ current = true
 size = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
-transform = Transform3D(2, -7.34149e-15, -3.06754e-14, 1.14391e-14, 1.98147, 0.271596, 2.93943e-14, -0.271596, 1.98147, -0.0079999, -0.0349846, -0.388587)
+transform = Transform3D(2, -7.34149e-15, -3.06754e-14, 1.14391e-14, 1.98147, 0.271596, 2.93943e-14, -0.271596, 1.98147, -0.0079999, -0.0349846, -0.388588)
+visible = false
 material_override = SubResource("ShaderMaterial_td6vy")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30147, 0)
+visible = false
+mesh = SubResource("CylinderMesh_50v2c")

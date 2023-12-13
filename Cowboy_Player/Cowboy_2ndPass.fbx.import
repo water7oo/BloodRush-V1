@@ -1,15 +1,15 @@
 [remap]
 
-importer="animation_library"
+importer="scene"
 importer_version=1
-type="AnimationLibrary"
-uid="uid://daunx3nm2w0kf"
-path="res://.godot/imported/2ndPassAnimations.glb-ebfd9bcd8d9b428c0a50abe09e5f49e2.res"
+type="PackedScene"
+uid="uid://c1k6bktugd8yk"
+path="res://.godot/imported/Cowboy_2ndPass.fbx-27fd8c19bee985a36104634a03cf1251.scn"
 
 [deps]
 
-source_file="res://Animations/2ndPassAnimations.glb"
-dest_files=["res://.godot/imported/2ndPassAnimations.glb-ebfd9bcd8d9b428c0a50abe09e5f49e2.res"]
+source_file="res://Cowboy_Player/Cowboy_2ndPass.fbx"
+dest_files=["res://.godot/imported/Cowboy_2ndPass.fbx-27fd8c19bee985a36104634a03cf1251.scn"]
 
 [params]
 

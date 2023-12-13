@@ -4,8 +4,8 @@ var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 @onready var timer = $Timer
-@onready var label = $Label
-@onready var blend_space = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
+#@onready var label = $Label
+@onready var blend_space = $AnimationTree.get('parameters/Combat/Ground_Blend/blend_position')
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
@@ -53,7 +53,7 @@ var dash_timer = 0.0
 var INITIAL_DASH_ACCELERATION = ACCELERATION
 var INITIAL_DASH_DECELERATION = DECELERATION
 var INITIAL_MAX_SPEED = MAX_SPEED
-var SECOND_MAX_SPEED = DASH_MAX_SPEED * 1.25
+var SECOND_MAX_SPEED = DASH_MAX_SPEED * 1.2
 var is_second_sprint = false
 
 
@@ -134,7 +134,8 @@ func _proccess_movement(delta):
 		if direction && !is_sprinting:
 			target_blend_amount = 0.0
 			current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
-			$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
+			$AnimationTree.set("parameters/Ground_Blend/blend_amount", current_blend_amount)
+			
 		else:
 			target_blend_amount = -1.0
 		
@@ -148,11 +149,11 @@ func _proccess_movement(delta):
 	
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), LERP_VAL)
 		
-	elif !direction:
+	elif !direction && is_on_floor():
 			velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
 			velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 			current_speed = sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
-			$AnimationTree.set("parameters/Blend3/blend_amount", -1) 
+			$AnimationTree.set("parameters/Ground_Blend/blend_amount", -1) 
 	
 	
 	
@@ -165,19 +166,22 @@ func _proccess_movement(delta):
 		DECELERATION = DASH_DECELERATION
 		target_blend_amount = 1.0
 		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
-		$AnimationTree.set("parameters/Blend3/blend_amount", current_blend_amount)
+		$AnimationTree.set("parameters/Ground_Blend/blend_amount", current_blend_amount)
 		
 		if sprint_timer >= 3:
 			DASH_ACCELERATION = SECOND_DASH_ACCELERATION
 			DASH_DECELERATION = SECOND_DASH_DECELERATION
 			target_speed = SECOND_MAX_SPEED
-
-		if Input.is_action_just_released("move_sprint"):
+			$AnimationTree.set("parameters/Ground_Speed/blend_amount", 1)
+			
+		if Input.is_action_just_released("move_sprint") || sprint_timer >= 3 && jumping:
 			is_sprinting = false
 			target_speed = BASE_SPEED
 			ACCELERATION = BASE_ACCELERATION
 			DECELERATION = BASE_DECELERATION
 			sprint_timer = 0.0
+			$AnimationTree.set("parameters/Air_Blend/blend_amount", 1)
+			
 
 	else:
 		is_sprinting = false
@@ -185,7 +189,6 @@ func _proccess_movement(delta):
 		ACCELERATION = BASE_ACCELERATION
 		DECELERATION = BASE_DECELERATION
 		
-	
 	#Dodging
 	if dodging && is_on_floor():
 		is_dodging = true
@@ -235,6 +238,7 @@ func _proccess_jump(delta):
 		jump_timer += delta
 		air_timer += delta
 		
+		
 		if jump_timer <= 0.2:
 			velocity.y = JUMP_VELOCITY
 		else:
@@ -244,20 +248,24 @@ func _proccess_jump(delta):
 	if !is_on_floor() && jump_timer >= 0.2:
 		jump_timer = 0.2
 		can_jump = false
+		$AnimationTree.set("parameters/Air_Blend/blend_amount", 0)
 		
 	if is_on_floor():
 		can_jump = true
 		
 		
+		
 	if Input.is_action_just_pressed("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
+		$AnimationTree.set("parameters/Air_Blend/blend_amount", 1)
 
 
 		
 	if Input.is_action_just_released("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
+		$AnimationTree.set("parameters/Air_Blend/blend_amount", 0)
 
 
 
@@ -317,7 +325,7 @@ func respawn():
 
 
 
-func _on_timer_timeout():
-	pass
+#func _on_timer_timeout():
+#	pass
 
 

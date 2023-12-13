@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b6cegmm0hgeam"
-path="res://.godot/imported/Cowboy_2ndPass.fbx-1444d38ce343c39f4f2260264a3afb2e.scn"
+uid="uid://c3an2vp8apkdu"
+path="res://.godot/imported/2ndPassAnimations.fbx-33088585a32d2ad5c05bcf0245f9f8c0.scn"
 
 [deps]
 
-source_file="res://Shaders/Cowboy_2ndPass.fbx"
-dest_files=["res://.godot/imported/Cowboy_2ndPass.fbx-1444d38ce343c39f4f2260264a3afb2e.scn"]
+source_file="res://Animations/2ndPassAnimations.fbx"
+dest_files=["res://.godot/imported/2ndPassAnimations.fbx-33088585a32d2ad5c05bcf0245f9f8c0.scn"]
 
 [params]
 
@@ -24,7 +24,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 skins/use_named_skins=true
 animation/import=true
-animation/fps=30
+animation/fps=60.0
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""

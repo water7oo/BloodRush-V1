@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuhejfsxbvu40"]
+
+[ext_resource type="PackedScene" uid="uid://b6cegmm0hgeam" path="res://Cowboy_Player/Cowboy_2ndPassANIMATIONS.fbx" id="1_vn4ca"]
+
+[node name="Cowboy_2ndPass" instance=ExtResource("1_vn4ca")]

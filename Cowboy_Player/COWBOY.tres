@@ -1,16 +1,26 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dcakvymmosyhp"]
 
-[ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="1_usv8n"]
+[ext_resource type="Shader" path="res://Game/TestingShaders3.gdshader" id="1_gelyl"]
 [ext_resource type="Shader" path="res://Shaders/PS1_Player_VertexWobbling.gdshader" id="2_rxmfh"]
 [ext_resource type="Texture2D" uid="uid://o2thmi3sn31t" path="res://addons/kenney_prototype_textures/light/texture_03.png" id="3_23145"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2ufi"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
 render_priority = 0
-shader = ExtResource("1_usv8n")
+shader = ExtResource("1_gelyl")
+shader_parameter/border_width = 0.01
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/pattern = false
+shader_parameter/line_number = null
+shader_parameter/line_sharpness = null
+shader_parameter/pulse = false
+shader_parameter/pulse_speed = null
+shader_parameter/line_movement = null
+shader_parameter/line_movement_speed = null
+shader_parameter/wave = false
 
 [resource]
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_e2ufi")
+next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_rxmfh")
 shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.5

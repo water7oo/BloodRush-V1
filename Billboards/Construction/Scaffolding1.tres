@@ -7,12 +7,15 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
 render_priority = 0
 shader = ExtResource("1_fqu1f")
+shader_parameter/disable_shader = false
+shader_parameter/MAX_DEPTH = 1000.0
 shader_parameter/shadows_enabled = false
 shader_parameter/highlights_enabled = false
 shader_parameter/shadow_strength = 0.6
 shader_parameter/highlight_strength = 0.1
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/pixelSize = 4
 
 [resource]
 render_priority = 0
