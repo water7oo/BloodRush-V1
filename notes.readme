@@ -1,13 +1,16 @@
-varied jump
+Sliding movement thingy
 
-Have tbe player press jump button
-game gives player max jumping height
-player falls back down after reaching regular heighr
-now if the player holds the jump button, they go to max jump height and falls doen
+when player is running in a direction for a small bit lets say 1 second or so give or take and they quickly switch directions
+make it to where their deceleration is decreased for a bit more slippiness, 
+then an await timer should make it to where they wait .5 seconds before going forward in that direction
 
-most likely needs to track time player is in the air and
-have the player fall back doen after ancertain amount of time
-so if i pressthe jump button, player should go up and back down with gravity
-but if i hold it player wil go up to the max height snd grabity will knock the player down
+first I need to check if the player goes in the opposite direction that they are moving (give or take with about a 45 degree angle on both sides of the player
+then I need to have the player await for about 0.5 seconds and decrease their deceleration a bit 
+lastly take their current movement speed  equal the START_AND_STOP speed which will take the current speed the player is going
+and multiply it by 0.5 making the player have a small bit of speed, control the lenght the player has this given speed with a momentum_timer variable set to about 0.6 seconds
 
-dont forget to interpolate this movement 
+Jumping animations
+
+There will be 1  jump animation which will have 2 phases, (hop phase and high jump phase)
+
+if the player
