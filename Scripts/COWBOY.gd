@@ -131,11 +131,10 @@ func _proccess_movement(delta):
 	
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
-		if direction && !is_sprinting:
+		if direction && !is_sprinting && is_on_floor():
 			target_blend_amount = 0.0
 			current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
 			$AnimationTree.set("parameters/Ground_Blend/blend_amount", 0)
-			print(current_blend_amount)
 		else:
 			target_blend_amount = -1.0
 		
@@ -185,7 +184,7 @@ func _proccess_movement(delta):
 			ACCELERATION = BASE_ACCELERATION
 			DECELERATION = BASE_DECELERATION
 			sprint_timer = 0.0
-			
+			$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
 
 	else:
 		is_sprinting = false
@@ -219,8 +218,8 @@ func _proccess_movement(delta):
 			
 			
 	if direction && !is_on_floor():
-		velocity.x -= target_speed * 0.5 * delta
-		velocity.z -= target_speed * 0.5 * delta
+		velocity.x -= 0.5 * delta
+		velocity.z -= 0.5 * delta
 		
 		
 	if direction.length_squared() > 0.01:  # Check if there is movement input
@@ -240,11 +239,14 @@ func _proccess_jump(delta):
 	elif is_on_floor():
 		can_jump = true
 
+	if velocity.y > 0 && jump_timer >= 0.1:
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
+		if sprinting && direction && is_on_floor():
+			print("GO GO GO GO")
 
 	if Input.is_action_pressed("move_jump"):
 		jump_timer += delta
 		air_timer += delta
-		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
 		
 		if jump_timer <= 0.2:
 			velocity.y = JUMP_VELOCITY
@@ -261,7 +263,7 @@ func _proccess_jump(delta):
 	if !is_on_floor() && jump_timer >= 0.3:
 		jump_timer = 0.3
 		can_jump = false
-		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+#		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
 	if is_on_floor():
 			can_jump = true
@@ -276,10 +278,10 @@ func _proccess_jump(delta):
 	if Input.is_action_just_released("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
-		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+#		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
-	if velocity.y < 0 && !is_on_floor():
-		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+#	if velocity.y < 0 && !is_on_floor():
+#		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
 
 

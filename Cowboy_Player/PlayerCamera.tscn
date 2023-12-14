@@ -40,13 +40,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.959388, 0.640344, 0, -0.28209, 2.17781, 0.00799954, 0.0583815, 0.0732438)
 collision_mask = 255
-spring_length = 2.23
+spring_length = 2.395
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.63814, 1.76711)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(1, 5.71957e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.38137, 0.181079)
+transform = Transform3D(1, 5.71956e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.89051, 0.781686)
 doppler_tracking = 2
 current = true
 size = 2.0

@@ -1,6 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=23 format=3 uid="uid://ciyscyyb72708"]
 
-[ext_resource type="Sky" uid="uid://ddor6rirpkfi1" path="res://Game/SKY.tres" id="1_aok0s"]
+[ext_resource type="Sky" uid="uid://cj0020bhxfxxp" path="res://Game/SKY_Sunset.tres" id="1_38u2m"]
 [ext_resource type="Material" uid="uid://bvdjc6srvvdrc" path="res://Game/GroundPS1.tres" id="2_6hlbg"]
 [ext_resource type="PackedScene" uid="uid://jubxd8mx88ue" path="res://Billboards/Construction/scaffolding1.tscn" id="2_on1q0"]
 [ext_resource type="Texture2D" uid="uid://cvtlpxne2f0ax" path="res://addons/kenney_prototype_textures/dark/texture_03.png" id="3_nrbii"]
@@ -19,9 +19,10 @@
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
 background_energy_multiplier = 1.3
-sky = ExtResource("1_aok0s")
+sky = ExtResource("1_38u2m")
+sky_rotation = Vector3(0, 5.34943, 0)
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_sky_contribution = 0.49
+ambient_light_sky_contribution = 0.46
 tonemap_exposure = 0.76
 tonemap_white = 16.0
 ssr_fade_in = 0.0111488
@@ -36,19 +37,18 @@ ssil_intensity = 13.88
 ssil_sharpness = 0.0
 fog_light_color = Color(0, 0.737255, 0.878431, 1)
 fog_light_energy = 0.76
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0059
-volumetric_fog_albedo = Color(0.0392157, 0.882353, 1, 1)
-volumetric_fog_emission = Color(0.0980392, 0.113725, 0.145098, 1)
-volumetric_fog_emission_energy = 662.59
-volumetric_fog_gi_inject = 0.32
-volumetric_fog_ambient_inject = 16.0
+volumetric_fog_density = 0.006
+volumetric_fog_albedo = Color(0.309804, 0.745098, 1, 1)
+volumetric_fog_emission = Color(0.308594, 0.742188, 0.996094, 1)
+volumetric_fog_emission_energy = 45.18
+volumetric_fog_anisotropy = -0.33
+volumetric_fog_length = 6.0
+volumetric_fog_ambient_inject = 1.57
 volumetric_fog_sky_affect = 0.0
+volumetric_fog_temporal_reprojection_enabled = false
+volumetric_fog_temporal_reprojection_amount = 0.552
 adjustment_enabled = true
 adjustment_saturation = 3.12
-
-[sub_resource type="FogMaterial" id="FogMaterial_rlg5c"]
-albedo = Color(0, 1, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
 
@@ -78,15 +78,14 @@ shader_parameter/enable_recolor = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, -6.46824, 61.2841, 3.0847)
+light_energy = 2.111
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_normal_bias = 2.139
 directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tjwux")
-
-[node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.606, 45.5458)
-shape = 0
-material = SubResource("FogMaterial_rlg5c")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(-3.40497e-08, -64.9223, 0, 0.778967, -2.83784e-06, 0, 0, 0, 59.3641, 0, -0.41, 10)
@@ -209,7 +208,7 @@ transform = Transform3D(0.4, 0, 6.99382e-08, 0, 0.4, 0, -6.99382e-08, 0, 0.4, 2.
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
 transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 3.28841, 4.81486, 3.61888)
 target = NodePath("../Cowboy_3rdPass/CamTarget")
-speed = 4.0
+speed = 10.0
 enabled = true
 
 [node name="Opener" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("13_a8nsm")]
