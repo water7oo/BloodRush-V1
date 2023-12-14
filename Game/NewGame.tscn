@@ -1,6 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=24 format=3 uid="uid://ciyscyyb72708"]
 
-[ext_resource type="Sky" uid="uid://cj0020bhxfxxp" path="res://Game/SKY_Sunset.tres" id="1_38u2m"]
+[ext_resource type="Sky" uid="uid://ddor6rirpkfi1" path="res://Game/SKY.tres" id="1_aok0s"]
 [ext_resource type="Material" uid="uid://bvdjc6srvvdrc" path="res://Game/GroundPS1.tres" id="2_6hlbg"]
 [ext_resource type="PackedScene" uid="uid://jubxd8mx88ue" path="res://Billboards/Construction/scaffolding1.tscn" id="2_on1q0"]
 [ext_resource type="Texture2D" uid="uid://cvtlpxne2f0ax" path="res://addons/kenney_prototype_textures/dark/texture_03.png" id="3_nrbii"]
@@ -19,7 +19,7 @@
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
 background_energy_multiplier = 1.3
-sky = ExtResource("1_38u2m")
+sky = ExtResource("1_aok0s")
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.49
 tonemap_exposure = 0.76
@@ -34,13 +34,21 @@ ssao_detail = 0.0
 ssil_radius = 50.4
 ssil_intensity = 13.88
 ssil_sharpness = 0.0
-volumetric_fog_density = 0.0294
-volumetric_fog_emission_energy = 0.0
+fog_light_color = Color(0, 0.737255, 0.878431, 1)
+fog_light_energy = 0.76
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0059
+volumetric_fog_albedo = Color(0.0392157, 0.882353, 1, 1)
+volumetric_fog_emission = Color(0.0980392, 0.113725, 0.145098, 1)
+volumetric_fog_emission_energy = 662.59
 volumetric_fog_gi_inject = 0.32
-volumetric_fog_ambient_inject = 0.48
-volumetric_fog_sky_affect = 0.456
+volumetric_fog_ambient_inject = 16.0
+volumetric_fog_sky_affect = 0.0
 adjustment_enabled = true
 adjustment_saturation = 3.12
+
+[sub_resource type="FogMaterial" id="FogMaterial_rlg5c"]
+albedo = Color(0, 1, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
 
@@ -74,6 +82,11 @@ directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tjwux")
+
+[node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.606, 45.5458)
+shape = 0
+material = SubResource("FogMaterial_rlg5c")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(-3.40497e-08, -64.9223, 0, 0.778967, -2.83784e-06, 0, 0, 0, 59.3641, 0, -0.41, 10)

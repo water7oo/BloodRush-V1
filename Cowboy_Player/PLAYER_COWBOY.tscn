@@ -353,7 +353,7 @@ animation = &"Armature_001|RUNNING_LOW"
 animation = &"Armature_001|WALKING_LOW"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nnqn"]
-animation = &"Armature_001|ATTACK"
+animation = &"Armature_001|SLIDE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7fqlc"]
 animation = &"Armature_001|IDLE_LOW"

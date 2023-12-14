@@ -9,7 +9,7 @@ var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
-var blend_lerp_speed = 5.0  # Adjust the speed of blending
+var blend_lerp_speed = 10.0  # Adjust the speed of blending
 
 
 @onready var armature = $RootNode/Armature/Skeleton3D
@@ -134,8 +134,8 @@ func _proccess_movement(delta):
 		if direction && !is_sprinting:
 			target_blend_amount = 0.0
 			current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
-			$AnimationTree.set("parameters/Ground_Blend/blend_amount", current_blend_amount)
-			
+			$AnimationTree.set("parameters/Ground_Blend/blend_amount", 0)
+			print(current_blend_amount)
 		else:
 			target_blend_amount = -1.0
 		
@@ -154,6 +154,9 @@ func _proccess_movement(delta):
 			velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 			current_speed = sqrt(velocity.x * velocity.x + velocity.z * velocity.z)
 			$AnimationTree.set("parameters/Ground_Blend/blend_amount", -1) 
+			$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+			$AnimationTree.set("parameters/Jump_Blend/blend_amount", -1)
+			$AnimationTree.set("parameters/Blend3/blend_amount", -1)  
 	
 	
 	
@@ -166,13 +169,15 @@ func _proccess_movement(delta):
 		DECELERATION = DASH_DECELERATION
 		target_blend_amount = 1.0
 		current_blend_amount = lerp(current_blend_amount, target_blend_amount, blend_lerp_speed * delta)
-		$AnimationTree.set("parameters/Ground_Blend/blend_amount", current_blend_amount)
+		
+		if sprint_timer >= 0.2:
+			$AnimationTree.set("parameters/Ground_Blend/blend_amount", 1)
 		
 		if sprint_timer >= 3:
 			DASH_ACCELERATION = SECOND_DASH_ACCELERATION
 			DASH_DECELERATION = SECOND_DASH_DECELERATION
 			target_speed = SECOND_MAX_SPEED
-			$AnimationTree.set("parameters/Ground_Speed/blend_amount", 1)
+			$AnimationTree.set("parameters/Ground_Blend2/blend_amount", 0)
 			
 		if Input.is_action_just_released("move_sprint") || sprint_timer >= 3 && jumping:
 			is_sprinting = false
@@ -180,7 +185,6 @@ func _proccess_movement(delta):
 			ACCELERATION = BASE_ACCELERATION
 			DECELERATION = BASE_DECELERATION
 			sprint_timer = 0.0
-			$AnimationTree.set("parameters/Air_Blend/blend_amount", 1)
 			
 
 	else:
@@ -222,6 +226,8 @@ func _proccess_movement(delta):
 	if direction.length_squared() > 0.01:  # Check if there is movement input
 		if direction.dot(velocity.normalized()) < 0:  # Check if moving in opposite directions
 			print("Player has inputted an opposite direction")
+			
+
 
 
 
@@ -233,40 +239,47 @@ func _proccess_jump(delta):
 		
 	elif is_on_floor():
 		can_jump = true
-		
+
+
 	if Input.is_action_pressed("move_jump"):
 		jump_timer += delta
 		air_timer += delta
-		
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
 		
 		if jump_timer <= 0.2:
 			velocity.y = JUMP_VELOCITY
 		else:
 			velocity.y -= custom_gravity * delta
 			can_jump = false
+			
+		
+#		#Falling
+#		if velocity.y < 0 && !is_on_floor():
+#			$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+#
 	
-	if !is_on_floor() && jump_timer >= 0.2:
-		jump_timer = 0.2
+	if !is_on_floor() && jump_timer >= 0.3:
+		jump_timer = 0.3
 		can_jump = false
-		$AnimationTree.set("parameters/Air_Blend/blend_amount", 0)
-		
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+
 	if is_on_floor():
-		can_jump = true
-		
-		
-		
+			can_jump = true
+			
+			
 	if Input.is_action_just_pressed("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
-		$AnimationTree.set("parameters/Air_Blend/blend_amount", 1)
 
 
 		
 	if Input.is_action_just_released("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
-		$AnimationTree.set("parameters/Air_Blend/blend_amount", 0)
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
+	if velocity.y < 0 && !is_on_floor():
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
 
 
