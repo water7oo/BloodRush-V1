@@ -1,5 +1,5 @@
 pivot movement thingy
-
+--------
 when player is running in a direction for a small bit lets say 1 second or so give or take and they quickly switch directions
 make it to where their deceleration is decreased for a bit more slippiness, 
 then an await timer should make it to where they wait .5 seconds before going forward in that direction
@@ -10,7 +10,7 @@ lastly take their current movement speed  equal the START_AND_STOP speed which w
 and multiply it by 0.5 making the player have a small bit of speed, control the lenght the player has this given speed with a momentum_timer variable set to about 0.6 seconds
 
 Attacking
-
+-----
 since its hard to make a good sillohuette with attack animations due to the model being small 
 and pudgy, the camera will rotate and pan outwards if I hit the attavk button and if the 
 enemys detectuon hitbox goes off
@@ -19,3 +19,20 @@ attach 2 hitboxes on the side of the spring arm pivot, these will be the positio
 to when the player is in combat
 
 attach 1 hitbox behind the camera so that if more than 1 enemy detects you the camera will pan outwards
+
+Stamina
+---------
+First have the stamina guage have a max of 100
+
+Then have it to where if the player dodges or runs, then the gauge depletes a certain amount
+
+Have this gauge await for about 3-4 seconds before slowly refilling exponentially
+
+If this guage reaches 0 then player has to wait 6-7 seconds before being able to use it again
+
+Both running, dodging and slide kicking animations will use stamina
+Stamina will start off at 100
+
+Running will burn the stamina at a certain rate 20/s
+Dodging will use up about 30/dodge
+Sliding will use up 15/slide while the kick part of the animation will cost an extra 5
