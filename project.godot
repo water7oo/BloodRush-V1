@@ -136,6 +136,7 @@ anti_aliasing/screen_space_roughness_limiter/amount=0.01
 anti_aliasing/screen_space_roughness_limiter/limit=0.01
 scaling_3d/mode=1
 scaling_3d/fsr_sharpness=2.0
+2d/snap/snap_2d_transforms_to_pixel=true
 
 [shader_globals]
 

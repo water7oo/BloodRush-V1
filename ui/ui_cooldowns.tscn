@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bi1x4qby8hoyw"]
+
+[node name="Stamina" type="ProgressBar"]
+offset_left = 24.0
+offset_top = 72.0
+offset_right = 187.0
+offset_bottom = 88.0
+value = 100.0
+show_percentage = false

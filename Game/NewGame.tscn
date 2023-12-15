@@ -65,10 +65,10 @@ size = Vector3(1, 0.215723, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
 shader = ExtResource("11_ke0bw")
-shader_parameter/enabled = false
+shader_parameter/enabled = true
 shader_parameter/dithering = true
-shader_parameter/colors = 8
-shader_parameter/dither_size = 2
+shader_parameter/colors = 16
+shader_parameter/dither_size = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_518tn"]
 shader = ExtResource("11_ke0bw")
@@ -199,6 +199,8 @@ grow_vertical = 2
 stretch = true
 stretch_shrink = 2
 
+[node name="Opener" parent="Preview/SubViewportContainer" instance=ExtResource("13_a8nsm")]
+
 [node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
@@ -208,15 +210,8 @@ render_target_update_mode = 4
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("3_yu345")]
 transform = Transform3D(0.4, 0, 6.99382e-08, 0, 0.4, 0, -6.99382e-08, 0, 0.4, 2.58144, 0.100814, 3.75989)
 
-[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 8.79126)
-target = NodePath("../Cowboy_3rdPass/CamTarget")
-speed = 2.0
-enabled = true
-
-[node name="Opener" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("13_a8nsm")]
-
 [node name="ColorRect" type="ColorRect" parent="Preview/SubViewportContainer/SubViewport"]
+visible = false
 material = SubResource("ShaderMaterial_518tn")
 anchors_preset = 15
 anchor_right = 1.0
@@ -225,7 +220,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 mouse_force_pass_scroll_events = false
-color = Color(1, 1, 1, 0)
+
+[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 8.79126)
+target = NodePath("../Cowboy_3rdPass/CamTarget")
+speed = 5.0
+enabled = true
 
 [node name="Cowboy_3rdPass" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("12_dxn1b")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)

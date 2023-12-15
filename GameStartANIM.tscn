@@ -15,7 +15,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(44.5005, -432)]
+"values": [Vector2(44.5005, -448)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -27,7 +27,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(44.5005, 440)]
+"values": [Vector2(44.5005, 456)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -36,10 +36,10 @@ tracks/2/path = NodePath("Letterbox controller/MeshInstance2D:rotation")
 tracks/2/interp = 4
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": []
+"values": [-0.0118908]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -48,10 +48,10 @@ tracks/3/path = NodePath("Letterbox controller/MeshInstance2D2:rotation")
 tracks/3/interp = 4
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": []
+"values": [3.12159]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -60,10 +60,10 @@ tracks/4/path = NodePath("Letterbox controller:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
 "update": 0,
-"values": [Vector2(512, 312)]
+"values": []
 }
 
 [sub_resource type="Animation" id="Animation_bxu6p"]
@@ -105,18 +105,17 @@ libraries = {
 position = Vector2(512, 312)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Letterbox controller"]
-visible = false
 material = SubResource("CanvasItemMaterial_nhbyx")
-position = Vector2(44.5005, -432)
+position = Vector2(44.5005, -448)
+rotation = -0.0118908
 scale = Vector2(1255.75, 346)
 mesh = SubResource("QuadMesh_bp5hn")
 texture = ExtResource("1_7hqct")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="Letterbox controller"]
-visible = false
 material = SubResource("CanvasItemMaterial_nhbyx")
-position = Vector2(44.5005, 440)
-rotation = 3.1416
+position = Vector2(44.5005, 456)
+rotation = 3.12159
 scale = Vector2(1257, 346)
 mesh = SubResource("QuadMesh_bp5hn")
 texture = ExtResource("1_7hqct")

@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
@@ -7,6 +8,8 @@ var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 @onready var dodge_cooldown_label = $Dodge_Cooldown_Label
 @onready var blend_space = $AnimationTree.get('parameters/Combat/Ground_Blend/blend_position')
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
+@onready var Stamina_bar = $"UI Cooldowns"
+
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
 var blend_lerp_speed = 10.0  # Adjust the speed of blending
@@ -18,16 +21,17 @@ var blend_lerp_speed = 10.0  # Adjust the speed of blending
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
 @onready var InputBuffer = get_node("/root/InputBuffer")
 
-
 #Basic Movement
 @export var mouse_sensitivity = 0.005
 @export var joystick_sensitivity = 0.005
 @export var BASE_SPEED = 3
 @export var MAX_SPEED = 7
+@export var  STAMINA_DEPLETED_SPEED = 1
 var SPEED = BASE_SPEED
 var target_speed = BASE_SPEED
 var current_speed = 0.0
 
+var is_moving = false
 
 @export var JUMP_VELOCITY = 8
 @export var SHORT_JUMP = 4
@@ -41,16 +45,21 @@ var jump_use = 1
 #Acceleration and Speed
 @export var ACCELERATION = 5.0 #the higher the value the faster the acceleration
 @export var DECELERATION = 25.0 #the lower the value the slippier the stop
-var BASE_ACCELERATION = 9
+var BASE_ACCELERATION = 5
 var BASE_DECELERATION = 15.0 
 @export var DASH_ACCELERATION = 20
 @export var DASH_DECELERATION = 20
 var DASH_MAX_SPEED = BASE_SPEED * 3
 
-
+@export var stamina = 250
+@export var sprinting_deplete_rate = 5
+@export var sprinting_refill_rate = 10
+@export var sprinting_refill_rate_zero = 5
 var is_dodging = false
 var can_dodge = true
+var can_sprint = true
 var dash_timer = 0.0
+var dodge_cooldown_timer = 0.0
 @export var DODGE_SPEED = 30
 @export var dash_duration = 0.04
 @export var SECOND_DASH_ACCELERATION = 300
@@ -60,6 +69,9 @@ var INITIAL_DASH_DECELERATION = DECELERATION
 var INITIAL_MAX_SPEED = MAX_SPEED
 var SECOND_MAX_SPEED = DASH_MAX_SPEED * 1.2
 var is_second_sprint = false
+
+@export var DODGE_ACCELERATION = 50
+@export var DODGE_DECELERATION = 5
 
 
 var WALL_JUMP_VELOCITY_MULTIPLIER = 2.5
@@ -131,6 +143,7 @@ func _proccess_movement(delta):
 	
 	
 	if direction:
+		is_moving = true
 		if current_speed < target_speed:
 			current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
 		else:
@@ -163,13 +176,25 @@ func _proccess_movement(delta):
 			$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
 			$AnimationTree.set("parameters/Jump_Blend/blend_amount", -1)
 			$AnimationTree.set("parameters/Blend3/blend_amount", -1)  
-	
-	
-	
-	if sprinting && direction:
+
+
+	for node in dust_trail:
+			var particle_emitter = node.get_node("GPUParticles3D")
+			if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
+				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
+				particle_emitter.set_emitting(should_emit_particles)
+				
+			if jumping || velocity.y > 0:
+				particle_emitter.set_emitting(false)
+
+func _proccess_sprinting(delta):
+	if sprinting && is_moving && Stamina_bar.value > 0 && can_sprint:
 		sprint_timer += delta
-		
 		is_sprinting = true
+		print(target_speed)
+		Stamina_bar.value -= sprinting_deplete_rate * delta
+		
+		
 		target_speed = MAX_SPEED
 		ACCELERATION = DASH_ACCELERATION
 		DECELERATION = DASH_DECELERATION
@@ -179,7 +204,7 @@ func _proccess_movement(delta):
 		if sprint_timer >= 0.2:
 			$AnimationTree.set("parameters/Ground_Blend/blend_amount", 1)
 		
-		if sprint_timer >= 3:
+		if sprint_timer >= 2:
 			DASH_ACCELERATION = SECOND_DASH_ACCELERATION
 			DASH_DECELERATION = SECOND_DASH_DECELERATION
 			target_speed = SECOND_MAX_SPEED
@@ -189,85 +214,73 @@ func _proccess_movement(delta):
 		
 		if Input.is_action_just_released("move_sprint") || sprint_timer >= 3 && jumping || jumping:
 			is_sprinting = false
+			
 			target_speed = BASE_SPEED
 			ACCELERATION = BASE_ACCELERATION
 			DECELERATION = BASE_DECELERATION
 			sprint_timer = 0.0
 			$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
 
+
+	
+		if Stamina_bar.value <= 0:
+			is_sprinting = false
+			can_sprint = false
+			sprinting_refill_rate = sprinting_refill_rate_zero
+			sprint_timer = 0.0
+			
+			if sprinting:
+				print("YOU CANNOT SPRINT")
+				is_sprinting = false
+				sprinting_deplete_rate = 0
+				$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+			
+			
+			if Stamina_bar.value >= 0:
+				if is_moving:
+					current_speed = STAMINA_DEPLETED_SPEED
+					print("Player is walking with no stamina!")
+		else:
+			sprinting_refill_rate = sprinting_refill_rate
+			
+		if sprinting_refill_rate == sprinting_refill_rate_zero:
+			Stamina_bar.has_theme_stylebox_override("res://ui/Sprint_Fill_Red.tres")
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
 		ACCELERATION = BASE_ACCELERATION
 		DECELERATION = BASE_DECELERATION
-	
-	
-#	#Dodging
-#
-#	if direction && dodging && is_on_floor():
-#
-#		if dodge_cooldown == 5:
-#			dodge_timer += delta
-#			can_dodge = true
-#			if can_dodge:
-#				is_dodging = true
-#
-#
-#				current_speed = DODGE_SPEED
-#				LERP_VAL = DODGE_LERP_VAL
-#				armature.rotate_y(deg_to_rad(180))
-#
-#				$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
-#			else:
-#				$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
-#
-#			if dodge_timer >= 0.4:
-#				is_dodging = false
-#				LERP_VAL = 0.2
-#			else:
-#				current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
-#
-#
-#		if dodge_cooldown < 5:
-#			print("UNABLE TO DODGE")
-#			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
-#
-#
-#	if Input.is_action_just_released("move_dodge"):
-#		await get_tree().create_timer(5).timeout
-#		print("Dodge Cooldown " + str(dodge_cooldown))
-#		dodge_cooldown = 5
-#		dodge_timer = 0.0
-#
-
-	for node in dust_trail:
-		var particle_emitter = node.get_node("GPUParticles3D")
-		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
-			var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
-			particle_emitter.set_emitting(should_emit_particles)
-			
-			
-var dodge_cooldown_timer = 0.0
+		$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+		
+		if Stamina_bar.value < stamina:
+			Stamina_bar.value += sprinting_refill_rate * delta
 
 func _proccess_dodge(delta):
-   # Move the dodge logic here
-	if dodging && is_on_floor() && can_dodge:
+	if dodging && is_on_floor() && can_dodge && Stamina_bar.value > 0:
 		is_dodging = true
 		current_speed = DODGE_SPEED
+		ACCELERATION = DODGE_ACCELERATION
+		DECELERATION = DODGE_DECELERATION
 		LERP_VAL = DODGE_LERP_VAL
+		
+		Stamina_bar.value -= 5
+		
 		armature.rotate_y(deg_to_rad(180))
 		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
 
 		dodge_cooldown_timer = dodge_cooldown  # Start the cooldown
 		can_dodge = false  # Disable dodging until cooldown finishes
-
+		if Stamina_bar.value <= 0 && is_dodging:
+			$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
+			current_speed = BASE_SPEED
+			print("UNABLE TO DODGE")
 	if is_dodging:
 		dodge_cooldown_timer -= delta
+#		armature.rotate_y(deg_to_rad(180))
 		if dodge_cooldown_timer <= 0:
 			is_dodging = false
 			LERP_VAL = 0.2
 			$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
-
 
 func _proccess_cooldown(delta):
 	if !can_dodge:
@@ -278,6 +291,8 @@ func _proccess_cooldown(delta):
 
 	if Input.is_action_just_released("move_dodge"):
 		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
+		ACCELERATION = BASE_ACCELERATION
+		DECELERATION = BASE_DECELERATION
 		if can_dodge:
 			dodge_cooldown_timer = dodge_cooldown
 			can_dodge = false
@@ -334,9 +349,6 @@ func _proccess_jump(delta):
 		jump_timer = 0.0
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
-
-
-
 func _process_walljump(delta):
 	if is_on_wall():
 		if Input.is_action_just_pressed("move_jump"):
@@ -363,7 +375,7 @@ func _physics_process(delta):
 	_unhandled_input(delta)
 	_proccess_dodge(delta)
 	_proccess_cooldown(delta)
-	_on_timer_timeout()
+	_proccess_sprinting(delta)
 
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -394,16 +406,5 @@ func respawn():
 
 
 
-#func _on_timer_timeout():
-#	pass
-
-
-
-
-func _on_timer_timeout():
-	
-	pass # Replace with function body.
-
-
-func _on_dodge_cooldown_timeout():
+func _on_refill_cooldown_timeout():
 	pass # Replace with function body.
