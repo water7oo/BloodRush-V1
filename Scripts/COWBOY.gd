@@ -3,8 +3,8 @@ extends CharacterBody3D
 var camera = preload("res://Cowboy_Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
-@onready var timer = $Timer
-#@onready var label = $Label
+@onready var dodge_node_timer = $Dodge_Cooldown
+@onready var dodge_cooldown_label = $Dodge_Cooldown_Label
 @onready var blend_space = $AnimationTree.get('parameters/Combat/Ground_Blend/blend_position')
 @onready var blend_space2 = $AnimationTree.get('parameters/Combat/MoveStrafe/blend_position')
 var current_blend_amount = 0.0
@@ -36,6 +36,7 @@ var current_speed = 0.0
 var jump_timer = 0.0
 var jump_tap_timer = 0.1
 var jump_height = 128
+var jump_use = 1
 
 #Acceleration and Speed
 @export var ACCELERATION = 5.0 #the higher the value the faster the acceleration
@@ -45,8 +46,12 @@ var BASE_DECELERATION = 15.0
 @export var DASH_ACCELERATION = 20
 @export var DASH_DECELERATION = 20
 var DASH_MAX_SPEED = BASE_SPEED * 3
+
+
 var is_dodging = false
+var can_dodge = true
 var dash_timer = 0.0
+@export var DODGE_SPEED = 30
 @export var dash_duration = 0.04
 @export var SECOND_DASH_ACCELERATION = 300
 @export var SECOND_DASH_DECELERATION = 25
@@ -76,6 +81,8 @@ var wall_jump_position = Vector3.ZERO
 var custom_gravity = 35.0 #The lower the value the floatier
 var sprinting = false
 var dodging = false
+var dodge_timer = 0.0
+@export var dodge_cooldown = 5
 var is_in_air = false
 var can_jump = true
 
@@ -161,7 +168,6 @@ func _proccess_movement(delta):
 	
 	if sprinting && direction:
 		sprint_timer += delta
-		print(sprint_timer)
 		
 		is_sprinting = true
 		target_speed = MAX_SPEED
@@ -194,28 +200,46 @@ func _proccess_movement(delta):
 		target_speed = BASE_SPEED
 		ACCELERATION = BASE_ACCELERATION
 		DECELERATION = BASE_DECELERATION
-		
-	#Dodging
-	if dodging && is_on_floor():
-		is_dodging = true
-		current_speed = DASH_MAX_SPEED
-		dash_timer = dash_duration 
-		LERP_VAL = DODGE_LERP_VAL
-
-	if is_dodging:
-		dash_timer -= delta
-		print(dash_timer)
-		is_sprinting = false
-		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
-
-		if dash_timer <= 0:
-			is_dodging = false
-			LERP_VAL = 0.2
-			$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
-		else:
-			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
 	
 	
+#	#Dodging
+#
+#	if direction && dodging && is_on_floor():
+#
+#		if dodge_cooldown == 5:
+#			dodge_timer += delta
+#			can_dodge = true
+#			if can_dodge:
+#				is_dodging = true
+#
+#
+#				current_speed = DODGE_SPEED
+#				LERP_VAL = DODGE_LERP_VAL
+#				armature.rotate_y(deg_to_rad(180))
+#
+#				$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
+#			else:
+#				$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
+#
+#			if dodge_timer >= 0.4:
+#				is_dodging = false
+#				LERP_VAL = 0.2
+#			else:
+#				current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
+#
+#
+#		if dodge_cooldown < 5:
+#			print("UNABLE TO DODGE")
+#			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
+#
+#
+#	if Input.is_action_just_released("move_dodge"):
+#		await get_tree().create_timer(5).timeout
+#		print("Dodge Cooldown " + str(dodge_cooldown))
+#		dodge_cooldown = 5
+#		dodge_timer = 0.0
+#
+
 	for node in dust_trail:
 		var particle_emitter = node.get_node("GPUParticles3D")
 		if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
@@ -223,20 +247,44 @@ func _proccess_movement(delta):
 			particle_emitter.set_emitting(should_emit_particles)
 			
 			
-	if direction && !is_on_floor():
-		velocity.x -= 0.5 * delta
-		velocity.z -= 0.5 * delta
-		
-		
-	if direction.length_squared() > 0.01:  # Check if there is movement input
-		if direction.dot(velocity.normalized()) < 0:  # Check if moving in opposite directions
-			print("Player has inputted an opposite direction")
-			
+var dodge_cooldown_timer = 0.0
+
+func _proccess_dodge(delta):
+   # Move the dodge logic here
+	if dodging && is_on_floor() && can_dodge:
+		is_dodging = true
+		current_speed = DODGE_SPEED
+		LERP_VAL = DODGE_LERP_VAL
+		armature.rotate_y(deg_to_rad(180))
+		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
+
+		dodge_cooldown_timer = dodge_cooldown  # Start the cooldown
+		can_dodge = false  # Disable dodging until cooldown finishes
+
+	if is_dodging:
+		dodge_cooldown_timer -= delta
+		if dodge_cooldown_timer <= 0:
+			is_dodging = false
+			LERP_VAL = 0.2
+			$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
 
 
+func _proccess_cooldown(delta):
+	if !can_dodge:
+		dodge_cooldown_timer -= delta
+		if dodge_cooldown_timer <= 0:
+			can_dodge = true
+			dodge_cooldown_timer = 0
 
+	if Input.is_action_just_released("move_dodge"):
+		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
+		if can_dodge:
+			dodge_cooldown_timer = dodge_cooldown
+			can_dodge = false
 
 func _proccess_jump(delta):
+	
+	
 	if !is_on_floor():
 		air_timer += delta
 		can_jump = false
@@ -245,36 +293,36 @@ func _proccess_jump(delta):
 	elif is_on_floor():
 		can_jump = true
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", -1)
+		
+#		jump_use = 1
 
 
 	if velocity.y > 0 && jump_timer >= 0.01:
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
-
-	if Input.is_action_pressed("move_jump"):
+	
+	if Input.is_action_pressed("move_jump") && jump_use != 0:
 		jump_timer += delta
 		air_timer += delta
+		print()
+#		jump_use -= 1
+		
 		
 		if jump_timer <= 0.2:
 			velocity.y = JUMP_VELOCITY
+			can_jump = false
 		else:
 			velocity.y -= custom_gravity * delta
 			can_jump = false
 			
 		
-#		#Falling
-#		if velocity.y < 0 && !is_on_floor():
-#			$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 #
 	
 	if !is_on_floor() && jump_timer >= 0.3:
 		jump_timer = 0.3
 		can_jump = false
-#		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
-	if is_on_floor():
-			can_jump = true
-			
-			
+
+
 	if Input.is_action_just_pressed("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
@@ -285,9 +333,6 @@ func _proccess_jump(delta):
 		air_timer = 0.0
 		jump_timer = 0.0
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
-
-#	if velocity.y < 0 && !is_on_floor():
-#		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
 
 
@@ -316,12 +361,15 @@ func _physics_process(delta):
 	_proccess_movement(delta)
 	_proccess_jump(delta)
 	_unhandled_input(delta)
+	_proccess_dodge(delta)
+	_proccess_cooldown(delta)
+	_on_timer_timeout()
 
 	if Input.is_action_just_pressed("mouse_left"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	sprinting = Input.is_action_pressed("move_sprint")
-	dodging = Input.is_action_just_pressed("move_dodge")
+	dodging = Input.is_action_pressed("move_dodge")
 	jumping = Input.is_action_pressed("move_jump")
 
 
@@ -353,4 +401,9 @@ func respawn():
 
 
 func _on_timer_timeout():
+	
+	pass # Replace with function body.
+
+
+func _on_dodge_cooldown_timeout():
 	pass # Replace with function body.

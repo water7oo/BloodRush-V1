@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8fw2k8esd2lg"
-path.s3tc="res://.godot/imported/texture_03.png-dcaf463e914c7896b38a95f49416e75a.s3tc.ctex"
+uid="uid://bieag6y18328y"
+path.s3tc="res://.godot/imported/Explosion_Sheet.png-9a628476840ce6ec1de5412aba877843.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/kenney_prototype_textures/red/texture_03.png"
-dest_files=["res://.godot/imported/texture_03.png-dcaf463e914c7896b38a95f49416e75a.s3tc.ctex"]
+source_file="res://FX/Explosion_Sheet.png"
+dest_files=["res://.godot/imported/Explosion_Sheet.png-9a628476840ce6ec1de5412aba877843.s3tc.ctex"]
 
 [params]
 

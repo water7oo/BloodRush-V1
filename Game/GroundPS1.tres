@@ -1,14 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bvdjc6srvvdrc"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bvdjc6srvvdrc"]
 
-[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_wcja1"]
 [ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_yr6at"]
 [ext_resource type="Texture2D" uid="uid://d2f6hkjv5n8k2" path="res://addons/kenney_prototype_textures/dark/texture_10.png" id="3_xd50k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
-render_priority = 0
-shader = ExtResource("1_wcja1")
-shader_parameter/outline_color = null
-shader_parameter/outline_width = 1.0
 
 [resource]
 render_priority = 0

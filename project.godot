@@ -22,8 +22,7 @@ InputBuffer="*res://addons/InputBuffer.gd"
 
 [display]
 
-window/size/viewport_width=1024
-window/size/viewport_height=600
+window/size/borderless=true
 window/stretch/mode="viewport"
 
 [editor]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnf5pg2d14fel"]
+
+[ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="1_ubgxf"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gxl8i"]
+blend_mode = 1
+light_mode = 1
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dlsig"]
+emission_shape = 1
+emission_sphere_radius = 37.65
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.4
+anim_speed_min = 0.24
+anim_speed_max = 1.88
+
+[node name="Node2D" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_gxl8i")
+position = Vector2(98, 87)
+amount = 6
+process_material = SubResource("ParticleProcessMaterial_dlsig")
+texture = ExtResource("1_ubgxf")
+lifetime = 0.5

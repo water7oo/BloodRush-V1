@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://ciyscyyb72708"]
 
-[ext_resource type="Sky" uid="uid://cj0020bhxfxxp" path="res://Game/SKY_Sunset.tres" id="1_38u2m"]
+[ext_resource type="Sky" uid="uid://ddor6rirpkfi1" path="res://Game/SKY.tres" id="1_aok0s"]
 [ext_resource type="Material" uid="uid://bvdjc6srvvdrc" path="res://Game/GroundPS1.tres" id="2_6hlbg"]
 [ext_resource type="PackedScene" uid="uid://jubxd8mx88ue" path="res://Billboards/Construction/scaffolding1.tscn" id="2_on1q0"]
 [ext_resource type="Texture2D" uid="uid://cvtlpxne2f0ax" path="res://addons/kenney_prototype_textures/dark/texture_03.png" id="3_nrbii"]
@@ -19,7 +19,7 @@
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2
 background_energy_multiplier = 1.3
-sky = ExtResource("1_38u2m")
+sky = ExtResource("1_aok0s")
 sky_rotation = Vector3(0, 5.34943, 0)
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.46
@@ -48,7 +48,7 @@ volumetric_fog_sky_affect = 0.0
 volumetric_fog_temporal_reprojection_enabled = false
 volumetric_fog_temporal_reprojection_amount = 0.552
 adjustment_enabled = true
-adjustment_saturation = 3.12
+adjustment_saturation = 3.01
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dhc18"]
 
@@ -64,15 +64,18 @@ albedo_texture = ExtResource("3_nrbii")
 size = Vector3(1, 0.215723, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
+shader = ExtResource("11_ke0bw")
+shader_parameter/enabled = false
+shader_parameter/dithering = true
+shader_parameter/colors = 8
+shader_parameter/dither_size = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_518tn"]
 shader = ExtResource("11_ke0bw")
-shader_parameter/change_color_depth = true
-shader_parameter/target_color_depth = 4
+shader_parameter/enabled = true
 shader_parameter/dithering = true
-shader_parameter/scale_resolution = true
-shader_parameter/target_resolution_scale = 2
-shader_parameter/enable_recolor = false
+shader_parameter/colors = 2
+shader_parameter/dither_size = 2
 
 [node name="Node3D" type="Node3D"]
 
@@ -105,7 +108,6 @@ mesh = SubResource("BoxMesh_hstq3")
 transform = Transform3D(2.92923, 0, 0, 0, 11.035, 0, 0, 0, 1.75446, 0, -0.414, 0)
 visible = false
 material_override = SubResource("StandardMaterial3D_jdeq7")
-use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Ground"]
 transform = Transform3D(2.9, 0, 0, 0, 1, 0, 0, 0, 3.31521, 0, 0, 10)
@@ -194,21 +196,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch = true
+stretch_shrink = 2
 
 [node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
 handle_input_locally = false
-scaling_3d_scale = 2.0
 canvas_item_default_texture_filter = 0
-size = Vector2i(1024, 600)
+size = Vector2i(576, 324)
 render_target_update_mode = 4
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("3_yu345")]
 transform = Transform3D(0.4, 0, 6.99382e-08, 0, 0.4, 0, -6.99382e-08, 0, 0.4, 2.58144, 0.100814, 3.75989)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("6_m03c4")]
-transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 3.28841, 4.81486, 3.61888)
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -0.71159, -0.185141, 8.79126)
 target = NodePath("../Cowboy_3rdPass/CamTarget")
-speed = 10.0
+speed = 2.0
 enabled = true
 
 [node name="Opener" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("13_a8nsm")]
@@ -222,14 +225,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 mouse_force_pass_scroll_events = false
+color = Color(1, 1, 1, 0)
 
 [node name="Cowboy_3rdPass" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("12_dxn1b")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 
 [node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("4_p7ho0")]
-transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, -0.0451059, 0.224882, -0.361753)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045106, 0.224882, 0.133729)
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.174957, 1.69179, 0.700274)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.174958, 0.118321, 0.0508014)
 
 [node name="Buildings2" parent="." instance=ExtResource("13_wx5oi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.458, 0)

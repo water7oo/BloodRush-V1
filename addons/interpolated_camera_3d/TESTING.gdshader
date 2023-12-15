@@ -1,140 +1,107 @@
-shader_type canvas_item;
+shader_type spatial;
+render_mode unshaded;
 
-// Handles the resolution changes, color depth, and dithering
-group_uniforms resolution_and_colors;
-uniform bool change_color_depth = false;
-uniform int target_color_depth : hint_range(1, 8) = 5;
-uniform bool dithering = false;
-uniform bool scale_resolution = false;
-uniform int target_resolution_scale = 3;
+// MIT License. Made by Leo Peltola
+// Inspired by https://threejs.org/examples/webgl_postprocessing_pixel.html
 
-// Handles the LUTish recoloring
-group_uniforms gradient_recoloring;
-uniform bool enable_recolor = false;
-uniform sampler2D to_gradient: hint_default_black;
+uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_nearest;
 
-int dithering_pattern(ivec2 fragcoord) {
-	const int pattern[] = {
-		-4, +0, -3, +1, 
-		+2, -2, +3, -1, 
-		-3, +1, -4, +0, 
-		+3, -1, +2, -2
-	};
-	
-	int x = fragcoord.x % 4;
-	int y = fragcoord.y % 4;
-	
-	return pattern[y * 4 + x];
+uniform bool shadows_enabled = true;
+uniform bool highlights_enabled = true;
+uniform float shadow_strength : hint_range(0.0, 1.0, 0.01) = 0.4;
+uniform float highlight_strength : hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec3 highlight_color : source_color = vec3(1.);
+uniform vec3 shadow_color : source_color = vec3(0.0);
+
+varying mat4 model_view_matrix;
+
+
+float getDepth(vec2 screen_uv, sampler2D depth_texture, mat4 inv_projection_matrix){
+//	Credit: https://godotshaders.com/shader/depth-modulated-pixel-outline-in-screen-space/
+	float raw_depth = texture(depth_texture, screen_uv)[0];
+	vec3 normalized_device_coordinates = vec3(screen_uv * 2.0 - 1.0, raw_depth);
+    vec4 view_space = inv_projection_matrix * vec4(normalized_device_coordinates, 1.0);	
+	view_space.xyz /= view_space.w;	
+	return -view_space.z;
 }
 
-vec3 rgb2hsv(vec3 rgb) { //Converts RGB values to HSV
-	float r = rgb.r;
-	float g = rgb.g;
-	float b = rgb.b;
-
-	float cmax = max(r,max(g,b));
-	float cmin = min(r,min(g,b));
-	float delta = cmax - cmin;
-
-	float h = 0.f; //hue
-
-	if (delta > 0.f){
-		if (cmax == r){
-			h = (g-b)/delta;
-			h = mod(h,6.f);
-		} else if (cmax == g){
-			h = ((b - r) / delta) + 2.f;
-		} else {
-			h = ((r-g)/delta) + 4.f;
-		}
-		h = h * 60.f;
-	}
-
-	float s = 0.f; //saturation
-	if (cmax > 0.f){
-		s = delta / cmax;
-	}
-
-	return vec3(h,s,cmax); // Keep original alpha value 
-
+vec3 getPos(float depth, mat4 mvm, mat4 ipm, vec2 suv, mat4 wm, mat4 icm){
+  vec4 pos = inverse(mvm) * ipm * vec4((suv * 2.0 - 1.0), depth * 2.0 - 1.0, 1.0);
+  pos.xyz /= (pos.w+0.0001*(1.-abs(sign(pos.w))));
+  return (pos*icm).xyz+wm[3].xyz;
 }
 
-vec3 hsv2rgb(vec3 hsv) { //Converts HSV values to RGB
-	float h = hsv.r;
-	float s = hsv.g;
-	float v = hsv.b;
-	float c = v * s;
-	//X = C × (1 - |(H / 60°) mod 2 - 1|)
-	float x = h / 60.f;
-	x = mod(x,2.f);
-	x = abs(x - 1.f);
-	x = c * (1.f - x);
+float normalIndicator(vec3 normalEdgeBias, vec3 baseNormal, vec3 newNormal, float depth_diff){
+	// Credit: https://threejs.org/examples/webgl_postprocessing_pixel.html
+	float normalDiff = dot(baseNormal - newNormal, normalEdgeBias);
+	float normalIndicator = clamp(smoothstep(-.01, .01, normalDiff), 0.0, 1.0);
+	float depthIndicator = clamp(sign(depth_diff * .25 + .0025), 0.0, 1.0);
+	return (1.0 - dot(baseNormal, newNormal)) * depthIndicator * normalIndicator;
+}
 
-	float m = v - c;
-
-	vec3 rgb = vec3(0.f,0.f,0.f);
-
-	if (h < 60.f) {
-		rgb = vec3(c,x,0.f);
-	} else if (h < 120.f){
-		rgb = vec3(x,c,0.f);
-	} else if (h < 180.f){
-		rgb = vec3(0.f,c,x);
-	} else if (h < 240.f){
-		rgb = vec3(0.f,x,c);
-	} else if (h < 300.f){
-		rgb = vec3(x,0.f,c);
-	} else if (h < 360.f){
-		rgb = vec3(c,0.f,x);
-	}
-	rgb[0] = rgb[0] + m;
-	rgb[1] = rgb[1] + m;
-	rgb[2] = rgb[2] + m;
-
-	return rgb; 
+void vertex(){
+    model_view_matrix = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
 }
 
 void fragment() {
-	ivec2 uv;
-	vec3 color;
+	vec2 e = vec2(1./VIEWPORT_SIZE.xy);
 	
-	if(scale_resolution){
-		uv = ivec2(FRAGCOORD.xy / float(target_resolution_scale));
-		color = texelFetch(TEXTURE, uv * target_resolution_scale, 0).rgb;
-	} else {
-		uv = ivec2(FRAGCOORD.xy);
-		color = texelFetch(TEXTURE, uv, 0).rgb;
+//	Shadows
+	float depth_diff = 0.0;
+	float neg_depth_diff = .5;
+	if (shadows_enabled) {
+		float depth = getDepth(SCREEN_UV, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float du = getDepth(SCREEN_UV+vec2(0., -1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dr = getDepth(SCREEN_UV+vec2(1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dd = getDepth(SCREEN_UV+vec2(0., 1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dl = getDepth(SCREEN_UV+vec2(-1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		depth_diff += clamp(du - depth, 0., 1.);
+		depth_diff += clamp(dd - depth, 0., 1.);
+		depth_diff += clamp(dr - depth, 0., 1.);
+		depth_diff += clamp(dl - depth, 0., 1.);
+		neg_depth_diff += depth - du;
+		neg_depth_diff += depth - dd;
+		neg_depth_diff += depth - dr;
+		neg_depth_diff += depth - dl;
+		neg_depth_diff = clamp(neg_depth_diff, 0., 1.);
+		neg_depth_diff = clamp(smoothstep(0.5, 0.5, neg_depth_diff)*10., 0., 1.);
+		depth_diff = smoothstep(0.2, 0.3, depth_diff);
+//		ALBEDO = vec3(neg_depth_diff);
 	}
 	
-	if(enable_recolor){
-		vec3 hsv = rgb2hsv(color);
-		float color_pos = (hsv.x / 360.0);
-		vec3 new_color = texture(to_gradient, vec2((color_pos), 0.5)).rgb;
-		vec3 new_hsv = rgb2hsv(new_color);
-		hsv.x = new_hsv.x;
-		vec3 final_rgb = hsv2rgb(hsv);
+//	Highlights
+	float normal_diff = 0.;
+	if (highlights_enabled) {
+		vec3 normal = texture(NORMAL_TEXTURE, SCREEN_UV).rgb * 2.0 - 1.0;
+		vec3 nu = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., -1.)*e).rgb * 2.0 - 1.0;
+		vec3 nr = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(1., 0.)*e).rgb * 2.0 - 1.0;
+		vec3 nd = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., 1.)*e).rgb * 2.0 - 1.0;
+		vec3 nl = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(-1., 0.)*e).rgb * 2.0 - 1.0;
+		vec3 normal_edge_bias = (vec3(1., 1., 1.));
+		normal_diff += normalIndicator(normal_edge_bias, normal, nu, depth_diff);
+		normal_diff += normalIndicator(normal_edge_bias, normal, nr, depth_diff);
+		normal_diff += normalIndicator(normal_edge_bias, normal, nd, depth_diff);
+		normal_diff += normalIndicator(normal_edge_bias, normal, nl, depth_diff);
+		normal_diff = smoothstep(0.2, 0.8, normal_diff);
+		normal_diff = clamp(normal_diff-neg_depth_diff, 0., 1.);
+//		ALBEDO = vec3(normal_diff);
+	}
+	
 
-		color.rgb = final_rgb;
+	vec3 original_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	vec3 final_highlight_color = mix(original_color, highlight_color, highlight_strength);
+	vec3 final_shadow_color = mix(original_color, shadow_color, shadow_strength);
+	vec3 final = original_color;
+	if (highlights_enabled) {
+		final = mix(final, final_highlight_color, normal_diff);
 	}
+	if (shadows_enabled) {
+		final = mix(final, final_shadow_color, depth_diff);
+	}
+	ALBEDO = final;
 
-	
-	// Convert from [0.0, 1.0] range to [0, 255] range
-	ivec3 c = ivec3(round(color * 255.0));
-	
-	// Apply the dithering pattern
-	if (dithering) {
-		c += ivec3(dithering_pattern(uv));
-	}
-	
-	vec3 final_color;
-	if(change_color_depth){
-		// Truncate from 8 bits to color_depth bits
-		c >>= (8 - target_color_depth);
-		final_color = vec3(c) / float(1 << target_color_depth);
-	} else {
-		final_color = vec3(c) / float(1 << 8);
-	}
-	
-	// Convert back to [0.0, 1.0] range
-	COLOR.rgb = final_color;
+	float alpha_mask = depth_diff * float(shadows_enabled) + normal_diff * float(highlights_enabled);
+	ALPHA = clamp((alpha_mask) * 5., 0., 1.);
 }

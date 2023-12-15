@@ -1,13 +1,13 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dcakvymmosyhp"]
 
-[ext_resource type="Shader" path="res://Game/TestingShaders3.gdshader" id="1_gelyl"]
+[ext_resource type="Shader" path="res://Shaders/OUTLINE_NEW.gdshader" id="1_oawxm"]
 [ext_resource type="Shader" path="res://Shaders/PS1_Player_VertexWobbling.gdshader" id="2_rxmfh"]
-[ext_resource type="Texture2D" uid="uid://o2thmi3sn31t" path="res://addons/kenney_prototype_textures/light/texture_03.png" id="3_23145"]
+[ext_resource type="Texture2D" uid="uid://boial4b5rlyu8" path="res://addons/kenney_prototype_textures/light/texture_08.png" id="3_6nh55"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
 render_priority = 0
-shader = ExtResource("1_gelyl")
-shader_parameter/border_width = 0.01
+shader = ExtResource("1_oawxm")
+shader_parameter/border_width = 0.02
 shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/pattern = false
 shader_parameter/line_number = null
@@ -26,4 +26,4 @@ shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.5
 shader_parameter/jitter = 0.5
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_23145")
+shader_parameter/albedo = ExtResource("3_6nh55")
