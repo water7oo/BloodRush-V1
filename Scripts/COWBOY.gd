@@ -161,6 +161,7 @@ func _proccess_movement(delta):
 	
 	if sprinting && direction:
 		sprint_timer += delta
+		print(sprint_timer)
 		
 		is_sprinting = true
 		target_speed = MAX_SPEED
@@ -177,8 +178,10 @@ func _proccess_movement(delta):
 			DASH_DECELERATION = SECOND_DASH_DECELERATION
 			target_speed = SECOND_MAX_SPEED
 			$AnimationTree.set("parameters/Ground_Blend2/blend_amount", 0)
-			
-		if Input.is_action_just_released("move_sprint") || sprint_timer >= 3 && jumping:
+		else:
+			$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+		
+		if Input.is_action_just_released("move_sprint") || sprint_timer >= 3 && jumping || jumping:
 			is_sprinting = false
 			target_speed = BASE_SPEED
 			ACCELERATION = BASE_ACCELERATION
@@ -201,11 +204,14 @@ func _proccess_movement(delta):
 
 	if is_dodging:
 		dash_timer -= delta
+		print(dash_timer)
 		is_sprinting = false
+		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
 
 		if dash_timer <= 0:
 			is_dodging = false
 			LERP_VAL = 0.2
+			$AnimationTree.set("parameters/Ground_Blend3/blend_amount", -1)
 		else:
 			current_speed = move_toward(current_speed, DASH_MAX_SPEED, DASH_DECELERATION * delta)
 	
@@ -238,11 +244,11 @@ func _proccess_jump(delta):
 		
 	elif is_on_floor():
 		can_jump = true
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", -1)
 
-	if velocity.y > 0 && jump_timer >= 0.1:
+
+	if velocity.y > 0 && jump_timer >= 0.01:
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 1)
-		if sprinting && direction && is_on_floor():
-			print("GO GO GO GO")
 
 	if Input.is_action_pressed("move_jump"):
 		jump_timer += delta
@@ -278,7 +284,7 @@ func _proccess_jump(delta):
 	if Input.is_action_just_released("move_jump"):
 		air_timer = 0.0
 		jump_timer = 0.0
-#		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 
 #	if velocity.y < 0 && !is_on_floor():
 #		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
@@ -344,3 +350,7 @@ func respawn():
 #	pass
 
 
+
+
+func _on_timer_timeout():
+	pass # Replace with function body.
