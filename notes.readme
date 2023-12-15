@@ -1,4 +1,4 @@
-Sliding movement thingy
+pivot movement thingy
 
 when player is running in a direction for a small bit lets say 1 second or so give or take and they quickly switch directions
 make it to where their deceleration is decreased for a bit more slippiness, 
@@ -9,8 +9,13 @@ then I need to have the player await for about 0.5 seconds and decrease their de
 lastly take their current movement speed  equal the START_AND_STOP speed which will take the current speed the player is going
 and multiply it by 0.5 making the player have a small bit of speed, control the lenght the player has this given speed with a momentum_timer variable set to about 0.6 seconds
 
-Jumping animations
+Attacking
 
-There will be 1  jump animation which will have 2 phases, (hop phase and high jump phase)
+since its hard to make a good sillohuette with attack animations due to the model being small 
+and pudgy, the camera will rotate and pan outwards if I hit the attavk button and if the 
+enemys detectuon hitbox goes off
 
-if the player
+attach 2 hitboxes on the side of the spring arm pivot, these will be the positions the camera will LERP
+to when the player is in combat
+
+attach 1 hitbox behind the camera so that if more than 1 enemy detects you the camera will pan outwards
