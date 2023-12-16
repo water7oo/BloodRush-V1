@@ -24,6 +24,6 @@ next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_rxmfh")
 shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.5
-shader_parameter/jitter = 0.5
+shader_parameter/jitter = 0.6
 shader_parameter/resolution = Vector2i(320, 240)
 shader_parameter/albedo = ExtResource("3_6nh55")

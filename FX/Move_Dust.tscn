@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://rlcylvhdacih"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aoycw"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_iuhjw"]
+_data = [Vector2(0, 0.452632), 0.0, 0.0, 0, 0, Vector2(1, 0.147368), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6t3s6"]
+curve = SubResource("Curve_iuhjw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7w8nj"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_6t3s6")
+
+[sub_resource type="QuadMesh" id="QuadMesh_kegxp"]
+
+[node name="DUST4" type="Node3D" groups=["move_dust"]]
+
+[node name="move_dust" type="GPUParticles3D" parent="."]
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_aoycw")
+emitting = false
+amount = 4
+lifetime = 0.5
+randomness = 1.0
+fixed_fps = 60
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_7w8nj")
+draw_pass_1 = SubResource("QuadMesh_kegxp")

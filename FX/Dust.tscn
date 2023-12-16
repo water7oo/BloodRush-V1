@@ -1,12 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dq1wojfy8mi7q"]
+[gd_scene load_steps=6 format=3 uid="uid://dq1wojfy8mi7q"]
 
 [ext_resource type="Material" uid="uid://cx0dsad2my6ud" path="res://Shaders/Dust.tres" id="1_nlbt2"]
-
-[sub_resource type="Gradient" id="Gradient_80kwa"]
-colors = PackedColorArray(0.35, 0.2051, 0.1085, 1, 1, 0.526, 0.21, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_fnu5t"]
-gradient = SubResource("Gradient_80kwa")
 
 [sub_resource type="Curve" id="Curve_w4jfo"]
 _data = [Vector2(0, 0.705263), 0.0, 0.0, 0, 0, Vector2(0.76, 0.936842), -1.78947, -1.78947, 0, 0, Vector2(1, 0.526316), 0.0, 0.0, 0, 0]
@@ -23,9 +17,8 @@ radial_accel_max = 38.71
 damping_min = 12.903
 damping_max = 29.032
 scale_min = 0.2
-scale_max = 0.5
+scale_max = 0.4
 scale_curve = SubResource("CurveTexture_llsai")
-color_ramp = SubResource("GradientTexture1D_fnu5t")
 turbulence_noise_strength = 0.03
 turbulence_noise_scale = 4.81
 anim_speed_min = 1.53
@@ -35,7 +28,7 @@ anim_speed_max = 4.46
 
 [node name="DUST2" type="Node3D" groups=["dust_trail"]]
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="Dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("1_nlbt2")
 emitting = false

@@ -18,6 +18,8 @@ var blend_lerp_speed = 10.0  # Adjust the speed of blending
 @onready var armature = $RootNode/Armature/Skeleton3D
 @onready var jump_wave = get_tree().get_nodes_in_group("Jump_wave")
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
+@onready var jump_dust = get_tree().get_nodes_in_group("jump_dust")
+@onready var move_dust = get_tree().get_nodes_in_group("move_dust")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
 @onready var InputBuffer = get_node("/root/InputBuffer")
 
@@ -90,7 +92,7 @@ var LERP_VAL = 0.2
 var DODGE_LERP_VAL = 1
 var wall_jump_position = Vector3.ZERO
 
-var custom_gravity = 35.0 #The lower the value the floatier
+var custom_gravity = 30.0 #The lower the value the floatier
 var sprinting = false
 var dodging = false
 var dodge_timer = 0.0
@@ -179,15 +181,30 @@ func _proccess_movement(delta):
 
 
 	for node in dust_trail:
-			var particle_emitter = node.get_node("GPUParticles3D")
+			var particle_emitter = node.get_node("Dust")
 			if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
 				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
 				particle_emitter.set_emitting(should_emit_particles)
 				
 			if jumping || velocity.y > 0:
 				particle_emitter.set_emitting(false)
+				
+	for node in jump_dust:
+		var particle_emitter = node.get_node("jump_dust")
+		if particle_emitter && Input.is_action_just_pressed("move_jump") || jumping:
+			particle_emitter.set_emitting(true)
+		else:
+			particle_emitter.set_emitting(false)
+
+	for node in move_dust:
+		var particle_emitter = node.get_node("move_dust")
+		if particle_emitter && is_on_floor() && direction && !sprinting:
+			particle_emitter.set_emitting(true)
+		else:
+			particle_emitter.set_emitting(false)
 
 func _proccess_sprinting(delta):
+	
 	if sprinting && is_moving && Stamina_bar.value > 0 && can_sprint:
 		sprint_timer += delta
 		is_sprinting = true
@@ -229,12 +246,12 @@ func _proccess_sprinting(delta):
 			sprinting_refill_rate = sprinting_refill_rate_zero
 			sprint_timer = 0.0
 			
-			if sprinting:
-				print("YOU CANNOT SPRINT")
-				is_sprinting = false
-				sprinting_deplete_rate = 0
-				$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
-			
+#			if sprinting:
+#				print("YOU CANNOT SPRINT")
+#				is_sprinting = false
+#				sprinting_deplete_rate = 0
+#				$AnimationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+#
 			
 			if Stamina_bar.value >= 0:
 				if is_moving:
@@ -243,8 +260,7 @@ func _proccess_sprinting(delta):
 		else:
 			sprinting_refill_rate = sprinting_refill_rate
 			
-		if sprinting_refill_rate == sprinting_refill_rate_zero:
-			Stamina_bar.has_theme_stylebox_override("res://ui/Sprint_Fill_Red.tres")
+			
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
@@ -254,6 +270,9 @@ func _proccess_sprinting(delta):
 		
 		if Stamina_bar.value < stamina:
 			Stamina_bar.value += sprinting_refill_rate * delta
+			
+		if Stamina_bar.value == stamina:
+			can_sprint = true
 
 func _proccess_dodge(delta):
 	if dodging && is_on_floor() && can_dodge && Stamina_bar.value > 0:

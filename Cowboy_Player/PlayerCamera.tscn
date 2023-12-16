@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene load_steps=5 format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" path="res://Cowboy_Player/follow_cam.gd" id="1_aphvx"]
 [ext_resource type="Shader" path="res://addons/interpolated_camera_3d/PIXELIZED.gdshader" id="2_ebpc2"]
@@ -20,11 +20,6 @@ shader_parameter/pixelSize = 16
 flip_faces = true
 size = Vector2(2, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jejf4"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_50v2c"]
-material = SubResource("StandardMaterial3D_jejf4")
-
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
 script = ExtResource("1_aphvx")
@@ -36,10 +31,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.959388, 0.640344, 0, -0.28209, 2.17781, 0.00799954, 0.0583815, 0.0732438)
 collision_mask = 255
-spring_length = 2.395
+spring_length = 2.0
+margin = 1.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.63814, 1.76711)
+transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.60302, 1.28346)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
 transform = Transform3D(1, 5.71956e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.84277, 0.946637)
@@ -55,8 +51,3 @@ mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.403275, 0)
-visible = false
-mesh = SubResource("CylinderMesh_50v2c")
