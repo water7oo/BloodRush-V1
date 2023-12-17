@@ -20,6 +20,7 @@ var blend_lerp_speed = 10.0  # Adjust the speed of blending
 @onready var dust_trail = get_tree().get_nodes_in_group("dust_trail")
 @onready var jump_dust = get_tree().get_nodes_in_group("jump_dust")
 @onready var move_dust = get_tree().get_nodes_in_group("move_dust")
+@onready var burst_dust = get_tree().get_nodes_in_group("burst_dust")
 @onready var wall_wave = get_tree().get_nodes_in_group("wall_wave")
 @onready var InputBuffer = get_node("/root/InputBuffer")
 
@@ -183,7 +184,7 @@ func _proccess_movement(delta):
 	for node in dust_trail:
 			var particle_emitter = node.get_node("Dust")
 			if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
-				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED
+				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED || dodging
 				particle_emitter.set_emitting(should_emit_particles)
 				
 			if jumping || velocity.y > 0:
@@ -191,7 +192,7 @@ func _proccess_movement(delta):
 				
 	for node in jump_dust:
 		var particle_emitter = node.get_node("jump_dust")
-		if particle_emitter && Input.is_action_just_pressed("move_jump") || jumping:
+		if particle_emitter && Input.is_action_just_pressed("move_jump"):
 			particle_emitter.set_emitting(true)
 		else:
 			particle_emitter.set_emitting(false)
@@ -199,6 +200,14 @@ func _proccess_movement(delta):
 	for node in move_dust:
 		var particle_emitter = node.get_node("move_dust")
 		if particle_emitter && is_on_floor() && direction && !sprinting:
+			particle_emitter.set_emitting(true)
+		else:
+			particle_emitter.set_emitting(false)
+			
+			
+	for node in burst_dust:
+		var particle_emitter = node.get_node("burst_dust")
+		if particle_emitter && is_on_floor() && dodging && Stamina_bar.value >= 20:
 			particle_emitter.set_emitting(true)
 		else:
 			particle_emitter.set_emitting(false)
@@ -282,9 +291,9 @@ func _proccess_dodge(delta):
 		DECELERATION = DODGE_DECELERATION
 		LERP_VAL = DODGE_LERP_VAL
 		
-		Stamina_bar.value -= 5
+		Stamina_bar.value -= 20
 		
-		armature.rotate_y(deg_to_rad(180))
+#		armature.rotate_y(deg_to_rad(180))
 		$AnimationTree.set("parameters/Ground_Blend3/blend_amount", 0)
 
 		dodge_cooldown_timer = dodge_cooldown  # Start the cooldown
@@ -295,7 +304,7 @@ func _proccess_dodge(delta):
 			print("UNABLE TO DODGE")
 	if is_dodging:
 		dodge_cooldown_timer -= delta
-#		armature.rotate_y(deg_to_rad(180))
+		armature.rotate_y(deg_to_rad(180))
 		if dodge_cooldown_timer <= 0:
 			is_dodging = false
 			LERP_VAL = 0.2
@@ -346,6 +355,7 @@ func _proccess_jump(delta):
 			can_jump = false
 		else:
 			velocity.y -= custom_gravity * delta
+			$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
 			can_jump = false
 			
 		
@@ -367,6 +377,7 @@ func _proccess_jump(delta):
 		air_timer = 0.0
 		jump_timer = 0.0
 		$AnimationTree.set("parameters/Jump_Blend/blend_amount", 0)
+		
 
 func _process_walljump(delta):
 	if is_on_wall():

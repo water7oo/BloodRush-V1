@@ -27,7 +27,7 @@ window/stretch/mode="viewport"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/scott/OneDrive/Desktop/Desktop Stuff/Timelapses_Recordings/GODOT_GAME_RECORDINGS/GODOT_RECORD1.avi"
+movie_writer/movie_file="C:/Users/scott/OneDrive/Desktop/Desktop Stuff/Timelapses_Recordings/GODOT_GAME_RECORDINGS/GODOT_RECORD1.mp4"
 version_control/autoload_on_startup=true
 
 [editor_plugins]

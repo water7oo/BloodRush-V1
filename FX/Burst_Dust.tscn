@@ -1,54 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1yu2x7osdqa5"]
+[gd_scene load_steps=6 format=3 uid="uid://ctudhwisdi64s"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ipbtd"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvicg"]
-next_pass = SubResource("ShaderMaterial_ipbtd")
-transparency = 1
-blend_mode = 1
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8f8w8"]
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 disable_ambient_light = true
-heightmap_scale = -16.0
+albedo_color = Color(0.960784, 0.694118, 0, 1)
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="Curve" id="Curve_2pfd2"]
-_data = [Vector2(0, 1), 0.0, -0.616174, 0, 0, Vector2(0.33, 1), -1.52801, -1.52801, 0, 0, Vector2(0.75, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_hvm6k"]
+_data = [Vector2(0, 0.705263), 0.0, 0.0, 0, 0, Vector2(0.68, 0.6), -1.29743, -1.29743, 0, 0, Vector2(1, 0.0842105), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_ym3tt"]
-curve = SubResource("Curve_2pfd2")
+[sub_resource type="CurveTexture" id="CurveTexture_vrli0"]
+curve = SubResource("Curve_hvm6k")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q746a"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tq8iu"]
 spread = 180.0
-flatness = 0.52
 gravity = Vector3(0, 0, 0)
 initial_velocity_max = 15.0
 angular_velocity_max = 20.0
-damping_max = 83.871
 scale_min = 0.1
-scale_max = 0.3
-scale_curve = SubResource("CurveTexture_ym3tt")
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_vrli0")
 
-[sub_resource type="BoxMesh" id="BoxMesh_dev0b"]
+[sub_resource type="QuadMesh" id="QuadMesh_5fy4s"]
 
-[node name="DUST3" type="Node3D" groups=["jump_dust"]]
+[node name="DUST3" type="Node3D" groups=["burst_dust"]]
 
-[node name="jump_dust" type="GPUParticles3D" parent="."]
+[node name="burst_dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_wvicg")
-emitting = false
+material_override = SubResource("StandardMaterial3D_8f8w8")
 amount = 20
-lifetime = 0.3
+lifetime = 0.2
 speed_scale = 0.7
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
 trail_lifetime = 0.5
-process_material = SubResource("ParticleProcessMaterial_q746a")
-draw_pass_1 = SubResource("BoxMesh_dev0b")
+process_material = SubResource("ParticleProcessMaterial_tq8iu")
+draw_pass_1 = SubResource("QuadMesh_5fy4s")

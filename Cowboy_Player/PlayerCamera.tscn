@@ -38,9 +38,8 @@ margin = 1.0
 transform = Transform3D(1, 0, 0, -1.51513e-15, 0.99344, 0.114364, -6.94201e-15, -0.114365, 0.993441, 3.58559e-07, 1.60302, 1.28346)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(1, 5.71956e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.6887e-16, 0.283649, 0.352348, 0, -1.84277, 0.946637)
+transform = Transform3D(1, 5.71956e-15, 1.46971e-14, 2.30444e-15, 0.885564, -0.453027, 2.68866e-16, 0.283649, 0.352348, 0, -2.94288, 2.24439)
 current = true
-fov = 82.0
 size = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]

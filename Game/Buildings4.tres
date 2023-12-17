@@ -7,7 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
 render_priority = 0
 shader = ExtResource("1_may04")
-shader_parameter/border_width = 0.03
+shader_parameter/border_width = 0.01
 shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/pattern = null
 shader_parameter/line_number = null

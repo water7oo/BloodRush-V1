@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene load_steps=26 format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://ddor6rirpkfi1" path="res://Game/SKY.tres" id="1_aok0s"]
 [ext_resource type="Material" uid="uid://bvdjc6srvvdrc" path="res://Game/GroundPS1.tres" id="2_6hlbg"]
@@ -11,8 +11,9 @@
 [ext_resource type="Script" path="res://Game/RespawnHitbox.gd" id="5_7vbi7"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Cowboy_Player/PlayerCamera.tscn" id="6_m03c4"]
 [ext_resource type="Shader" path="res://Game/RETRO.gdshader" id="11_ke0bw"]
+[ext_resource type="PackedScene" uid="uid://ctudhwisdi64s" path="res://FX/Burst_dust.tscn" id="12_0scso"]
 [ext_resource type="PackedScene" uid="uid://rlcylvhdacih" path="res://FX/Move_Dust.tscn" id="12_bbdr3"]
-[ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/Burst_Dust.tscn" id="12_d51g0"]
+[ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/jump_dust.tscn" id="12_d51g0"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Cowboy3rd/cowboy_3rd_pass.tscn" id="12_dxn1b"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="13_a8nsm"]
 [ext_resource type="PackedScene" uid="uid://dordn2c1222of" path="res://Billboards/Billboards2.tscn" id="13_cmpb6"]
@@ -256,10 +257,13 @@ enabled = true
 [node name="Cowboy_3rdPass" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("12_dxn1b")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 
+[node name="DUST5" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("12_0scso")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+
 [node name="DUST4" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("12_bbdr3")]
 
 [node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("12_d51g0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045106, 0.224882, 0.133729)
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 
 [node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("4_p7ho0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045106, 0.224882, 0.133729)
